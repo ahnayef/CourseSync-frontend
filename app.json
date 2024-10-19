@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "CourceSync",
-    "slug": "CourceSync",
+    "name": "CourseSync",
+    "slug": "CourseSync",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "CourceSync",
+    "scheme": "CourseSync",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
