@@ -21,7 +21,7 @@ const FormInput = ({
       <View className="rounded-sm border border-primary p-2">
         {type === "select" ? (
           <Picker selectedValue={value} onValueChange={(e) => onChangeFn(e)}>
-            <Picker.Item label="Select a role..." value="" />
+            <Picker.Item label="Select a role..." value="" enabled={false}/>
             <Picker.Item label="Teacher" value="Teacher" />
             <Picker.Item label="CR" value="CR" />
             <Picker.Item label="Student" value="Student" />

@@ -19,7 +19,7 @@ export default function Index() {
         Bring order to your academic life, all in one place.
       </Text>
 
-      <View className="flex flex-col">
+      <View className="flex flex-col w-full py-10">
         <Cbutton
           title="Login"
           styles="rounded-sm m-4"

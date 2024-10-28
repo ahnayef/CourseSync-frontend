@@ -55,7 +55,7 @@ const Signup = () => {
         <Text className="text-xl font-bold text-primary">Sign Up</Text>
         <View className="w-3/4">
           <FormInput
-            value={formState.department}
+            value={formState.name}
             title="Name"
             onChangeFn={(e: any) => setFormState({ ...formState, name: e })}
           />
