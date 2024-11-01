@@ -1,8 +1,8 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import logo from "@/assets/images/icon.png";
-import { Href, Link, router } from "expo-router";
+import { Image, Text, View } from "react-native";
+import { Href, router } from "expo-router";
 import Cbutton from "./components/Cbutton/Cbutton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { logo } from "@/constants/assets";
 
 export default function Index() {
   const handleRouter = (page: string) => {
