@@ -8,8 +8,10 @@ import { Href, router } from "expo-router";
 
 export default function Login() {
   const [formState, setFormState] = useState({
+    sid:"",
     email: "",
     password: "",
+    role:""
   });
 
   const handleSubmit = () => {
@@ -27,20 +29,51 @@ export default function Login() {
         <GestureHandlerRootView className="h-screen flex-1 flex-col items-center justify-center bg-white font-notoSB">
           <Text className="text-xl font-bold text-primary">Login</Text>
           <View className="w-3/4">
-            <FormInput
-              value={formState.email}
-              title="Email"
-              onChangeFn={(e: any) => setFormState({ ...formState, email: e })}
-            />
-            <FormInput
-              value={formState.password}
-              title="Password"
-              onChangeFn={(e: any) => setFormState({ ...formState, password: e })}
-              isPassword={true}
-            />
 
-            <Cbutton title="Login" onclickFn={() => handleSubmit()} />
-          </View>
+          <FormInput
+            value={formState.role}
+            title="Role"
+            onChangeFn={(e: any) => setFormState({ ...formState, role: e })}
+            type="select"
+          />
+
+          {formState.role === "Teacher" ? (
+            <>
+              <FormInput
+                value={formState.email}
+                title="Email"
+                onChangeFn={(e: any) =>
+                  setFormState({ ...formState, email: e })
+                }
+              />
+            </>
+          ) : formState.role === "Student" || formState.role === "CR" ? (
+            <>
+              <FormInput
+                value={formState.sid}
+                title="Student ID"
+                onChangeFn={(e: any) => setFormState({ ...formState, sid: e })}
+              />
+            </>
+          ) : (
+            <></>
+          )}
+
+          {formState.role !== "" && (
+            <>
+              <FormInput
+                value={formState.password}
+                title="Password"
+                onChangeFn={(e: any) =>
+                  setFormState({ ...formState, password: e })
+                }
+                isPassword={true}
+              />
+            </>
+          )}
+
+          <Cbutton title="Login" onclickFn={() => handleSubmit()} />
+        </View>
         </GestureHandlerRootView>
       </SafeAreaView>
     </ScrollView>
