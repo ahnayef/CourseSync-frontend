@@ -16,6 +16,7 @@ export default function App() {
 
   const [isLoading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login = async ({ email, password }: any) => {
     setLoading(true);
@@ -41,6 +42,32 @@ export default function App() {
     setLoading(false);
   };
 
+  const register = async ({ email, password }: any) => {
+    setLoading(true);
+    try {
+      const res = await request.post("/auth/register", {
+        email,
+        password,
+      });
+      setUser(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
+  };
+
+  const checkIsLoggedIn = () => {
+    if (user) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  };
+
+  useEffect(() => {
+    checkIsLoggedIn();
+  }, [user]);
+
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
@@ -52,36 +79,36 @@ export default function App() {
     return null;
   } else {
     return (
-      <View style={{ flex: 1 }}>
-        <RootLayout props={{ login, logout }}/>
-      </View>
+      <AuthProvider value={{isLoggedIn}}>
+        <View style={{ flex: 1 }}>
+          <RootLayout />
+        </View>
+      </AuthProvider>
     );
   }
 }
 
-function RootLayout({ props }: any) {
+function RootLayout() {
   return (
-    <AuthProvider value={{ login: props.login, logout: props.logout }}>
-      <Stack>
-        <Stack.Screen
-          name="index"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="(auth)"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="(dashboard)"
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack>
-    </AuthProvider>
+    <Stack>
+      <Stack.Screen
+        name="index"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="(auth)"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="(dashboard)"
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack>
   );
 }
