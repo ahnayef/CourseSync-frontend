@@ -8,6 +8,7 @@ import {
 import { Stack } from "expo-router";
 import { AuthProvider } from "@/context/authContext";
 import { request } from "@/utils/request";
+import { toastError } from "@/utils/toast";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -43,18 +44,33 @@ export default function App() {
     setLoading(false);
   };
 
-  const register = async ({ email, password }: any) => {
+  const register = async ({
+    role,
+    sid,
+    name,
+    email,
+    password,
+    department,
+    session,
+  }: any) => {
     setLoading(true);
     try {
-      const res = await request.post("/auth/register", {
-        email,
+      const res = await request.post("/users/register", {
+        role,
+        sid: sid || null,
+        name,
+        email: email || null,
         password,
+        department,
+        session: session || null,
       });
-      setUser(res.data);
-    } catch (error) {
-      console.error(error);
+      console.log(res);
+      // setUser(res.data);
+    } catch (error: any) {
+      toastError(error.response?.data || error.message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const checkIsLoggedIn = () => {
@@ -80,7 +96,7 @@ export default function App() {
     return null;
   } else {
     return (
-      <AuthProvider value={{isLoggedIn, login, register}}>
+      <AuthProvider value={{ isLoggedIn, login, register }}>
         <View style={{ flex: 1 }}>
           <RootLayout />
         </View>

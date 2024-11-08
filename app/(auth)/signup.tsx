@@ -1,34 +1,52 @@
 import { View, Text, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormInput from "../components/FormInput/FormInput";
 import Cbutton from "../components/Cbutton/Cbutton";
 import { Href, router } from "expo-router";
+import AuthContext from "@/context/authContext";
 
 const Signup = () => {
-  const [formState, setFormState] = useState({
-    sid: "",
+  const { register } = useContext(AuthContext);
+
+  type FormState = {
+    sid: string | null;
+    name: string;
+    email: string | null;
+    password: string;
+    department: string;
+    session: string | null;
+    role: string;
+  };
+
+  const [formState, setFormState] = useState<FormState>({
+    sid: null,
     name: "",
-    email: "",
+    email: null,
     password: "",
     department: "",
-    session: "",
+    session: null,
     role: "",
   });
 
   const handleSubmit = () => {
     if (formState.role === "Teacher") {
-      setFormState({ ...formState, sid: "" });
-      setFormState({ ...formState, session: "" });
+      setFormState({ ...formState, sid: null });
+      setFormState({ ...formState, session: null });
       if (
         formState.email &&
         formState.name &&
         formState.department &&
         formState.password
       ) {
-        console.log(formState);
-        router.navigate("/dashboard" as Href);
+        register({
+          email: formState.email,
+          name: formState.name,
+          department: formState.department,
+          password: formState.password,
+          role: formState.role,
+        });
       } else {
         alert("Please fill all the fields");
       }
@@ -41,8 +59,16 @@ const Signup = () => {
         formState.session &&
         formState.password
       ) {
-        console.log(formState);
-        router.navigate("/dashboard" as Href);
+        register({
+          sid: formState.sid,
+          name: formState.name,
+          department: formState.department,
+          session: formState.session,
+          password: formState.password,
+          role: formState.role,
+        });
+        // console.log(formState);
+        // router.navigate("/dashboard" as Href);
       } else {
         alert("Please fill all the fields");
       }
@@ -70,7 +96,7 @@ const Signup = () => {
           {formState.role === "Teacher" ? (
             <>
               <FormInput
-                value={formState.email}
+                value={formState.email || ""}
                 title="Email"
                 onChangeFn={(e: any) =>
                   setFormState({ ...formState, email: e })
@@ -80,12 +106,12 @@ const Signup = () => {
           ) : formState.role === "Student" || formState.role === "CR" ? (
             <>
               <FormInput
-                value={formState.sid}
+                value={formState.sid || ""}
                 title="Student ID"
                 onChangeFn={(e: any) => setFormState({ ...formState, sid: e })}
               />
               <FormInput
-                value={formState.session}
+                value={formState.session || ""}
                 title="Session"
                 onChangeFn={(e: any) =>
                   setFormState({ ...formState, session: e })

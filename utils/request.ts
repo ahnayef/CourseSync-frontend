@@ -2,7 +2,7 @@
 
 import axios, { AxiosResponse } from 'axios';
 
-const api = process.env.EXPO_PUBLIC_API_URL;
+const api = `${process.env.EXPO_PUBLIC_API_URL}/api`;
 
 type RequestData = Record<string, any>;
 
@@ -14,6 +14,7 @@ const getRequest = async (endpoint: string): Promise<AxiosResponse<any>> => {
 
 // Use like this: login: (data: any) => request.post('/auth/login', data),
 const postRequest = async (endpoint: string, data: RequestData): Promise<AxiosResponse<any>> => {
+  console.log(`${api}${endpoint}`);
   const response = await axios.post(`${api}${endpoint}`, data, {
     headers: {
       "Content-Type": "application/json",
