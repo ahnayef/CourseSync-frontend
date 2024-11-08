@@ -18,11 +18,12 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const login = async ({ email, password }: any) => {
+  const login = async ({ role, identification, password }: any) => {
     setLoading(true);
     try {
-      const res = await request.post("/auth/login", {
-        email,
+      const res = await request.post("/users/login", {
+        role,
+        identification,
         password,
       });
       setUser(res.data);
@@ -79,7 +80,7 @@ export default function App() {
     return null;
   } else {
     return (
-      <AuthProvider value={{isLoggedIn}}>
+      <AuthProvider value={{isLoggedIn, login, register}}>
         <View style={{ flex: 1 }}>
           <RootLayout />
         </View>

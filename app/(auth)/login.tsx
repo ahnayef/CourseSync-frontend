@@ -1,10 +1,11 @@
 import { View, Text, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormInput from "../components/FormInput/FormInput";
 import Cbutton from "../components/Cbutton/Cbutton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Href, router } from "expo-router";
+import AuthContext from "@/context/authContext";
 
 export default function Login() {
   const [formState, setFormState] = useState({
@@ -14,12 +15,29 @@ export default function Login() {
     role: "",
   });
 
+  const { login } = useContext(AuthContext);
+
   const handleSubmit = () => {
-    if (formState.email && formState.password) {
-      console.log(formState);
-      router.navigate("/dashboard" as Href);
-    } else {
-      alert("Please fill all the fields");
+    if (
+      formState.role === "Teacher" &&
+      formState.email !== "" &&
+      formState.password !== ""
+    ) {
+      login({
+        role: formState.role,
+        identification: formState.email,
+        password: formState.password,
+      });
+    } else if (
+      (formState.role === "Student" || formState.role === "CR") &&
+      formState.sid !== "" &&
+      formState.password !== ""
+    ) {
+      login({
+        role: formState.role,
+        identification: formState.sid,
+        password: formState.password,
+      });
     }
   };
 

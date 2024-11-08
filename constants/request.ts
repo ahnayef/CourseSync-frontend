@@ -1,41 +1,57 @@
 // DO NOT MODIFY THIS FILE, if it's really necessary, contact @AHNayef first. Or just create an issue. Thanks!
 
 import axios, { AxiosResponse } from 'axios';
+import { ToastAndroid } from 'react-native';
 
-const api = process.env.EXPO_PUBLIC_API_URL;
+const api = `${process.env.EXPO_PUBLIC_API_URL}/api`;
 
 type RequestData = Record<string, any>;
 
-// Use like this:   getUser: (userId: string) => request.get(`/users/${userId}`),
 const getRequest = async (endpoint: string): Promise<AxiosResponse<any>> => {
-  const response = await axios.get(`${api}${endpoint}`);
-  return response.data;
+  const response = await axios.get(`${api}${endpoint}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      toastError(error.message);
+      throw error;
+    });
+  return response;
 };
 
-// Use like this: login: (data: any) => request.post('/auth/login', data),
 const postRequest = async (endpoint: string, data: RequestData): Promise<AxiosResponse<any>> => {
+  console.log(`${api}${endpoint}`, data);
   const response = await axios.post(`${api}${endpoint}`, data, {
     headers: {
       "Content-Type": "application/json",
     },
+  }).then((response) => response.data).catch((error) => {
+    toastError(error.response.data);
+    console.log(error.response.data);
   });
-  return response.data;
+  return response;
 };
 
-// Use like this: updateUser: (userId: string, data: any) => request.put(`/users/${userId}`, data),
 const putRequest = async (endpoint: string, data: RequestData): Promise<AxiosResponse<any>> => {
   const response = await axios.put(`${api}${endpoint}`, data, {
     headers: {
       "Content-Type": "application/json",
     },
-  });
-  return response.data;
+  })
+    .then((response) => response.data)
+    .catch((error) => {
+      toastError(error.message);
+      throw error;
+    });
+  return response;
 };
 
-// Use like this: deleteUser: (userId: string) => request.delete(`/users/${userId}`),
 const deleteRequest = async (endpoint: string): Promise<AxiosResponse<any>> => {
-  const response = await axios.delete(`${api}${endpoint}`);
-  return response.data;
+  const response = await axios.delete(`${api}${endpoint}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      toastError(error.message);
+      throw error;
+    });
+  return response;
 };
 
 export const request = {
@@ -44,3 +60,11 @@ export const request = {
   put: putRequest,
   delete: deleteRequest,
 };
+
+function toastError(message: string) {
+  ToastAndroid.showWithGravity(
+    message,
+    ToastAndroid.LONG,
+    ToastAndroid.CENTER
+  );
+}
