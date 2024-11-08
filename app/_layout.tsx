@@ -9,6 +9,7 @@ import { Stack } from "expo-router";
 import { AuthProvider } from "@/context/authContext";
 import { request } from "@/utils/request";
 import { toastError } from "@/utils/toast";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -39,7 +40,7 @@ export default function App() {
         department,
         session: session || null,
       });
-      console.log(res);
+      console.log(res.data);
       // setUser(res.data);
     } catch (error: any) {
       toastError(error.response?.data || error.message);
@@ -56,8 +57,10 @@ export default function App() {
         identification,
         password,
       });
-      console.log(res.data);
-      setUser(res.data);
+      const { user, token } = res.data;
+      AsyncStorage.setItem("token", token);
+      AsyncStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
     } catch (error: any) {
       toastError(error.response?.data || error.message);
     } finally {
@@ -68,19 +71,32 @@ export default function App() {
   const logout = async () => {
     setLoading(true);
     try {
+      await AsyncStorage.removeItem("token");
+      await AsyncStorage.removeItem("user");
       setUser(null);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      toastError(error.response?.data || error.message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  const checkIsLoggedIn = () => {
-    if (user) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+  const checkIsLoggedIn = async () => {
+    setLoading(true);
+    await AsyncStorage.getItem("token")
+      .then((token) => {
+        if (token) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -98,7 +114,7 @@ export default function App() {
     return null;
   } else {
     return (
-      <AuthProvider value={{ isLoggedIn, login, register }}>
+      <AuthProvider value={{ isLoading, isLoggedIn, login, register, logout }}>
         <View style={{ flex: 1 }}>
           <RootLayout />
         </View>

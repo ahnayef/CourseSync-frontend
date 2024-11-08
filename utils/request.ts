@@ -1,12 +1,24 @@
 // DO NOT MODIFY THIS FILE, if it's really necessary, contact @AHNayef first. Or just create an issue. Thanks!
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { AxiosResponse } from 'axios';
 
 const api = `${process.env.EXPO_PUBLIC_API_URL}/api`;
 
 type RequestData = Record<string, any>;
 
-// Use like this:   getUser: (userId: string) => request.get(`/users/${userId}`),
+const setAuthToken = async () => {
+  const token = await AsyncStorage.getItem('token');
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete axios.defaults.headers.common['Authorization'];
+  }
+};
+
+setAuthToken();
+
+// Use like this: getUser: (userId: string) => request.get(`/users/${userId}`),
 const getRequest = async (endpoint: string): Promise<AxiosResponse<any>> => {
   const response = await axios.get(`${api}${endpoint}`);
   return response.data;
