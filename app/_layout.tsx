@@ -7,7 +7,7 @@ import {
 } from "@expo-google-fonts/noto-sans-bengali";
 import { Stack } from "expo-router";
 import { AuthProvider } from "@/context/authContext";
-import { request } from "@/constants/request";
+import { request } from "@/utils/request";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
