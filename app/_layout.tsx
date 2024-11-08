@@ -5,7 +5,7 @@ import {
   useFonts,
   NotoSansBengali_400Regular,
 } from "@expo-google-fonts/noto-sans-bengali";
-import { Stack } from "expo-router";
+import { Href, Redirect, router, Stack } from "expo-router";
 import { AuthProvider } from "@/context/authContext";
 import { request } from "@/utils/request";
 import { toastError } from "@/utils/toast";
@@ -58,21 +58,30 @@ export default function App() {
         password,
       });
       const { user, token } = res.data;
-      AsyncStorage.setItem("token", token);
-      AsyncStorage.setItem("user", JSON.stringify(user));
+
+      await Promise.all([
+        AsyncStorage.setItem("token", token),
+        AsyncStorage.setItem("user", JSON.stringify(user)),
+      ]);
+
       setUser(user);
+      setIsLoggedIn(true);
+      router.navigate("/dashboard" as Href);
     } catch (error: any) {
       toastError(error.response?.data || error.message);
     } finally {
       setLoading(false);
     }
   };
-
   const logout = async () => {
     setLoading(true);
     try {
-      await AsyncStorage.removeItem("token");
-      await AsyncStorage.removeItem("user");
+      await Promise.all([
+        AsyncStorage.removeItem("token"),
+        AsyncStorage.removeItem("user"),
+      ]);
+      setIsLoggedIn(false);
+      router.navigate("/" as Href);
       setUser(null);
     } catch (error: any) {
       toastError(error.response?.data || error.message);
@@ -99,9 +108,22 @@ export default function App() {
       });
   };
 
+  const getUser = async () => {
+    await AsyncStorage.getItem("user")
+      .then((user) => {
+        if (user) {
+          setUser(JSON.parse(user));
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   useEffect(() => {
     checkIsLoggedIn();
-  }, [user]);
+    getUser();
+  }, []);
 
   useEffect(() => {
     if (fontsLoaded) {
@@ -114,7 +136,9 @@ export default function App() {
     return null;
   } else {
     return (
-      <AuthProvider value={{ isLoading, isLoggedIn, login, register, logout }}>
+      <AuthProvider
+        value={{ isLoading, isLoggedIn, login, register, logout, user }}
+      >
         <View style={{ flex: 1 }}>
           <RootLayout />
         </View>

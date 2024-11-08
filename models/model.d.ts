@@ -6,7 +6,6 @@ export interface User {
     department: 'CSE' | 'EEE' | 'BBA' | 'LLB';
     session?: string;
     password: string;
-    token: string;
 }
 
 export interface AuthContext {

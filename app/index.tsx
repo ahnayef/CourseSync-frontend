@@ -1,13 +1,20 @@
 import { Image, Text, View } from "react-native";
-import { Href, router } from "expo-router";
+import { Href, Redirect, router } from "expo-router";
 import Cbutton from "./components/Cbutton/Cbutton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { logo } from "@/constants/assets";
+import { useContext } from "react";
+import AuthContext from "@/context/authContext";
 
 export default function Index() {
+  const { isLoggedIn } = useContext(AuthContext);
+  if (isLoggedIn) {
+    return <Redirect href="/dashboard" />;
+  }
+
   const handleRouter = (page: string) => {
     // router.replace("/login");
-    router.navigate(`/${page}` as Href)
+    router.navigate(`/${page}` as Href);
   };
 
   return (
@@ -19,7 +26,7 @@ export default function Index() {
         Bring order to your academic life, all in one place.
       </Text>
 
-      <View className="flex flex-col w-full py-10">
+      <View className="flex w-full flex-col py-10">
         <Cbutton
           title="Login"
           styles="rounded-sm m-4"

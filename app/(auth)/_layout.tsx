@@ -1,8 +1,13 @@
 import { View, Text } from "react-native";
-import React from "react";
-import { Stack } from "expo-router";
+import React, { useContext } from "react";
+import { Redirect, Stack } from "expo-router";
+import AuthContext from "@/context/authContext";
 
 const AuthLayout = () => {
+  const { isLoggedIn } = useContext(AuthContext);
+  if (isLoggedIn) {
+    return <Redirect href="/dashboard" />;
+  }
   return (
     <Stack>
       <Stack.Screen
