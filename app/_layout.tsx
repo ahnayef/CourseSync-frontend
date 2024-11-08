@@ -19,31 +19,6 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const login = async ({ role, identification, password }: any) => {
-    setLoading(true);
-    try {
-      const res = await request.post("/users/login", {
-        role,
-        identification,
-        password,
-      });
-      setUser(res.data);
-    } catch (error) {
-      console.error(error);
-    }
-    setLoading(false);
-  };
-
-  const logout = async () => {
-    setLoading(true);
-    try {
-      setUser(null);
-    } catch (error) {
-      console.error(error);
-    }
-    setLoading(false);
-  };
-
   const register = async ({
     role,
     sid,
@@ -71,6 +46,33 @@ export default function App() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const login = async ({ role, identification, password }: any) => {
+    setLoading(true);
+    try {
+      const res = await request.post("/users/login", {
+        role,
+        identification,
+        password,
+      });
+      console.log(res.data);
+      setUser(res.data);
+    } catch (error: any) {
+      toastError(error.response?.data || error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const logout = async () => {
+    setLoading(true);
+    try {
+      setUser(null);
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
   };
 
   const checkIsLoggedIn = () => {
