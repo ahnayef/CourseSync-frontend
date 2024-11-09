@@ -5,7 +5,6 @@ export interface User {
     email?: string;
     department: 'CSE' | 'EEE' | 'BBA' | 'LLB';
     session?: string;
-    password: string;
 }
 
 export interface AuthContext {
