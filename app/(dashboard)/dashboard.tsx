@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
@@ -10,16 +10,9 @@ import {
   scheduleIcon,
 } from "@/constants/icons";
 import AuthContext from "@/context/authContext";
-import { Redirect } from "expo-router";
 
 const Dashboard = () => {
-  const { isLoggedIn, user, logout } = useContext(AuthContext);
-
-  console.log('Dashboard',isLoggedIn);
-
-  if (!isLoggedIn) {
-    return <Redirect href="/login" />;
-  }
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <SafeAreaView>
