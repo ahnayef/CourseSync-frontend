@@ -1,10 +1,11 @@
 import { Image, Text, View } from "react-native";
-import { Href, Redirect, router } from "expo-router";
+import { Redirect } from "expo-router";
 import Cbutton from "./components/Cbutton/Cbutton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { logo } from "@/constants/assets";
 import { useContext } from "react";
 import AuthContext from "@/context/authContext";
+import { handleNavigate } from "@/utils/navigate";
 
 export default function Index() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -12,9 +13,6 @@ export default function Index() {
     return <Redirect href="/dashboard" />;
   }
 
-  const handleRouter = (page: string) => {
-    router.navigate(`/${page}` as Href);
-  };
 
   return (
     <GestureHandlerRootView className="flex-1 items-center justify-center bg-white font-notoSB">
@@ -29,13 +27,13 @@ export default function Index() {
         <Cbutton
           title="Login"
           styles="rounded-sm m-4"
-          onclickFn={() => handleRouter("login")}
+          onclickFn={() => handleNavigate("login")}
         />
 
         <Cbutton
           title="Signup"
           styles="rounded-sm m-4"
-          onclickFn={() => handleRouter("signup")}
+          onclickFn={() => handleNavigate("signup")}
         />
       </View>
     </GestureHandlerRootView>
