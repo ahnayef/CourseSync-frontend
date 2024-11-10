@@ -13,7 +13,6 @@ export default function Index() {
   }
 
   const handleRouter = (page: string) => {
-    // router.replace("/login");
     router.navigate(`/${page}` as Href);
   };
 

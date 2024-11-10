@@ -40,8 +40,17 @@ export default function App() {
         department,
         session: session || null,
       });
-      console.log(res.data);
-      // setUser(res.data);
+      const { user, token } = res.data;
+
+      await Promise.all([
+        AsyncStorage.setItem("token", token),
+        AsyncStorage.setItem("user", JSON.stringify(user)),
+      ]);
+
+      setIsLoggedIn(true);
+      setUser(user);
+      router.navigate("/dashboard" as Href);
+
     } catch (error: any) {
       toastError(error.response?.data || error.message);
     } finally {
@@ -108,7 +117,7 @@ export default function App() {
       });
   };
 
-  const getUser = async () => {
+  const getAndSetUser = async () => {
     await AsyncStorage.getItem("user")
       .then((user) => {
         if (user) {
@@ -122,7 +131,7 @@ export default function App() {
 
   useEffect(() => {
     checkIsLoggedIn();
-    getUser();
+    getAndSetUser();
   }, []);
 
   useEffect(() => {
