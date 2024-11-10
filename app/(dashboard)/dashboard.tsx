@@ -10,6 +10,7 @@ import {
   scheduleIcon,
 } from "@/constants/icons";
 import AuthContext from "@/context/authContext";
+import { handleNavigate } from "@/utils/navigate";
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -46,7 +47,7 @@ const Dashboard = () => {
 
             <TouchableOpacity
               className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
-              onPress={() => alert("Under Construction")}
+              onPress={() => handleNavigate("cources")}
             >
               <Image source={courseIcon} className="h-5 w-5" />
               <Text className="ml-2 text-white">Cources</Text>

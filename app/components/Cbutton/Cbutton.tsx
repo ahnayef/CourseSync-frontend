@@ -11,13 +11,13 @@ const Cbutton = ({
   styles,
 }: {
   title: string;
-  onclickFn: Function;
+  onclickFn?: Function;
   styles?: string;
 }) => {
   return (
     <TouchableOpacity
-      onPressIn={() => onclickFn()}
-      className={`flex justify-center items-center bg-primary px-5 py-2 text-center text-white ${styles}`}
+      onPressIn={() => onclickFn && onclickFn()}
+      className={`flex items-center justify-center bg-primary px-5 py-2 text-center text-white ${styles}`}
     >
       <Text className="text-white">{title}</Text>
     </TouchableOpacity>

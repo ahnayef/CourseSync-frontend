@@ -20,6 +20,12 @@ const DashboardLayout = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="cources"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </>
   );
