@@ -1,6 +1,6 @@
 import { ToastAndroid } from "react-native";
 
-export const toastError = (message: string) => {
+export const toast = (message: string) => {
     ToastAndroid.showWithGravity(
         message,
         ToastAndroid.LONG,

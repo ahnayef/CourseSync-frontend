@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormInput from "../components/FormInput/FormInput";
 import Cbutton from "../components/Cbutton/Cbutton";
-import { toastError } from "@/utils/toast";
+import { toast } from "@/utils/toast";
 import { request } from "@/utils/request";
 import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
@@ -31,31 +31,18 @@ const AddCourse = () => {
       formState.credit !== ""
     ) {
       setLoading(true);
-      // request
-      //   .post("/courses/create", formState)
-      //   .then((res) => {
-      //     console.log(res);
-      //     setLoading(false);
-      //     handleNavigate("./cources");
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //     toastError(err.response?.data || err.message);
-      //     setLoading(false);
-      //   });
-
       try {
         const res = await request.post("/courses/create", formState);
-        console.log(res);
         setLoading(false);
+        toast(res as any);
         handleNavigate("./cources");
       } catch (error: any) {
-        toastError(error.response?.data || error.message);
+        toast(error.response?.data || error.message);
       } finally {
         setLoading(false);
       }
     } else {
-      toastError("Please fill all fields");
+      toast("Please fill all fields");
     }
   };
 

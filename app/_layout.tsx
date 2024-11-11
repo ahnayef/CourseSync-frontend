@@ -8,7 +8,7 @@ import {
 import { Href, Redirect, router, Stack } from "expo-router";
 import { GlobalProvider } from "@/context/globalContext";
 import { request } from "@/utils/request";
-import { toastError } from "@/utils/toast";
+import { toast } from "@/utils/toast";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
@@ -52,7 +52,7 @@ export default function App() {
       router.navigate("/dashboard" as Href);
 
     } catch (error: any) {
-      toastError(error.response?.data || error.message);
+      toast(error.response?.data || error.message);
     } finally {
       setLoading(false);
     }
@@ -77,7 +77,7 @@ export default function App() {
       setIsLoggedIn(true);
       router.navigate("/dashboard" as Href);
     } catch (error: any) {
-      toastError(error.response?.data || error.message);
+      toast(error.response?.data || error.message);
     } finally {
       setLoading(false);
     }
@@ -93,7 +93,7 @@ export default function App() {
       router.navigate("/" as Href);
       setUser(null);
     } catch (error: any) {
-      toastError(error.response?.data || error.message);
+      toast(error.response?.data || error.message);
     } finally {
       setLoading(false);
     }
