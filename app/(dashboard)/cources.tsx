@@ -1,15 +1,32 @@
 import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { addIcon } from "@/constants/icons";
 import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
+import { request } from "@/utils/request";
+import { toastError } from "@/utils/toast";
 
 const Cources = () => {
   const { user } = useContext(GlobalContext);
 
+  const [courses, setCourses] = useState([]);
+
+  const getCourse = async () => {
+    try {
+      const res = await request.get("/courses/getAll");
+      setCourses(res.data);
+      console.log(res.data);
+    } catch (error: any) {
+      toastError(error.response?.data || error.message);
+    }
+  };
+
+  useEffect(() => {
+    getCourse();
+  }, []);
 
   let demoCourses = [
     {
@@ -81,12 +98,8 @@ const Cources = () => {
           {item.name}
         </Text>
         <View className="mt-3 space-y-2">
-          <Text className="text-sm font-medium">
-            Course Code: {item.code}
-          </Text>
-          <Text className="text-xs">
-            Department: {item.department}
-          </Text>
+          <Text className="text-sm font-medium">Course Code: {item.code}</Text>
+          <Text className="text-xs">Department: {item.department}</Text>
           <Text className="text-xs">Session: {item.session}</Text>
         </View>
       </TouchableOpacity>
@@ -98,11 +111,11 @@ const Cources = () => {
       <GestureHandlerRootView className="flex-col items-center justify-center py-5 align-middle">
         <FlatList
           className="flex w-full px-3 text-center"
-          data={demoCourses}
-          renderItem={({ item }) => (
+          data={courses}
+          renderItem={({ item }: any) => (
             <View
               className="flex-col items-center justify-center"
-              key={item.id}
+              key={item.code}
             >
               {renderCourse(item)}
             </View>
@@ -114,7 +127,7 @@ const Cources = () => {
               {user.role === "teacher" && (
                 <TouchableOpacity
                   className="my-5 flex w-2/5 flex-row items-center justify-center rounded bg-primary p-3 text-center text-xl"
-                  onPress={() => handleNavigate('./addCourse')}
+                  onPress={() => handleNavigate("./addCourse")}
                 >
                   <Image source={addIcon} className="h-5 w-5" />
                   <Text className="ml-2 text-white">Add Cource</Text>

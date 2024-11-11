@@ -18,6 +18,7 @@ const AddCourse = () => {
     description: "",
     department: "",
     session: "",
+    credit: "",
   });
 
   const handleSubmit = () => {
@@ -29,16 +30,25 @@ const AddCourse = () => {
       formState.session !== ""
     ) {
       setLoading(true);
-      request.post("/courses/addCourse", formState).then((res) => {
-        if (res.data.success) {
-          toastError("Course added successfully");
-          handleNavigate("./cources");
+      request
+        .post("/courses/create", formState)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data) {
+            toastError("Course added successfully");
+            handleNavigate("./cources");
+            setLoading(false);
+          } else {
+            console.log();
+            toastError(res.data.message);
+            setLoading(false);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          toastError(err.response?.data || err.message);
           setLoading(false);
-        } else {
-          toastError(res.data.message);
-          setLoading(false);
-        }
-      });
+        });
     } else {
       toastError("Please fill all fields");
     }
@@ -67,6 +77,14 @@ const AddCourse = () => {
               onChangeFn={(e: any) =>
                 setFormState({ ...formState, description: e })
               }
+            />
+
+            <FormInput
+              value={formState.credit}
+              title="Credit"
+              type="select"
+              selectItems={["3", "1.5"]}
+              onChangeFn={(e: any) => setFormState({ ...formState, credit: e })}
             />
 
             <FormInput
