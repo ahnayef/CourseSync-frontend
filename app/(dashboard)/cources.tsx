@@ -1,13 +1,13 @@
 import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { addIcon } from "@/constants/icons";
 import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
 import { request } from "@/utils/request";
 import { toastError } from "@/utils/toast";
+import { useFocusEffect } from "expo-router";
 
 const Cources = () => {
   const { user } = useContext(GlobalContext);
@@ -16,6 +16,7 @@ const Cources = () => {
 
   const getCourse = async () => {
     try {
+      console.log("getCourse");
       const res = await request.get("/courses/getAll");
       setCourses(res.data);
       console.log(res.data);
@@ -27,6 +28,12 @@ const Cources = () => {
   useEffect(() => {
     getCourse();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getCourse();
+    }, []),
+  );
 
   let demoCourses = [
     {

@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import React, { useContext, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -21,34 +21,39 @@ const AddCourse = () => {
     credit: "",
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (
       formState.name !== "" &&
       formState.code !== "" &&
       formState.description !== "" &&
       formState.department !== "" &&
-      formState.session !== ""
+      formState.session !== "" &&
+      formState.credit !== ""
     ) {
       setLoading(true);
-      request
-        .post("/courses/create", formState)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data) {
-            toastError("Course added successfully");
-            handleNavigate("./cources");
-            setLoading(false);
-          } else {
-            console.log();
-            toastError(res.data.message);
-            setLoading(false);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          toastError(err.response?.data || err.message);
-          setLoading(false);
-        });
+      // request
+      //   .post("/courses/create", formState)
+      //   .then((res) => {
+      //     console.log(res);
+      //     setLoading(false);
+      //     handleNavigate("./cources");
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     toastError(err.response?.data || err.message);
+      //     setLoading(false);
+      //   });
+
+      try {
+        const res = await request.post("/courses/create", formState);
+        console.log(res);
+        setLoading(false);
+        handleNavigate("./cources");
+      } catch (error: any) {
+        toastError(error.response?.data || error.message);
+      } finally {
+        setLoading(false);
+      }
     } else {
       toastError("Please fill all fields");
     }
