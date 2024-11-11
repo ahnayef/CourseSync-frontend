@@ -5,10 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import FormInput from "../components/FormInput/FormInput";
 import Cbutton from "../components/Cbutton/Cbutton";
 import { Href, router } from "expo-router";
-import AuthContext from "@/context/authContext";
+import GlobalContext from "@/context/globalContext";
 
 const Signup = () => {
-  const { register } = useContext(AuthContext);
+  const { register } = useContext(GlobalContext);
 
   type FormState = {
     sid: string | null;
@@ -91,6 +91,7 @@ const Signup = () => {
             title="Role"
             onChangeFn={(e: any) => setFormState({ ...formState, role: e })}
             type="select"
+            selectItems={["Teacher", "Student", "CR"]}
           />
 
           {formState.role === "Teacher" ? (

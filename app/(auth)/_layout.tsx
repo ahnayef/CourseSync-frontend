@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 import React, { useContext } from "react";
 import { Redirect, Stack } from "expo-router";
-import AuthContext from "@/context/authContext";
+import GlobalContext from "@/context/globalContext";
 
 const AuthLayout = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(GlobalContext);
   if (isLoggedIn) {
     return <Redirect href="/dashboard" />;
   }

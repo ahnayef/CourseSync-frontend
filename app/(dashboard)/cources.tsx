@@ -4,14 +4,12 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { addIcon } from "@/constants/icons";
-import AuthContext from "@/context/authContext";
+import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
 
 const Cources = () => {
-  const { user } = useContext(AuthContext);
-  const handleAddCource = () => {
-    alert("Under Construction");
-  };
+  const { user } = useContext(GlobalContext);
+
 
   let demoCourses = [
     {
@@ -116,7 +114,7 @@ const Cources = () => {
               {user.role === "teacher" && (
                 <TouchableOpacity
                   className="my-5 flex w-2/5 flex-row items-center justify-center rounded bg-primary p-3 text-center text-xl"
-                  onPress={() => handleAddCource()}
+                  onPress={() => handleNavigate('./addCourse')}
                 >
                   <Image source={addIcon} className="h-5 w-5" />
                   <Text className="ml-2 text-white">Add Cource</Text>

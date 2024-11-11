@@ -5,7 +5,7 @@ import FormInput from "../components/FormInput/FormInput";
 import Cbutton from "../components/Cbutton/Cbutton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Href, router } from "expo-router";
-import AuthContext from "@/context/authContext";
+import GlobalContext from "@/context/globalContext";
 
 export default function Login() {
   const [formState, setFormState] = useState({
@@ -15,7 +15,7 @@ export default function Login() {
     role: "",
   });
 
-  const { login } = useContext(AuthContext);
+  const { login } = useContext(GlobalContext);
 
   const handleSubmit = () => {
     if (
@@ -52,6 +52,7 @@ export default function Login() {
               title="Role"
               onChangeFn={(e: any) => setFormState({ ...formState, role: e })}
               type="select"
+              selectItems={["Teacher", "Student", "CR"]}
             />
 
             {formState.role === "Teacher" ? (

@@ -6,7 +6,7 @@ import {
   NotoSansBengali_400Regular,
 } from "@expo-google-fonts/noto-sans-bengali";
 import { Href, Redirect, router, Stack } from "expo-router";
-import { AuthProvider } from "@/context/authContext";
+import { GlobalProvider } from "@/context/globalContext";
 import { request } from "@/utils/request";
 import { toastError } from "@/utils/toast";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -145,13 +145,13 @@ export default function App() {
     return null;
   } else {
     return (
-      <AuthProvider
-        value={{ isLoading, isLoggedIn, login, register, logout, user }}
+      <GlobalProvider
+        value={{ isLoading, setLoading, isLoggedIn, login, register, logout, user }}
       >
         <View style={{ flex: 1 }}>
           <RootLayout />
         </View>
-      </AuthProvider>
+      </GlobalProvider>
     );
   }
 }

@@ -9,11 +9,11 @@ import {
   powerIcon,
   scheduleIcon,
 } from "@/constants/icons";
-import AuthContext from "@/context/authContext";
+import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
 
 const Dashboard = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = useContext(GlobalContext);
 
   return (
     <SafeAreaView>

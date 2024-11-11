@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
 import { Redirect, Stack } from "expo-router";
-import AuthContext from "@/context/authContext";
+import GlobalContext from "@/context/globalContext";
 
 const DashboardLayout = () => {
-  const { isLoggedIn } = useContext(AuthContext);
-
-  console.log("Dashboard", isLoggedIn);
+  const { isLoggedIn } = useContext(GlobalContext);
 
   if (!isLoggedIn) {
     return <Redirect href="/login" />;
@@ -24,6 +22,14 @@ const DashboardLayout = () => {
           name="cources"
           options={{
             headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="addCourse"
+          options={{
+            animation: "slide_from_bottom",
+            contentStyle: { backgroundColor: "white" },
+            title: "Add Course",
           }}
         />
       </Stack>

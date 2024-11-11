@@ -4,11 +4,11 @@ import Cbutton from "./components/Cbutton/Cbutton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { logo } from "@/constants/assets";
 import { useContext } from "react";
-import AuthContext from "@/context/authContext";
+import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
 
 export default function Index() {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(GlobalContext);
   if (isLoggedIn) {
     return <Redirect href="/dashboard" />;
   }
