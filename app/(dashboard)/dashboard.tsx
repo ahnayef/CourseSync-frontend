@@ -20,14 +20,11 @@ const Dashboard = () => {
       <ScrollView>
         <GestureHandlerRootView className="h-screen items-center justify-center align-middle">
           <View className="flex items-center justify-center py-10 text-center align-middle">
-            <Text className="text-2xl text-primary">Dashboard</Text>
-            <Text className="">
-              CourseSync |&nbsp;
-              {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
-              &nbsp;dashboard
+            <Text className="text-2xl text-primary">
+              {user.role.charAt(0).toUpperCase() + user.role.slice(1)}'s dashboard
             </Text>
 
-            <Text className="py-5 text-xl">
+            <Text className="py-2 text-lg">
               Welcome back&nbsp;
               <Text className="text-primary">{user.name}!</Text>
             </Text>
