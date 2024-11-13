@@ -26,6 +26,10 @@ const Dashboard = () => {
               {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
               &nbsp;dashboard
             </Text>
+
+            <Text className="py-5 text-xl">
+              Welcome back<Text className="text-primary">{user.name}!</Text>
+            </Text>
           </View>
 
           <View className="flex w-full flex-col items-center justify-center gap-5">
