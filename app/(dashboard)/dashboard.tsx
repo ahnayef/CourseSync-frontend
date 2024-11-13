@@ -47,7 +47,7 @@ const Dashboard = () => {
 
             <TouchableOpacity
               className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
-              onPress={() => handleNavigate("cources")}
+              onPress={() => handleNavigate("courses")}
             >
               <Image source={courseIcon} className="h-5 w-5" />
               <Text className="ml-2 text-white">Cources</Text>

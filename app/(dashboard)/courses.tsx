@@ -129,7 +129,7 @@ const Cources = () => {
   const renderCourse = (item: any) => {
     return (
       <TouchableOpacity
-        onPress={() => handleNavigate(`/cources/${item.id}`)}
+        onPress={() => handleNavigate(`/course/${item.id}`)}
         activeOpacity={0.7}
         className="relative my-4 w-full flex-col rounded-lg border border-primary bg-white p-5 shadow-sm transition-shadow duration-300 ease-in-out hover:shadow-md"
       >

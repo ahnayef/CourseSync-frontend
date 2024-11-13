@@ -19,7 +19,7 @@ const DashboardLayout = () => {
           }}
         />
         <Stack.Screen
-          name="cources"
+          name="courses"
           options={{
             headerShown: false,
           }}
@@ -32,6 +32,12 @@ const DashboardLayout = () => {
             title: "Add Course",
           }}
         />
+          <Stack.Screen
+            name="course/[id]"
+            options={{
+              headerShown: false,
+            }}
+          />
 
         <Stack.Screen
           name="notice"
