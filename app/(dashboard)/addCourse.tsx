@@ -50,7 +50,7 @@ const AddCourse = () => {
     <ScrollView>
       <SafeAreaView>
         <GestureHandlerRootView className="flex-1 flex-col items-center justify-center bg-white font-notoSB">
-          <View className="w-full px-10">
+          <View className="w-full p-10">
             <FormInput
               value={formState.name}
               title="Course Name"
