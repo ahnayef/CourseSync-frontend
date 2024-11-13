@@ -28,7 +28,8 @@ const Dashboard = () => {
             </Text>
 
             <Text className="py-5 text-xl">
-              Welcome back<Text className="text-primary">{user.name}!</Text>
+              Welcome back&nbsp;
+              <Text className="text-primary">{user.name}!</Text>
             </Text>
           </View>
 
