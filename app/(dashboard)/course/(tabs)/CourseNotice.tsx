@@ -72,7 +72,6 @@ const CourseNotice = ({ notices }: any) => {
   ];
 
   const renderNotice = ({ item }: any) => {
-    console.log(item);
     return (
       <View className="m-4 w-full max-w-md rounded-2xl border-l-8 border-primary bg-white p-4 shadow-2xl">
         <Text className="mb-2 text-lg font-semibold text-gray-900">
