@@ -9,7 +9,6 @@ type RequestData = Record<string, any>;
 
 const setAuthToken = async () => {
   const token = await AsyncStorage.getItem('token');
-  console.log(token);
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   } else {
