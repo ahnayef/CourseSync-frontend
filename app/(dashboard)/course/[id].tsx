@@ -11,8 +11,9 @@ import CoursePeople from "./(tabs)/CoursePeople";
 
 const CourseDetailsMain = () => {
   const { id } = useLocalSearchParams();
-
   const [selectedTab, setSelectedTab] = useState("details");
+
+  
 
   return (
     <SafeAreaView>

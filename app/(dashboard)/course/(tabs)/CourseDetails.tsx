@@ -5,7 +5,7 @@ import {
   ScrollView,
 } from "react-native-gesture-handler";
 
-const CourseDetails = () => {
+const CourseDetails = ({ details }: any) => {
   return (
     <ScrollView>
       <GestureHandlerRootView className="flex h-full flex-col items-center justify-center py-5 align-middle">
