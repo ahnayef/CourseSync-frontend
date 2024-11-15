@@ -36,6 +36,15 @@ const FormInput = ({
               <Picker.Item key={index} label={item} value={item} />
             ))}
           </Picker>
+        ) : type === "textarea" ? (
+          <TextInput
+            value={value}
+            onChangeText={(e) => onChangeFn(e)}
+            placeholder={`Enter your ${title}`}
+            multiline
+            numberOfLines={4}
+            style={{ textAlignVertical: "top" }}
+          />
         ) : (
           <TextInput
             value={value}
@@ -47,6 +56,16 @@ const FormInput = ({
         )}
       </View>
     </View>
+    // {type === "textarea" && (
+    //   <TextInput
+    //     value={value}
+    //     onChangeText={(e) => onChangeFn(e)}
+    //     placeholder={`Enter your ${title}`}
+    //     multiline
+    //     numberOfLines={4}
+    //     style={{ textAlignVertical: "top" }}
+    //   />
+    // )}
   );
 };
 

@@ -47,8 +47,8 @@ export default function App() {
         AsyncStorage.setItem("user", JSON.stringify(user)),
       ]);
 
-      setIsLoggedIn(true);
       setUser(user);
+      setIsLoggedIn(true);
       router.navigate("/dashboard" as Href);
 
     } catch (error: any) {

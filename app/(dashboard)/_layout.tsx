@@ -32,17 +32,26 @@ const DashboardLayout = () => {
             title: "Add Course",
           }}
         />
-          <Stack.Screen
-            name="course/[id]"
-            options={{
-              headerShown: false,
-            }}
-          />
-
         <Stack.Screen
-          name="notice"
+          name="course/[id]"
           options={{
             headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="notices"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="createNotice"
+          options={{
+            animation: "slide_from_bottom",
+            contentStyle: { backgroundColor: "white" },
+            title: "Create Notice",
           }}
         />
       </Stack>
