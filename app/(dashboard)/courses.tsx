@@ -168,6 +168,11 @@ const Cources = () => {
               {renderCourse(item)}
             </View>
           )}
+          ListEmptyComponent={() => (
+            <View className="flex w-full flex-col items-center justify-center text-center">
+              <Text className="text-red-500">No cources yet</Text>
+            </View>
+          )}
           ListHeaderComponent={() => (
             <View className="flex w-full flex-col items-center justify-center text-center">
               <Text className="text-xl text-primary">Cources</Text>
