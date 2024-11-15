@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -10,13 +10,13 @@ import CourseDisscussion from "./(tabs)/CourseDisscussion";
 import CoursePeople from "./(tabs)/CoursePeople";
 
 const CourseDetailsMain = () => {
-const { id } = useLocalSearchParams();
+  const { id } = useLocalSearchParams();
 
   const [selectedTab, setSelectedTab] = useState("details");
 
   return (
     <SafeAreaView>
-      <GestureHandlerRootView className="flex h-full flex-col items-center justify-center py-5 align-middle">
+      <GestureHandlerRootView className="h-full">
         <View>
           {selectedTab === "details" && <CourseDetails />}
           {selectedTab === "notice" && <CourseNotice />}
@@ -26,28 +26,28 @@ const { id } = useLocalSearchParams();
 
         <View className="absolute bottom-0 flex w-full flex-row justify-around bg-primary py-2 text-white shadow-sm">
           <TouchableOpacity
-            className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "details" ? "opacity-100 scale-105" : "opacity-60"}`}
+            className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "details" ? "scale-105 opacity-100" : "opacity-60"}`}
             onPress={() => setSelectedTab("details")}
           >
             <Image source={noticeIcon} className="h-5 w-5" />
             <Text className="ml-2 text-white">Details</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "notice" ? "opacity-100 scale-105" : "opacity-60"}`}
+            className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "notice" ? "scale-105 opacity-100" : "opacity-60"}`}
             onPress={() => setSelectedTab("notice")}
           >
             <Image source={noticeIcon} className="h-5 w-5" />
             <Text className="ml-2 text-white">Notice</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "discussion" ? "opacity-100 scale-105" : "opacity-60"}`}
+            className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "discussion" ? "scale-105 opacity-100" : "opacity-60"}`}
             onPress={() => setSelectedTab("discussion")}
           >
             <Image source={noticeIcon} className="h-5 w-5" />
             <Text className="ml-2 text-white">Discussion</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "people" ? "opacity-100 scale-105" : "opacity-60"}`}
+            className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "people" ? "scale-105 opacity-100" : "opacity-60"}`}
             onPress={() => setSelectedTab("people")}
           >
             <Image source={noticeIcon} className="h-5 w-5" />
