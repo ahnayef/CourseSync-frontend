@@ -3,23 +3,38 @@ import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { noticeIcon } from "@/constants/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CourseDetails from "./(tabs)/CourseDetails";
 import CourseNotice from "./(tabs)/CourseNotice";
 import CourseDisscussion from "./(tabs)/CourseDisscussion";
 import CoursePeople from "./(tabs)/CoursePeople";
+import { request } from "@/utils/request";
+import { toast } from "@/utils/toast";
 
 const CourseDetailsMain = () => {
   const { id } = useLocalSearchParams();
   const [selectedTab, setSelectedTab] = useState("details");
 
-  
+  const [course, setCourse] = useState();
+
+  const getCourseDetails = async () => {
+    try {
+      const res = await request.get(`/courses/get/${id}`);
+      setCourse(res.data);
+    } catch (error: any) {
+      toast(error.response?.data || error.message);
+    }
+  };
+
+  useEffect(() => {
+    getCourseDetails();
+  }, []);
 
   return (
     <SafeAreaView>
       <GestureHandlerRootView className="h-full">
-        <View>
-          {selectedTab === "details" && <CourseDetails />}
+        <View className="h-full">
+          {selectedTab === "details" && <CourseDetails course={course} />}
           {selectedTab === "notice" && <CourseNotice />}
           {selectedTab === "discussion" && <CourseDisscussion />}
           {selectedTab === "people" && <CoursePeople />}
