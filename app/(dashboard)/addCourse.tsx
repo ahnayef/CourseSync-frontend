@@ -15,7 +15,6 @@ const AddCourse = () => {
   const [formState, setFormState] = useState({
     name: "",
     code: "",
-    description: "",
     department: "",
     session: "",
     credit: "",
@@ -25,7 +24,6 @@ const AddCourse = () => {
     if (
       formState.name !== "" &&
       formState.code !== "" &&
-      formState.description !== "" &&
       formState.department !== "" &&
       formState.session !== "" &&
       formState.credit !== ""
@@ -35,7 +33,7 @@ const AddCourse = () => {
         const res = await request.post("/courses/create", formState);
         setLoading(false);
         toast(res as any);
-        handleNavigate("./cources");
+        handleNavigate("./courses");
       } catch (error: any) {
         toast(error.response?.data || error.message);
       } finally {
@@ -61,14 +59,6 @@ const AddCourse = () => {
               value={formState.code}
               title="Course Code"
               onChangeFn={(e: any) => setFormState({ ...formState, code: e })}
-            />
-
-            <FormInput
-              value={formState.description}
-              title="Description"
-              onChangeFn={(e: any) =>
-                setFormState({ ...formState, description: e })
-              }
             />
 
             <FormInput
