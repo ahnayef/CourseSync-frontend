@@ -33,13 +33,12 @@ const CourseDetailsMain = () => {
   return (
     <SafeAreaView>
       <GestureHandlerRootView className="h-full">
-        <View className="h-full">
+        <View className="h-full pb-9">
           {selectedTab === "details" && <CourseDetails course={course} />}
           {selectedTab === "notice" && <CourseNotice />}
           {selectedTab === "discussion" && <CourseDisscussion />}
           {selectedTab === "people" && <CoursePeople />}
         </View>
-
         <View className="absolute bottom-0 flex w-full flex-row justify-around bg-primary py-2 text-white shadow-sm">
           <TouchableOpacity
             className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "details" ? "scale-105 opacity-100" : "opacity-60"}`}
