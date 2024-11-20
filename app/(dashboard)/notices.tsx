@@ -1,11 +1,14 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import { handleNavigate } from "@/utils/navigate";
 import { addIcon } from "@/constants/icons";
+import GlobalContext from "@/context/globalContext";
 
 const Notice = () => {
+  const { user } = useContext(GlobalContext);
+
   let demoNotice = [
     {
       id: 1,
@@ -115,13 +118,15 @@ const Notice = () => {
           ListHeaderComponent={() => (
             <View className="flex w-full flex-col items-center justify-center text-center">
               <Text className="text-2xl text-primary">Notices</Text>
-              <TouchableOpacity
-                className="my-5 flex w-2/5 flex-row items-center justify-center rounded bg-primary p-3 text-center text-xl"
-                onPress={() => handleNavigate("./createNotice")}
-              >
-                <Image source={addIcon} className="h-5 w-5" />
-                <Text className="ml-2 text-white">Create Notice</Text>
-              </TouchableOpacity>
+              {user.role === "cr" && (
+                <TouchableOpacity
+                  className="my-5 flex w-2/5 flex-row items-center justify-center rounded bg-primary p-3 text-center text-xl"
+                  onPress={() => handleNavigate("./createNotice")}
+                >
+                  <Image source={addIcon} className="h-5 w-5" />
+                  <Text className="ml-2 text-white">Create Notice</Text>
+                </TouchableOpacity>
+              )}
             </View>
           )}
         />
