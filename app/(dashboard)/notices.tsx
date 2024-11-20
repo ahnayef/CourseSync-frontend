@@ -1,76 +1,40 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import React, { useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import { handleNavigate } from "@/utils/navigate";
 import { addIcon } from "@/constants/icons";
 import GlobalContext from "@/context/globalContext";
+import { request } from "@/utils/request";
+import { toast } from "@/utils/toast";
+import { useFocusEffect } from "expo-router";
 
 const Notice = () => {
   const { user } = useContext(GlobalContext);
 
-  let demoNotice = [
-    {
-      id: 1,
-      title: "Notice 1",
-      content: "This is the content of notice 1",
-      timestamp: "2021-09-01T00:00:00Z",
-    },
-    {
-      id: 2,
-      title: "Notice 1",
-      content: "This is the content of notice 2",
-      timestamp: "2021-09-02T00:00:00Z",
-    },
-    {
-      id: 3,
-      title: "Notice 1",
-      content: "This is the content of notice 3",
-      timestamp: "2021-09-03T00:00:00Z",
-    },
-    {
-      id: 4,
-      title: "Notice 1",
-      content: "This is the content of notice 4",
-      timestamp: "2021-09-04T00:00:00Z",
-    },
-    {
-      id: 5,
-      title: "Notice 1",
-      content: "This is the content of notice 5",
-      timestamp: "2021-09-05T00:00:00Z",
-    },
-    {
-      id: 6,
-      title: "Notice 1",
-      content: "This is the content of notice 6",
-      timestamp: "2021-09-06T00:00:00Z",
-    },
-    {
-      id: 7,
-      title: "Notice 1",
-      content: "This is the content of notice 7",
-      timestamp: "2021-09-07T00:00:00Z",
-    },
-    {
-      id: 8,
-      title: "Notice 1",
-      content: "This is the content of notice 8",
-      timestamp: "2021-09-08T00:00:00Z",
-    },
-    {
-      id: 9,
-      title: "Notice 1",
-      content: "This is the content of notice 9",
-      timestamp: "2021-09-09T00:00:00Z",
-    },
-    {
-      id: 10,
-      title: "Notice 1",
-      content: "This is the content of notice 10",
-      timestamp: "2021-09-10T00:00:00Z",
-    },
-  ];
+  const [notices, setNotices] = useState([]);
+
+  const getNotices = async () => {
+    try {
+      const res = await request.get(
+        `/notices/get/${user.session}+${user.department}`,
+      );
+      setNotices(res.data);
+    } catch (error: any) {
+      console.log(error.response?.data || error.message);
+      toast(error.response?.data || error.message);
+    }
+  };
+
+  useEffect(() => {
+    getNotices();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getNotices();
+    }, []),
+  );
 
   const renderNotice = ({ item }: any) => {
     return (
@@ -84,7 +48,7 @@ const Notice = () => {
         </Text>
 
         <Text className="mt-4 text-xs italic text-gray-500">
-          {new Date(item?.timestamp).toLocaleString("en-US", {
+          {new Date(item?.created_at).toLocaleString("en-US", {
             month: "short",
             day: "2-digit",
             year: "numeric",
@@ -101,7 +65,7 @@ const Notice = () => {
       <GestureHandlerRootView className="flex h-full w-full flex-col items-center justify-center align-middle">
         <FlatList
           className="flex w-full px-3 text-center"
-          data={demoNotice}
+          data={notices}
           renderItem={({ item }: any) => (
             <View
               className="flex-col items-center justify-center"
