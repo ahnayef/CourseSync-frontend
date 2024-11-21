@@ -10,11 +10,12 @@ import { toast } from "@/utils/toast";
 import { useFocusEffect } from "expo-router";
 
 const Notice = () => {
-  const { user } = useContext(GlobalContext);
+  const { user, isLoading, setLoading } = useContext(GlobalContext);
 
   const [notices, setNotices] = useState([]);
 
   const getNotices = async () => {
+    setLoading(true);
     try {
       const res = await request.get(
         `/notices/get?session=${user.session}&dept=${user.department}`,
@@ -23,6 +24,8 @@ const Notice = () => {
     } catch (error: any) {
       console.log(error.response?.data || error.message);
       toast(error.response?.data || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,7 +79,11 @@ const Notice = () => {
           )}
           ListEmptyComponent={() => (
             <View className="flex w-full flex-col items-center justify-center text-center">
-              <Text className="text-red-500">No cources yet</Text>
+              {isLoading ? (
+                <Text>Loading...</Text>
+              ) : (
+                <Text className="text-red-500">No notices yet</Text>
+              )}
             </View>
           )}
           ListHeaderComponent={() => (

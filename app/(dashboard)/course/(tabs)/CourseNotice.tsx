@@ -1,5 +1,5 @@
 import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   GestureHandlerRootView,
   ScrollView,
@@ -9,17 +9,22 @@ import { addIcon } from "@/constants/icons";
 import { request } from "@/utils/request";
 import { toast } from "@/utils/toast";
 import { useFocusEffect } from "expo-router";
+import GlobalContext from "@/context/globalContext";
 
 const CourseNotice = ({ course }: any) => {
   const [notices, setNotices] = useState([]);
+  const { isLoading, setLoading } = useContext(GlobalContext);
 
   const getNotices = async () => {
+    setLoading(true);
     try {
       const res = await request.get(`/notices/get?courseId=${course.id}`);
       setNotices(res.data);
     } catch (error: any) {
       console.log(error.response?.data || error.message);
       toast(error.response?.data || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -32,7 +37,6 @@ const CourseNotice = ({ course }: any) => {
       getNotices();
     }, []),
   );
-
 
   const renderNotice = ({ item }: any) => {
     return (
@@ -70,7 +74,11 @@ const CourseNotice = ({ course }: any) => {
         )}
         ListEmptyComponent={() => (
           <View className="flex w-full flex-col items-center justify-center text-center">
-            <Text className="text-red-500">No cources yet</Text>
+            {isLoading ? (
+              <Text>Loading...</Text>
+            ) : (
+              <Text className="text-red-500">No notices yet</Text>
+            )}
           </View>
         )}
         ListHeaderComponent={() => (

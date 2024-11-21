@@ -17,16 +17,19 @@ import { toast } from "@/utils/toast";
 import { useFocusEffect } from "expo-router";
 
 const Cources = () => {
-  const { user } = useContext(GlobalContext);
+  const { user, isLoading, setLoading } = useContext(GlobalContext);
 
   const [courses, setCourses] = useState([]);
 
   const getCourse = async () => {
+    setLoading(true);
     try {
       const res = await request.get("/courses/getAll");
       setCourses(res.data);
     } catch (error: any) {
       toast(error.response?.data || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,65 +69,6 @@ const Cources = () => {
       getCourse();
     }, []),
   );
-
-  let demoCourses = [
-    {
-      id: 1,
-      name: "Course 1",
-      code: "CSE101",
-      description: "This is course 1",
-      department: "CSE",
-      session: "Spring 23",
-    },
-    {
-      id: 2,
-      name: "Course 2",
-      code: "CSE102",
-      description: "This is course 2",
-      department: "CSE",
-      session: "Spring 23",
-    },
-    {
-      id: 3,
-      name: "Course 3",
-      code: "CSE103",
-      description: "This is course 3",
-      department: "CSE",
-      session: "Spring 23",
-    },
-    {
-      id: 4,
-      name: "Course 4",
-      code: "CSE104",
-      description: "This is course 4",
-      department: "CSE",
-      session: "Spring 23",
-    },
-    {
-      id: 5,
-      name: "Course 5",
-      code: "CSE105",
-      description: "This is course 5",
-      department: "CSE",
-      session: "Spring 23",
-    },
-    {
-      id: 6,
-      name: "Course 6",
-      code: "CSE106",
-      description: "This is course 6",
-      department: "CSE",
-      session: "Spring 23",
-    },
-    {
-      id: 7,
-      name: "Course 7",
-      code: "CSE107",
-      description: "This is course 7",
-      department: "CSE",
-      session: "Spring 23",
-    },
-  ];
 
   const renderCourse = (item: any) => {
     return (
@@ -170,7 +114,11 @@ const Cources = () => {
           )}
           ListEmptyComponent={() => (
             <View className="flex w-full flex-col items-center justify-center text-center">
-              <Text className="text-red-500">No cources yet</Text>
+              {isLoading ? (
+                <Text>Loading...</Text>
+              ) : (
+                <Text className="text-red-500">No cources yet</Text>
+              )}
             </View>
           )}
           ListHeaderComponent={() => (
