@@ -17,7 +17,7 @@ const Notice = () => {
   const getNotices = async () => {
     try {
       const res = await request.get(
-        `/notices/get/${user.session}+${user.department}`,
+        `/notices/get?session=${user.session}&dept=${user.department}`,
       );
       setNotices(res.data);
     } catch (error: any) {
