@@ -38,7 +38,7 @@ const CreateNotice = () => {
   return (
     <ScrollView>
       <SafeAreaView>
-        <GestureHandlerRootView className="-mt-10 flex-col items-center justify-center font-notoSB">
+        <GestureHandlerRootView className="flex-col items-center justify-center font-notoSB">
           <View className="w-full p-5">
             <FormInput
               value={formState.title}
