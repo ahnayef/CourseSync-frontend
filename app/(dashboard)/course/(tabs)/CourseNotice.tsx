@@ -1,8 +1,7 @@
 import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
-  GestureHandlerRootView,
-  ScrollView,
+  GestureHandlerRootView
 } from "react-native-gesture-handler";
 import { handleNavigate } from "@/utils/navigate";
 import { addIcon } from "@/constants/icons";
