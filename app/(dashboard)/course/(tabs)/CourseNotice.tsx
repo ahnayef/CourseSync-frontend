@@ -20,7 +20,6 @@ const CourseNotice = ({ course }: any) => {
       const res = await request.get(`/notices/get?courseId=${course.id}`);
       setNotices(res.data);
     } catch (error: any) {
-      console.log(error.response?.data || error.message);
       toast(error.response?.data || error.message);
     } finally {
       setLoading(false);

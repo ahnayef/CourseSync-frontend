@@ -13,7 +13,6 @@ const CreateNotice = () => {
   const { isLoading, setLoading } = useContext(GlobalContext);
 
   const { courseId } = useLocalSearchParams();
-  console.log(courseId);
   const [formState, setFormState] = useState({
     title: "",
     content: "",
@@ -24,7 +23,6 @@ const CreateNotice = () => {
     if (formState.title !== "" && formState.content !== "") {
       setLoading(true);
       try {
-        console.log(formState);
         const res = await request.post("/notices/create", formState);
         setLoading(false);
         toast(res as any);

@@ -1,9 +1,9 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import { handleNavigate } from "@/utils/navigate";
-import { addIcon } from "@/constants/icons";
+import { addIcon, trashIcon } from "@/constants/icons";
 import GlobalContext from "@/context/globalContext";
 import { request } from "@/utils/request";
 import { toast } from "@/utils/toast";
@@ -39,6 +39,34 @@ const Notice = () => {
     }, []),
   );
 
+  const handleNoticeDelete = (id: number) => {
+    Alert.alert(
+      "Delete Notice",
+      "Are you sure you want to delete this notice?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              const res = await request.delete(`/notices/delete/${id}`);
+              getNotices();
+              console.log(res);
+              toast(res as any);
+            } catch (error: any) {
+              toast(error.response?.data || error.message);
+            }
+          },
+        },
+      ],
+    );
+  };
+
+
   const renderNotice = ({ item }: any) => {
     return (
       <View className="m-4 w-full max-w-md rounded-2xl border-l-8 border-primary bg-white p-4 shadow-2xl">
@@ -59,6 +87,16 @@ const Notice = () => {
             minute: "2-digit",
           })}
         </Text>
+
+        {user.role === "cr" && (
+          <TouchableOpacity
+            onPress={() => handleNoticeDelete(item.id)}
+            className="absolute right-2 top-2"
+          >
+            <Image source={trashIcon} className="h-5 w-5" />
+          </TouchableOpacity>
+        )}
+
       </View>
     );
   };
