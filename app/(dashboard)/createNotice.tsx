@@ -8,19 +8,24 @@ import { toast } from "@/utils/toast";
 import { request } from "@/utils/request";
 import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
+import { useLocalSearchParams } from "expo-router";
 
 const CreateNotice = () => {
   const { isLoading, setLoading } = useContext(GlobalContext);
 
+  const { courseId } = useLocalSearchParams();
+  console.log(courseId);
   const [formState, setFormState] = useState({
     title: "",
     content: "",
+    courseId: courseId || null,
   });
 
   const handleSubmit = async () => {
     if (formState.title !== "" && formState.content !== "") {
       setLoading(true);
       try {
+        console.log(formState);
         const res = await request.post("/notices/create", formState);
         setLoading(false);
         toast(res as any);
@@ -50,7 +55,9 @@ const CreateNotice = () => {
               value={formState.content}
               title="Description"
               type="textarea"
-              onChangeFn={(e: any) => setFormState({ ...formState, content: e })}
+              onChangeFn={(e: any) =>
+                setFormState({ ...formState, content: e })
+              }
             />
 
             <Cbutton title="Post" onclickFn={() => handleSubmit()} />

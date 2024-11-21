@@ -35,7 +35,7 @@ const CourseDetailsMain = () => {
       <GestureHandlerRootView className="h-full">
         <View className="h-full pb-9">
           {selectedTab === "details" && <CourseDetails course={course} />}
-          {selectedTab === "notice" && <CourseNotice />}
+          {selectedTab === "notice" && <CourseNotice course={course} />}
           {selectedTab === "discussion" && <CourseDisscussion />}
           {selectedTab === "people" && <CoursePeople />}
         </View>

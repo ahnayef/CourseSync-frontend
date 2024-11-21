@@ -10,7 +10,6 @@ const CourseDetails = ({ course }: any) => {
     <ScrollView className="h-full">
       <GestureHandlerRootView className="flex-1 py-5 h-full">
         <View className="flex-col items-center justify-center space-y-6 px-5">
-          {/* Course Info Header */}
           <View className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
             <Text className="mb-4 text-center text-3xl font-semibold text-primary">
               {course?.name}
