@@ -131,6 +131,8 @@ const Signup = () => {
                 onChangeFn={(e: any) =>
                   setFormState({ ...formState, department: e })
                 }
+                type="select"
+                selectItems={["CSE", "BBA", "English", "LLB"]}
               />
               <FormInput
                 value={formState.password}

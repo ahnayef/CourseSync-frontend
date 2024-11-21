@@ -47,7 +47,7 @@ const AddCourse = () => {
   return (
     <ScrollView>
       <SafeAreaView>
-        <GestureHandlerRootView className="flex-col justify-center items-center -mt-10 font-notoSB">
+        <GestureHandlerRootView className="flex-col items-center justify-center font-notoSB">
           <View className="w-full p-5">
             <FormInput
               value={formState.name}
@@ -72,7 +72,7 @@ const AddCourse = () => {
             <FormInput
               value={formState.department}
               type="select"
-              selectItems={["CSE", "BBA", "ENG", "LAW"]}
+              selectItems={["CSE", "BBA", "English", "LLB"]}
               title="Department"
               onChangeFn={(e: any) =>
                 setFormState({ ...formState, department: e })
