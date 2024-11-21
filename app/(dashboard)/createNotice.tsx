@@ -7,8 +7,7 @@ import Cbutton from "../components/Cbutton/Cbutton";
 import { toast } from "@/utils/toast";
 import { request } from "@/utils/request";
 import GlobalContext from "@/context/globalContext";
-import { handleNavigate } from "@/utils/navigate";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 const CreateNotice = () => {
   const { isLoading, setLoading } = useContext(GlobalContext);
@@ -29,7 +28,7 @@ const CreateNotice = () => {
         const res = await request.post("/notices/create", formState);
         setLoading(false);
         toast(res as any);
-        handleNavigate("./notices");
+        router.back();
       } catch (error: any) {
         toast(error.response?.data || error.message);
       } finally {
