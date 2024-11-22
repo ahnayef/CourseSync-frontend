@@ -1,13 +1,25 @@
 // DO NOT MODIFY THIS FILE, if it's really necessary, contact @AHNayef first. Or just create an issue. Thanks!
 
+import isTokenExpired from '@/constants/checkTokenExpirity';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { AxiosResponse } from 'axios';
+import { Href, router } from 'expo-router';
 
 const api = `${process.env.EXPO_PUBLIC_API_URL}/api`;
 
 type RequestData = Record<string, any>;
 
 const setAuthToken = async () => {
+
+  if (await isTokenExpired()) {
+    await Promise.all([
+      AsyncStorage.removeItem("token"),
+      AsyncStorage.removeItem("user"),
+    ]);
+    router.navigate("/" as Href);
+    return;
+  }
+
   const token = await AsyncStorage.getItem('token');
   if (token) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

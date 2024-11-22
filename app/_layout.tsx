@@ -5,12 +5,12 @@ import {
   useFonts,
   NotoSansBengali_400Regular,
 } from "@expo-google-fonts/noto-sans-bengali";
-import { Href, Redirect, router, Stack } from "expo-router";
+import { Href, router, Stack } from "expo-router";
 import { GlobalProvider } from "@/context/globalContext";
 import { request } from "@/utils/request";
 import { toast } from "@/utils/toast";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { jwtDecode } from "jwt-decode";
+import isTokenExpired from "@/constants/checkTokenExpirity";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -99,19 +99,7 @@ export default function App() {
     }
   };
 
-  const isTokenExpired = async () => {
-    const token = await AsyncStorage.getItem("token");
-    if (token) {
-      const decoded = jwtDecode(token);
-      if (!decoded || !decoded.exp) {
-        return true;
-      }
 
-      if (decoded.exp * 1000 < Date.now()) {
-        return true;
-      }
-    }
-  };
 
   const checkIsLoggedIn = async () => {
     // Auto logout if token is expired
