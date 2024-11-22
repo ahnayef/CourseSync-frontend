@@ -10,6 +10,7 @@ import { GlobalProvider } from "@/context/globalContext";
 import { request } from "@/utils/request";
 import { toast } from "@/utils/toast";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { jwtDecode } from "jwt-decode";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -50,7 +51,6 @@ export default function App() {
       setUser(user);
       setIsLoggedIn(true);
       router.navigate("/dashboard" as Href);
-
     } catch (error: any) {
       toast(error.response?.data || error.message);
     } finally {
@@ -99,7 +99,33 @@ export default function App() {
     }
   };
 
+  const isTokenExpired = async () => {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      if (!decoded || !decoded.exp) {
+        return true;
+      }
+
+      if (decoded.exp * 1000 < Date.now()) {
+        return true;
+      }
+    }
+  };
+
   const checkIsLoggedIn = async () => {
+    // Auto logout if token is expired
+    if (await isTokenExpired()) {
+      await logout()
+        .then(() => {
+          toast("Session expired. Please login again.");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      return;
+    }
+
     setLoading(true);
     await AsyncStorage.getItem("token")
       .then((token) => {
@@ -146,7 +172,15 @@ export default function App() {
   } else {
     return (
       <GlobalProvider
-        value={{ isLoading, setLoading, isLoggedIn, login, register, logout, user }}
+        value={{
+          isLoading,
+          setLoading,
+          isLoggedIn,
+          login,
+          register,
+          logout,
+          user,
+        }}
       >
         <View style={{ flex: 1 }}>
           <RootLayout />
