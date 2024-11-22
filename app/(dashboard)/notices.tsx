@@ -54,7 +54,7 @@ const Notice = () => {
           onPress: async () => {
             try {
               const res = await request.delete(`/notices/delete/${id}`);
-              getNotices();
+              setNotices(notices.filter((notice: any) => notice.id !== id));
               toast(res as any);
             } catch (error: any) {
               toast(error.response?.data || error.message);
@@ -64,7 +64,6 @@ const Notice = () => {
       ],
     );
   };
-
 
   const renderNotice = ({ item }: any) => {
     return (
@@ -95,7 +94,6 @@ const Notice = () => {
             <Image source={trashIcon} className="h-5 w-5" />
           </TouchableOpacity>
         )}
-
       </View>
     );
   };
