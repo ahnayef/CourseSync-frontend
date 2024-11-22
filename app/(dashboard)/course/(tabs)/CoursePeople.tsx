@@ -1,10 +1,16 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useContext } from "react";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
-import { addPeopleIcon, peopleIcon, removeIcon, trashIcon } from "@/constants/icons";
+import {
+  addPeopleIcon,
+  peopleIcon,
+  removeIcon,
+  trashIcon,
+} from "@/constants/icons";
 import GlobalContext from "@/context/globalContext";
+import { handleNavigate } from "@/utils/navigate";
 
-const CoursePeople = ({ peoples }: any) => {
+const CoursePeople = ({ course }: any) => {
   const { user } = useContext(GlobalContext);
 
   const instructor = {
@@ -62,16 +68,22 @@ const CoursePeople = ({ peoples }: any) => {
       </View>
 
       <FlatList
-        className="flex w-full mt-10 px-3 text-center"
+        className="mt-10 flex w-full px-3 text-center"
         data={students}
         ListHeaderComponent={() => (
-          <View className="flex w-full flex-row px-3 items-center justify-center align-middle text-center border-b-2 border-primary py-2c">
+          <View className="py-2c flex w-full flex-row items-center justify-center border-b-2 border-primary px-3 text-center align-middle">
             {user.role === "teacher" ? (
               <>
                 <Text className="w-full text-2xl font-bold text-primary">
                   Students
                 </Text>
-                <Image source={addPeopleIcon} className="h-6 w-6" />
+                <TouchableOpacity
+                  onPress={() =>
+                    handleNavigate(`./addPeople?courseId=${course.id}`)
+                  }
+                >
+                  <Image source={addPeopleIcon} className="h-6 w-6" />
+                </TouchableOpacity>
               </>
             ) : (
               <Text className="w-full text-2xl font-bold text-primary">

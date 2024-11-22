@@ -36,8 +36,8 @@ const CourseDetailsMain = () => {
         <View className="h-full pb-9">
           {selectedTab === "details" && <CourseDetails course={course} />}
           {selectedTab === "notice" && <CourseNotice course={course} />}
-          {selectedTab === "discussion" && <CourseDisscussion />}
-          {selectedTab === "people" && <CoursePeople />}
+          {selectedTab === "discussion" && <CourseDisscussion course={course}  />}
+          {selectedTab === "people" && <CoursePeople course={course} />}
         </View>
         <View className="absolute bottom-0 flex w-full flex-row justify-around bg-primary py-2 text-white shadow-sm">
           <TouchableOpacity

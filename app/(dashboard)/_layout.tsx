@@ -54,6 +54,15 @@ const DashboardLayout = () => {
             title: "Create Notice",
           }}
         />
+
+        <Stack.Screen
+          name="course/(tabs)/addPeople"
+          options={{
+            animation: "slide_from_bottom",
+            contentStyle: { backgroundColor: "white" },
+            title: "Add Student",
+          }}
+        />
       </Stack>
     </>
   );
