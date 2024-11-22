@@ -24,7 +24,7 @@ const Cources = () => {
   const getCourse = async () => {
     setLoading(true);
     try {
-      const res = await request.get("/courses/getAll");
+      const res = await request.get("/courses/get");
       setCourses(res.data);
     } catch (error: any) {
       toast(error.response?.data || error.message);
