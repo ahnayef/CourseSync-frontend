@@ -21,7 +21,8 @@ const Dashboard = () => {
         <GestureHandlerRootView className="h-screen items-center justify-center align-middle">
           <View className="flex items-center justify-center py-10 text-center align-middle">
             <Text className="text-2xl text-primary">
-              {user.role.charAt(0).toUpperCase() + user.role.slice(1)}'s dashboard
+              {user.role.charAt(0).toUpperCase() + user.role.slice(1)}'s
+              dashboard
             </Text>
 
             <Text className="py-2 text-lg">
@@ -31,21 +32,25 @@ const Dashboard = () => {
           </View>
 
           <View className="flex w-full flex-col items-center justify-center gap-5">
-            <TouchableOpacity
-              className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
-              onPress={() => handleNavigate("notices")}
-            >
-              <Image source={noticeIcon} className="h-5 w-5" />
-              <Text className="ml-2 text-white">Notices</Text>
-            </TouchableOpacity>
+            {user.role !== "teacher" && (
+              <>
+                <TouchableOpacity
+                  className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
+                  onPress={() => handleNavigate("notices")}
+                >
+                  <Image source={noticeIcon} className="h-5 w-5" />
+                  <Text className="ml-2 text-white">Notices</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity
-              className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
-              onPress={() => alert("Under Construction")}
-            >
-              <Image source={discussionIcon} className="h-5 w-5" />
-              <Text className="ml-2 text-white">Discussion</Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                  className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
+                  onPress={() => alert("Under Construction")}
+                >
+                  <Image source={discussionIcon} className="h-5 w-5" />
+                  <Text className="ml-2 text-white">Discussion</Text>
+                </TouchableOpacity>
+              </>
+            )}
 
             <TouchableOpacity
               className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
