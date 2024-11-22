@@ -33,23 +33,23 @@ const Dashboard = () => {
 
           <View className="flex w-full flex-col items-center justify-center gap-5">
             {user.role !== "teacher" && (
-              <>
-                <TouchableOpacity
-                  className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
-                  onPress={() => handleNavigate("notices")}
-                >
-                  <Image source={noticeIcon} className="h-5 w-5" />
-                  <Text className="ml-2 text-white">Notices</Text>
-                </TouchableOpacity>
+              <TouchableOpacity
+                className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
+                onPress={() => handleNavigate("notices")}
+              >
+                <Image source={noticeIcon} className="h-5 w-5" />
+                <Text className="ml-2 text-white">Notices</Text>
+              </TouchableOpacity>
+            )}
 
-                <TouchableOpacity
-                  className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
-                  onPress={() => alert("Under Construction")}
-                >
-                  <Image source={discussionIcon} className="h-5 w-5" />
-                  <Text className="ml-2 text-white">Discussion</Text>
-                </TouchableOpacity>
-              </>
+            {user.role !== "teacher" && (
+              <TouchableOpacity
+                className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
+                onPress={() => alert("Under Construction")}
+              >
+                <Image source={discussionIcon} className="h-5 w-5" />
+                <Text className="ml-2 text-white">Discussion</Text>
+              </TouchableOpacity>
             )}
 
             <TouchableOpacity
