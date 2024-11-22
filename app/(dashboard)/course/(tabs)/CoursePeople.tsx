@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import {
@@ -42,9 +42,37 @@ const CoursePeople = ({ course }: any) => {
     }, []),
   );
 
+  const handleRemoveStudent = (id: number) => {
+    Alert.alert(
+      "Delete Notice",
+      "Are you sure you want to delete this notice?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              const res = await request.delete(
+                `/courses/removeStudent?studentId=${id}&courseId=${course.id}`,
+              );
+              setStudents(students.filter((student: any) => student.id !== id));
+              toast(res as any);
+            } catch (error: any) {
+              toast(error.response?.data || error.message);
+            }
+          },
+        },
+      ],
+    );
+  };
+
   const renderPeople = ({ item }: any) => {
     return (
-      <View className="m-4 flex w-full flex-row items-center justify-between p-2 align-middle shadow border border-primary/50 rounded">
+      <View className="m-4 flex w-full flex-row items-center justify-between rounded border border-primary/50 p-2 align-middle shadow">
         <View className="inline-flex flex-row items-center justify-between gap-2 align-middle">
           <View className="h-7 w-7 rounded-full bg-white">
             <Image source={peopleIcon} className="h-full w-full" />
@@ -55,7 +83,7 @@ const CoursePeople = ({ course }: any) => {
           </View>
         </View>
         {user.role === "teacher" ? (
-          <TouchableOpacity onPress={() => toast("Under development")}>
+          <TouchableOpacity onPress={() => handleRemoveStudent(item.id)}>
             <Image source={removeIcon} className="h-6 w-6" />
           </TouchableOpacity>
         ) : null}
@@ -70,7 +98,7 @@ const CoursePeople = ({ course }: any) => {
           Instructor
         </Text>
         <View className="flex-col items-center justify-center">
-          <View className="m-4 flex w-full flex-row items-center justify-between p-2 align-middle border border-primary/50 rounded">
+          <View className="m-4 flex w-full flex-row items-center justify-between rounded border border-primary/50 p-2 align-middle">
             <View className="inline-flex flex-row items-center justify-between gap-2 align-middle">
               <View className="h-7 w-7 rounded-full bg-white">
                 <Image source={peopleIcon} className="h-full w-full" />
