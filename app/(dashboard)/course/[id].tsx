@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { noticeIcon } from "@/constants/icons";
+import { discussionIcon, groupIcon, infoIcon, noticeIcon, peopleIcon } from "@/constants/icons";
 import { useEffect, useState } from "react";
 import CourseDetails from "./(tabs)/CourseDetails";
 import CourseNotice from "./(tabs)/CourseNotice";
@@ -44,7 +44,7 @@ const CourseDetailsMain = () => {
             className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "details" ? "scale-105 opacity-100" : "opacity-60"}`}
             onPress={() => setSelectedTab("details")}
           >
-            <Image source={noticeIcon} className="h-5 w-5" />
+            <Image source={infoIcon} className="h-5 w-5" />
             <Text className="ml-2 text-white">Details</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -58,14 +58,14 @@ const CourseDetailsMain = () => {
             className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "discussion" ? "scale-105 opacity-100" : "opacity-60"}`}
             onPress={() => setSelectedTab("discussion")}
           >
-            <Image source={noticeIcon} className="h-5 w-5" />
+            <Image source={discussionIcon} className="h-5 w-5" />
             <Text className="ml-2 text-white">Discussion</Text>
           </TouchableOpacity>
           <TouchableOpacity
             className={`flex flex-col items-center justify-center text-center text-xl ${selectedTab === "people" ? "scale-105 opacity-100" : "opacity-60"}`}
             onPress={() => setSelectedTab("people")}
           >
-            <Image source={noticeIcon} className="h-5 w-5" />
+            <Image source={groupIcon} className="h-5 w-5" />
             <Text className="ml-2 text-white">People</Text>
           </TouchableOpacity>
         </View>

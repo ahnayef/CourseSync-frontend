@@ -8,5 +8,20 @@ import trashIcon from "@/assets/icons/trash.png";
 import peopleIcon from "@/assets/icons/people.png";
 import removeIcon from "@/assets/icons/remove.png";
 import addPeopleIcon from "@/assets/icons/addPeople.png";
+import groupIcon from "@/assets/icons/group.png";
+import infoIcon from "@/assets/icons/info.png";
 
-export { noticeIcon, discussionIcon, courseIcon, scheduleIcon, powerIcon, addIcon, trashIcon, peopleIcon, removeIcon, addPeopleIcon };
+export {
+    noticeIcon,
+    discussionIcon,
+    courseIcon,
+    scheduleIcon,
+    powerIcon,
+    addIcon,
+    trashIcon,
+    peopleIcon,
+    removeIcon,
+    addPeopleIcon,
+    groupIcon,
+    infoIcon,
+};
