@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   addPeopleIcon,
@@ -9,36 +9,35 @@ import {
 } from "@/constants/icons";
 import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
+import { request } from "@/utils/request";
+import { toast } from "@/utils/toast";
+import { useFocusEffect } from "expo-router";
 
 const CoursePeople = ({ course }: any) => {
-  const { user } = useContext(GlobalContext);
+  const { user, isLoading, setLoading } = useContext(GlobalContext);
 
-  const instructor = {
-    name: "Dr. John Doe",
+  const [instructor, setInstructor] = useState<any>({});
+  const [students, setStudents] = useState<any>([]);
+
+  const getCoursePeople = async () => {
+    setLoading(true);
+    try {
+      const res = await request.get(`/courses/getPeople?courseId=${course.id}`);
+      console.log(res.data);
+    } catch (error: any) {
+      toast(error.response?.data || error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const students = [
-    {
-      id: 1,
-      name: "Student 1",
-    },
-    {
-      id: 2,
-      name: "Student 2",
-    },
-    {
-      id: 3,
-      name: "Student 3",
-    },
-    {
-      id: 4,
-      name: "Student 4",
-    },
-    {
-      id: 5,
-      name: "Student 5",
-    },
-  ];
+  useEffect(() => {
+    getCoursePeople();
+  }, []);
+
+  useFocusEffect(() => {
+    getCoursePeople();
+  });
 
   const renderPeople = ({ item }: any) => {
     return (

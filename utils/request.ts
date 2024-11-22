@@ -21,6 +21,7 @@ const setAuthToken = async () => {
 // Use like this: getUser: (userId: string) => request.get(`/users/${userId}`),
 const getRequest = async (endpoint: string): Promise<AxiosResponse<any>> => {
   await setAuthToken();
+  console.log(`${api}${endpoint}`);
   const response = await axios.get(`${api}${endpoint}`);
   return response.data;
 };
@@ -40,6 +41,7 @@ const postRequest = async (endpoint: string, data: RequestData): Promise<AxiosRe
 // Use like this: updateUser: (userId: string, data: any) => request.put(`/users/${userId}`, data),
 const putRequest = async (endpoint: string, data: RequestData): Promise<AxiosResponse<any>> => {
   await setAuthToken();
+  console.log(`${api}${endpoint}`);
   const response = await axios.put(`${api}${endpoint}`, data, {
     headers: {
       "Content-Type": "application/json",
@@ -51,6 +53,7 @@ const putRequest = async (endpoint: string, data: RequestData): Promise<AxiosRes
 // Use like this: deleteUser: (userId: string) => request.delete(`/users/${userId}`),
 const deleteRequest = async (endpoint: string): Promise<AxiosResponse<any>> => {
   await setAuthToken();
+  console.log(`${api}${endpoint}`);
   const response = await axios.delete(`${api}${endpoint}`);
   return response.data;
 };
