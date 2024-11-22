@@ -197,6 +197,7 @@ function RootLayout() {
         name="index"
         options={{
           headerShown: false,
+          statusBarHidden: false,
         }}
       />
       <Stack.Screen
