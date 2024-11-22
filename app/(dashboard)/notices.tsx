@@ -55,7 +55,6 @@ const Notice = () => {
             try {
               const res = await request.delete(`/notices/delete/${id}`);
               getNotices();
-              console.log(res);
               toast(res as any);
             } catch (error: any) {
               toast(error.response?.data || error.message);

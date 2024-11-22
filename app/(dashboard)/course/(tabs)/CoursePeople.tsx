@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   addPeopleIcon,
@@ -22,8 +22,9 @@ const CoursePeople = ({ course }: any) => {
   const getCoursePeople = async () => {
     setLoading(true);
     try {
-      const res = await request.get(`/courses/getPeople?courseId=${course.id}`);
-      console.log(res.data);
+      const res = await request.get(`/courses/getPeople/${course.id}`);
+      setInstructor(res.data.instructor);
+      setStudents(res.data.students);
     } catch (error: any) {
       toast(error.response?.data || error.message);
     } finally {
@@ -35,22 +36,29 @@ const CoursePeople = ({ course }: any) => {
     getCoursePeople();
   }, []);
 
-  useFocusEffect(() => {
-    getCoursePeople();
-  });
+  useFocusEffect(
+    useCallback(() => {
+      getCoursePeople();
+    }, []),
+  );
 
   const renderPeople = ({ item }: any) => {
     return (
-      <View className="m-4 flex w-full flex-row items-center justify-between py-2 align-middle">
+      <View className="m-4 flex w-full flex-row items-center justify-between p-2 align-middle shadow border border-primary/50 rounded">
         <View className="inline-flex flex-row items-center justify-between gap-2 align-middle">
           <View className="h-7 w-7 rounded-full bg-white">
             <Image source={peopleIcon} className="h-full w-full" />
           </View>
-
-          <Text className="">{item?.name}</Text>
+          <View className="flex flex-col">
+            <Text className="">{item?.name}</Text>
+            <Text className="text-sm text-gray-500">{item?.sid}</Text>
+          </View>
         </View>
-
-        <Image source={removeIcon} className="h-5 w-5 rounded-full" />
+        {user.role === "teacher" ? (
+          <TouchableOpacity onPress={() => toast("Under development")}>
+            <Image source={removeIcon} className="h-6 w-6" />
+          </TouchableOpacity>
+        ) : null}
       </View>
     );
   };
@@ -62,12 +70,20 @@ const CoursePeople = ({ course }: any) => {
           Instructor
         </Text>
         <View className="flex-col items-center justify-center">
-          {renderPeople({ item: instructor })}
+          <View className="m-4 flex w-full flex-row items-center justify-between p-2 align-middle border border-primary/50 rounded">
+            <View className="inline-flex flex-row items-center justify-between gap-2 align-middle">
+              <View className="h-7 w-7 rounded-full bg-white">
+                <Image source={peopleIcon} className="h-full w-full" />
+              </View>
+
+              <Text className="">{instructor.name}</Text>
+            </View>
+          </View>
         </View>
       </View>
 
       <FlatList
-        className="mt-10 flex w-full px-3 text-center"
+        className="mt-6 flex w-full px-3 text-center"
         data={students}
         ListHeaderComponent={() => (
           <View className="py-2c flex w-full flex-row items-center justify-center border-b-2 border-primary px-3 text-center align-middle">
