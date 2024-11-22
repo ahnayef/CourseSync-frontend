@@ -1,8 +1,6 @@
 import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import {
-  GestureHandlerRootView
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { handleNavigate } from "@/utils/navigate";
 import { addIcon } from "@/constants/icons";
 import { request } from "@/utils/request";
@@ -12,7 +10,7 @@ import GlobalContext from "@/context/globalContext";
 
 const CourseNotice = ({ course }: any) => {
   const [notices, setNotices] = useState([]);
-  const { isLoading, setLoading } = useContext(GlobalContext);
+  const { user, isLoading, setLoading } = useContext(GlobalContext);
 
   const getNotices = async () => {
     setLoading(true);
@@ -82,15 +80,18 @@ const CourseNotice = ({ course }: any) => {
         ListHeaderComponent={() => (
           <View className="flex w-full flex-col items-center justify-center text-center">
             <Text className="text-xl text-primary">Notices</Text>
-            <TouchableOpacity
-              className="my-5 flex w-2/5 flex-row items-center justify-center rounded bg-primary p-3 text-center text-xl"
-              onPress={() =>
-                handleNavigate(`/createNotice?courseId=${course.id}`)
-              }
-            >
-              <Image source={addIcon} className="h-5 w-5" />
-              <Text className="ml-2 text-white">Create Notice</Text>
-            </TouchableOpacity>
+
+            {user.role === "teacher" && (
+              <TouchableOpacity
+                className="my-5 flex w-2/5 flex-row items-center justify-center rounded bg-primary p-3 text-center text-xl"
+                onPress={() =>
+                  handleNavigate(`/createNotice?courseId=${course.id}`)
+                }
+              >
+                <Image source={addIcon} className="h-5 w-5" />
+                <Text className="ml-2 text-white">Create Notice</Text>
+              </TouchableOpacity>
+            )}
           </View>
         )}
       />
