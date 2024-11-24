@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text } from "react-native";
 import React, { useContext, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -91,7 +91,7 @@ const Signup = () => {
             title="Role"
             onChangeFn={(e: any) => setFormState({ ...formState, role: e })}
             type="select"
-            selectItems={["Teacher", "Student", "CR"]}
+            selectItems={["Teacher", "Student"]}
           />
 
           {formState.role === "Teacher" ? (
@@ -104,7 +104,7 @@ const Signup = () => {
                 }
               />
             </>
-          ) : formState.role === "Student" || formState.role === "CR" ? (
+          ) : formState.role === "Student" ? (
             <>
               <FormInput
                 value={formState.sid || ""}

@@ -29,7 +29,7 @@ export default function Login() {
         password: formState.password,
       });
     } else if (
-      (formState.role === "Student" || formState.role === "CR") &&
+      formState.role === "Student" &&
       formState.sid !== "" &&
       formState.password !== ""
     ) {
@@ -52,10 +52,10 @@ export default function Login() {
               title="Role"
               onChangeFn={(e: any) => setFormState({ ...formState, role: e })}
               type="select"
-              selectItems={["Teacher", "Student", "CR"]}
+              selectItems={["Teacher", "Student", "Admin/HOD"]}
             />
 
-            {formState.role === "Teacher" ? (
+            {formState.role === "Teacher" || formState.role === "Admin/HOD" ? (
               <>
                 <FormInput
                   value={formState.email}
@@ -65,7 +65,7 @@ export default function Login() {
                   }
                 />
               </>
-            ) : formState.role === "Student" || formState.role === "CR" ? (
+            ) : formState.role === "Student" ? (
               <>
                 <FormInput
                   value={formState.sid}
