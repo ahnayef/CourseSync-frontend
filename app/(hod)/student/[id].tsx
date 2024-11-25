@@ -1,38 +1,22 @@
-import { View, Text } from "react-native";
-import React from "react";
-import { useLocalSearchParams } from "expo-router";
-
-const Student = () => {
-  const { id } = useLocalSearchParams();
-
-  console.log(id);
-
-  return (
-    <View>
-      <Text>Student : {id}</Text>
-    </View>
-  );
-};
-
-export default Student;
-import { View, Text, Button, Alert } from "react-native";
+import { View, Text, Button, Alert, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
+import { Ionicons } from "@expo/vector-icons";
 
 const Student = () => {
   const { id } = useLocalSearchParams();
 
   const [student, setStudent] = useState({
     id: 1,
-    name: "John Doe",
-    sid: "123456",
+    name: "Ahsan Habib",
+    sid: "0562310005101027",
     role: "student",
     session: "Spring 23",
   });
 
   const handleBan = () => {
-    Alert.alert("Ban Student", "Student has been banned.");
+    Alert.alert("Under Construction");
   };
 
   const handleRoleChange = (newRole: string) => {
@@ -40,47 +24,55 @@ const Student = () => {
   };
 
   const handleDelete = () => {
-    // Implement delete logic here
-    Alert.alert("Delete Account", "Student account has been deleted.");
+    Alert.alert("Under Construction");
   };
 
   return (
-    <View style={{ padding: 16 }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 16 }}>
+    <View className="flex-1 bg-gray-100 p-4">
+      <Text className="mb-6 text-2xl font-bold text-gray-800">
         Manage Student
       </Text>
-      <Text style={{ fontSize: 18, marginBottom: 8 }}>
-        Name: {student.name}
-      </Text>
-      <Text style={{ fontSize: 18, marginBottom: 8 }}>
-        Student ID: {student.sid}
-      </Text>
-      <Text style={{ fontSize: 18, marginBottom: 8 }}>
-        Session: {student.session}
-      </Text>
-      <Text style={{ fontSize: 18, marginBottom: 8 }}>
-        Role: {student.role}
-      </Text>
 
-      <View style={{ marginTop: 16 }}>
-        <Button title="Ban Student" onPress={handleBan} color="red" />
+      <View className="mb-6 rounded-lg bg-white p-6 shadow-lg">
+        <Text className="mb-2 text-xl font-semibold text-gray-800">
+          Name: {student.name}
+        </Text>
+        <Text className="mb-2 text-lg text-gray-600">
+          Student ID: {student.sid}
+        </Text>
+        <Text className="mb-2 text-lg text-gray-600">
+          Session: {student.session}
+        </Text>
+        <Text className="mb-4 text-lg text-gray-600">Role: {student.role}</Text>
       </View>
 
-      <View style={{ marginTop: 16 }}>
-        <Text style={{ fontSize: 18, marginBottom: 8 }}>Change Role:</Text>
+      <Text className="mb-2 text-lg text-gray-800">Change Role:</Text>
+      <View className="mb-6 rounded-lg bg-white p-2">
         <Picker
           selectedValue={student.role}
           onValueChange={(itemValue: string) => handleRoleChange(itemValue)}
-          style={{ height: 50, width: 150 }}
+          style={{ height: 50 }}
         >
           <Picker.Item label="Student" value="student" />
           <Picker.Item label="CR" value="CR" />
         </Picker>
       </View>
 
-      <View style={{ marginTop: 16 }}>
-        <Button title="Delete Account" onPress={handleDelete} color="red" />
-      </View>
+      <TouchableOpacity
+        onPress={handleBan}
+        className="mb-4 flex-row items-center justify-center rounded-lg bg-red-600 p-4"
+      >
+        <Ionicons name="ban" size={24} color="#fff" className="mr-2" />
+        <Text className=" text-white">Ban Student</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={handleDelete}
+        className="flex-row items-center justify-center rounded-lg bg-red-600 p-4"
+      >
+        <Ionicons name="trash-bin" size={24} color="#fff" className="mr-2" />
+        <Text className=" text-white">Delete Account</Text>
+      </TouchableOpacity>
     </View>
   );
 };
