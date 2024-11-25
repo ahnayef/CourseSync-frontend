@@ -85,10 +85,10 @@ const Dashboard = () => {
             <View className="flex w-6/12 flex-col items-center justify-center gap-5">
               <TouchableOpacity
                 className="flex w-full flex-row items-center justify-around rounded bg-primary p-4 text-center text-xl"
-                onPress={() => alert("Under Construction")}
+                onPress={() => handleNavigate("/manageStudents")}
               >
                 <Image source={groupIcon} className="h-5 w-5" />
-                <Text className="ml-2 w-full text-white">Manage CRs</Text>
+                <Text className="ml-2 w-full text-white">Manage Students</Text>
               </TouchableOpacity>
 
               <TouchableOpacity

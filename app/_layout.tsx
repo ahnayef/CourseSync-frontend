@@ -200,6 +200,12 @@ function RootLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="(hod)"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
