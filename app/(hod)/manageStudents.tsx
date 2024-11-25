@@ -1,15 +1,40 @@
 import { View, Text, TextInput } from "react-native";
 import React, { useState } from "react";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
+import { Href, Link } from "expo-router";
 
 const ManageStudents = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const students = [
-    { id: 1, name: "John Doe", sid: "123456", role: "student", session:'Spring 23' },
-    { id: 3, name: "Alice", sid: "123458", role: "student", session:'Spring 23' },
-    { id: 4, name: "Bob", sid: "123459", role: "student", session:'Spring 23' },
-    { id: 5, name: "Charlie", sid: "123460", role: "student", session:'Spring 23' },
+    {
+      id: 1,
+      name: "John Doe",
+      sid: "123456",
+      role: "student",
+      session: "Spring 23",
+    },
+    {
+      id: 3,
+      name: "Alice",
+      sid: "123458",
+      role: "student",
+      session: "Spring 23",
+    },
+    {
+      id: 4,
+      name: "Bob",
+      sid: "123459",
+      role: "student",
+      session: "Spring 23",
+    },
+    {
+      id: 5,
+      name: "Charlie",
+      sid: "123460",
+      role: "student",
+      session: "Spring 23",
+    },
   ];
   const [filteredStudents, setFilteredStudents] = useState(students);
 
@@ -28,13 +53,18 @@ const ManageStudents = () => {
   const renderStudents = ({ item }: any) => (
     <View className="flex flex-row items-center justify-between border-t border-gray-200 bg-white p-4">
       <View className="flex-1">
-      <Text className="text-lg font-semibold">{item.name}</Text>
-      <Text className="text-sm text-gray-500">{item.sid}</Text>
-      <Text className="text-sm text-gray-500">{item.session}</Text>
+        <Text className="text-lg font-semibold">{item.name}</Text>
+        <Text className="text-sm text-gray-500">{item.sid}</Text>
+        <Text className="text-sm text-gray-500">{item.session}</Text>
       </View>
       <View className="flex items-end">
-      <Text className="text-sm text-gray-400">{item.role}</Text>
-      <Text className="mt-1 text-lg text-primary">Manage</Text>
+        <Text className="text-sm text-gray-400">{item.role}</Text>
+        <Link
+          href={`/student/${item.id}` as Href}
+          className="mt-1 text-lg text-primary"
+        >
+          Manage
+        </Link>
       </View>
     </View>
   );
@@ -52,12 +82,12 @@ const ManageStudents = () => {
 
             <View className="px-4">
               <TextInput
-              className="rounded-full border border-gray-300 p-3 shadow-sm"
-              placeholder="Search students..."
-              value={searchQuery}
-              onChangeText={handleSearch}
-              placeholderTextColor="#999"
-              style={{ backgroundColor: "#f9f9f9" }}
+                className="rounded-full border border-gray-300 p-3 shadow-sm"
+                placeholder="Search students..."
+                value={searchQuery}
+                onChangeText={handleSearch}
+                placeholderTextColor="#999"
+                style={{ backgroundColor: "#f9f9f9" }}
               />
             </View>
           </View>
