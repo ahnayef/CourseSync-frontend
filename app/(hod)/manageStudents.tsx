@@ -1,11 +1,42 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import { Ionicons, FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { handleNavigate } from "@/utils/navigate";
+import { useFocusEffect } from "expo-router";
+import GlobalContext from "@/context/globalContext";
+import { request } from "@/utils/request";
+import { toast } from "@/utils/toast";
 
 const ManageStudents = () => {
   const [searchQuery, setSearchQuery] = useState("");
+
+  const { isLoading, setLoading } = useContext(GlobalContext);
+
+  const [dbStundets, setDbStudents] = useState<any>([]);
+
+  const getStudent = async () => {
+    setLoading(true);
+    try {
+      const res = await request.get("/users/hodGet");
+      setDbStudents(res.data);
+      console.log(res.data)
+    } catch (error: any) {
+      toast(error.response?.data || error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getStudent();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getStudent();
+    }, []),
+  );
 
   const students = [
     {
@@ -76,7 +107,7 @@ const ManageStudents = () => {
   return (
     <GestureHandlerRootView className="h-full bg-gray-100">
       <FlatList
-        data={filteredStudents}
+        data={dbStundets}
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={() => (
           <View className="px-5 py-6">
