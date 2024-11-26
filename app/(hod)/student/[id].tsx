@@ -9,8 +9,8 @@ const Student = () => {
 
   const [student, setStudent] = useState({
     id: 1,
-    name: "Ahsan Habib",
-    sid: "0562310005101027",
+    name: "Abdullah ",
+    sid: "0562310005101042",
     role: "student",
     session: "Spring 23",
   });
