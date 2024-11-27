@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormInput from "../components/FormInput/FormInput";
 import Cbutton from "../components/Cbutton/Cbutton";
-import { Href, router } from "expo-router";
+import { Href, Link, router } from "expo-router";
 import GlobalContext from "@/context/globalContext";
 
 const Signup = () => {
@@ -146,6 +146,9 @@ const Signup = () => {
           )}
 
           <Cbutton title="Signup" onclickFn={() => handleSubmit()} />
+          <Text className="w-full text-center p-2">
+                Already have an account? <Link className="text-primary" href="/login"> Login</Link>
+              </Text>
         </View>
       </GestureHandlerRootView>
     </SafeAreaView>
