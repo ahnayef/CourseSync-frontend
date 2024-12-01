@@ -9,7 +9,6 @@ import { toast } from "@/utils/toast";
 const Student = () => {
   const { id } = useLocalSearchParams();
 
-
   const [student, setStudent] = useState({
     id: null,
     name: "",
@@ -35,8 +34,17 @@ const Student = () => {
     Alert.alert("Under Construction");
   };
 
-  const handleRoleChange = (newRole: string) => {
-    // setStudent((prevStudent) => ({ ...prevStudent, role: newRole }));
+  const handleRoleChange = async (newRole: string) => {
+    try {
+      const res = await request.put(`/users/updateRole/`, {
+        id: id,
+        role: newRole,
+      });
+      toast(res as any);
+      setStudent((prevStudent) => ({ ...prevStudent, role: newRole }));
+    } catch (error: any) {
+      toast(error.response?.data || error.message);
+    }
   };
 
   const handleDelete = () => {
@@ -53,12 +61,8 @@ const Student = () => {
         <Text className="mb-2 text-lg font-semibold text-gray-800">
           Name: {student.name}
         </Text>
-        <Text className="mb-2 text-gray-600">
-          Student ID: {student.sid}
-        </Text>
-        <Text className="mb-2 text-gray-600">
-          Session: {student.session}
-        </Text>
+        <Text className="mb-2 text-gray-600">Student ID: {student.sid}</Text>
+        <Text className="mb-2 text-gray-600">Session: {student.session}</Text>
         <Text className="mb-4 text-gray-600">Role: {student.role}</Text>
       </View>
 
@@ -67,10 +71,9 @@ const Student = () => {
         <Picker
           selectedValue={student.role}
           onValueChange={(itemValue: string) => handleRoleChange(itemValue)}
-          
         >
           <Picker.Item label="Student" value="student" />
-          <Picker.Item label="CR" value="CR" />
+          <Picker.Item label="CR" value="cr" />
         </Picker>
       </View>
 
