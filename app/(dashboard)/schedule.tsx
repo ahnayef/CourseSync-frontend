@@ -39,31 +39,6 @@ const Schedule = () => {
     },
   ];
 
-  const editSchedule = (id: number) => {
-    Alert.alert(
-      "Delete Schedule",
-      "Are you sure you want to delete this schedule?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: async () => {
-            try {
-              const res = await request.delete(`/schedule/delete/${id}`);
-              //   getSchedule();
-              toast(res as any);
-            } catch (error: any) {
-              toast(error.response?.data || error.message);
-            }
-          },
-        },
-      ],
-    );
-  };
 
   const renderSchedule = (item: any) => {
     return (
