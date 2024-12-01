@@ -3,10 +3,8 @@ import React, { useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import { handleNavigate } from "@/utils/navigate";
-import { addIcon, trashIcon } from "@/constants/icons";
+import { addIcon } from "@/constants/icons";
 import GlobalContext from "@/context/globalContext";
-import { request } from "@/utils/request";
-import { toast } from "@/utils/toast";
 import { FontAwesome6 } from "@expo/vector-icons";
 
 const Schedule = () => {
