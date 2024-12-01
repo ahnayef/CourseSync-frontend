@@ -9,13 +9,6 @@ import { toast } from "@/utils/toast";
 const Student = () => {
   const { id } = useLocalSearchParams();
 
-  // const [student, setStudent] = useState({
-  //   id: 1,
-  //   name: "Abdullah ",
-  //   sid: "0562310005101042",
-  //   role: "student",
-  //   session: "Spring 23",
-  // });
 
   const [student, setStudent] = useState({
     id: null,
@@ -57,24 +50,24 @@ const Student = () => {
       </Text>
 
       <View className="mb-6 rounded-lg bg-white p-6 shadow-lg">
-        <Text className="mb-2 text-xl font-semibold text-gray-800">
+        <Text className="mb-2 text-lg font-semibold text-gray-800">
           Name: {student.name}
         </Text>
-        <Text className="mb-2 text-lg text-gray-600">
+        <Text className="mb-2 text-gray-600">
           Student ID: {student.sid}
         </Text>
-        <Text className="mb-2 text-lg text-gray-600">
+        <Text className="mb-2 text-gray-600">
           Session: {student.session}
         </Text>
-        <Text className="mb-4 text-lg text-gray-600">Role: {student.role}</Text>
+        <Text className="mb-4 text-gray-600">Role: {student.role}</Text>
       </View>
 
-      <Text className="mb-2 text-lg text-gray-800">Change Role:</Text>
+      <Text className="mb-2 text-gray-800">Change Role:</Text>
       <View className="mb-6 rounded-lg bg-white p-2">
         <Picker
           selectedValue={student.role}
           onValueChange={(itemValue: string) => handleRoleChange(itemValue)}
-          style={{ height: 50 }}
+          
         >
           <Picker.Item label="Student" value="student" />
           <Picker.Item label="CR" value="CR" />
@@ -83,7 +76,7 @@ const Student = () => {
 
       <TouchableOpacity
         onPress={handleBan}
-        className="mb-4 flex-row items-center justify-center rounded-lg bg-red-600 p-4"
+        className="mb-4 flex-row items-center justify-center rounded-lg bg-red-600 p-3"
       >
         <Ionicons name="ban" size={24} color="#fff" className="mr-2" />
         <Text className="text-white">Ban Student</Text>
@@ -91,7 +84,7 @@ const Student = () => {
 
       <TouchableOpacity
         onPress={handleDelete}
-        className="flex-row items-center justify-center rounded-lg bg-red-600 p-4"
+        className="flex-row items-center justify-center rounded-lg bg-red-600 p-3"
       >
         <Ionicons name="trash-bin" size={24} color="#fff" className="mr-2" />
         <Text className="text-white">Delete Account</Text>
