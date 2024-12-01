@@ -31,8 +31,25 @@ const Student = () => {
   }, []);
 
   const handleBan = () => {
-    Alert.alert("Under Construction");
-  };
+    Alert.alert("Delete Course", "Are you sure you want to ban this student?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: async () => {
+          try {
+            const res = await request.get(`/users/ban/${id}`);
+            toast(res as any);
+          } catch (error: any) {
+            toast(error.response?.data || error.message);
+          }
+        },
+      },
+    ]);
+  };  
 
   const handleRoleChange = async (newRole: string) => {
     try {
