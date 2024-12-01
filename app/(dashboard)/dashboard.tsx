@@ -62,52 +62,40 @@ const Dashboard = () => {
                 <Image source={courseIcon} className="h-5 w-5" />
                 <Text className="ml-2 text-white">Cources</Text>
               </TouchableOpacity>
-
-              <TouchableOpacity
-                className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
-                onPress={() => alert("Under Construction")}
-              >
-                <Image source={scheduleIcon} className="h-5 w-5" />
-                <Text className="ml-2 text-white">Schedule</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                className="flex w-2/5 flex-row items-center justify-center rounded bg-red-500 p-4 text-center text-xl"
-                onPress={() => logout()}
-              >
-                <Image source={powerIcon} className="h-5 w-5" />
-                <Text className="ml-2 text-white">Logout</Text>
-              </TouchableOpacity>
             </View>
           )}
 
           {user.role === "hod" && (
-            <View className="flex w-6/12 flex-col items-center justify-center gap-5">
+            <View className="flex w-full flex-col items-center justify-center gap-5">
               <TouchableOpacity
-                className="flex w-full flex-row items-center justify-around rounded bg-primary p-4 text-center text-xl"
+                className="flex flex-wrap w-2/5 flex-row items-center justify-around rounded bg-primary p-4 text-center text-xl"
                 onPress={() => handleNavigate("/manageStudents")}
               >
                 <Image source={groupIcon} className="h-5 w-5" />
                 <Text className="ml-2 w-full text-white">Manage Students</Text>
               </TouchableOpacity>
-
-              <TouchableOpacity
-                className="flex w-full flex-row items-center justify-around rounded bg-primary p-4 text-center text-xl"
-                onPress={() => alert("Under Construction")}
-              >
-                <Image source={scheduleIcon} className="h-5 w-5" />
-                <Text className="ml-2 w-full text-white">Manage Schedule</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                className="flex w-full flex-row items-center justify-center rounded bg-red-500 p-4 text-center text-xl"
-                onPress={() => logout()}
-              >
-                <Image source={powerIcon} className="h-5 w-5" />
-                <Text className="ml-2 text-white">Logout</Text>
-              </TouchableOpacity>
             </View>
           )}
+
+          <View className="flex w-full flex-col items-center justify-center gap-5 py-5">
+            <TouchableOpacity
+              className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
+              onPress={() => alert("Under Construction")}
+            >
+              <Image source={scheduleIcon} className="h-5 w-5" />
+              <Text className="ml-2 text-white">
+                {user.role === "hod" ? "Manage Schedule" : "Schedule"}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              className="flex w-2/5 flex-row items-center justify-center rounded bg-red-500 p-4 text-center text-xl"
+              onPress={() => logout()}
+            >
+              <Image source={powerIcon} className="h-5 w-5" />
+              <Text className="ml-2 text-white">Logout</Text>
+            </TouchableOpacity>
+          </View>
         </GestureHandlerRootView>
       </ScrollView>
     </SafeAreaView>
