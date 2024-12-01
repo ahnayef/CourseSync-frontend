@@ -2,7 +2,7 @@ import { View, Text, Button, Alert, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome6 } from "@expo/vector-icons";
 import { request } from "@/utils/request";
 import { toast } from "@/utils/toast";
 
@@ -15,6 +15,7 @@ const Student = () => {
     sid: "",
     role: "",
     session: "",
+    disabled: false,
   });
 
   const getStudent = async () => {
@@ -30,26 +31,37 @@ const Student = () => {
     getStudent();
   }, []);
 
-  const handleBan = () => {
-    Alert.alert("Delete Course", "Are you sure you want to ban this student?", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      {
-        text: "OK",
-        onPress: async () => {
-          try {
-            const res = await request.get(`/users/ban/${id}`);
-            toast(res as any);
-          } catch (error: any) {
-            toast(error.response?.data || error.message);
-          }
+  const toggleBan = () => {
+    Alert.alert(
+      "Delete Course",
+      `Are you sure you want to ${student.disabled ? "unban" : "ban"} this student?`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
         },
-      },
-    ]);
-  };  
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              const res = await request.put(`/users/toggleBan`, {
+                id: id,
+                disabled: !student.disabled,
+              });
+              setStudent((prevStudent) => ({
+                ...prevStudent,
+                disabled: !prevStudent.disabled,
+              }));
+              toast(res as any);
+            } catch (error: any) {
+              toast(error.response?.data || error.message);
+            }
+          },
+        },
+      ],
+    );
+  };
 
   const handleRoleChange = async (newRole: string) => {
     try {
@@ -64,8 +76,29 @@ const Student = () => {
     }
   };
 
-  const handleDelete = () => {
-    Alert.alert("Under Construction");
+  const handleReset = () => {
+    Alert.alert(
+      "Reset Password",
+      `Are you sure you want to reset password for this student?`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              const res = await request.get(`/users/resetPass/${id}`);
+              toast(res as any);
+            } catch (error: any) {
+              toast(error.response?.data || error.message);
+            }
+          },
+        },
+      ],
+    );
   };
 
   return (
@@ -95,19 +128,31 @@ const Student = () => {
       </View>
 
       <TouchableOpacity
-        onPress={handleBan}
-        className="mb-4 flex-row items-center justify-center rounded-lg bg-red-600 p-3"
+        onPress={toggleBan}
+        className={`mb-4 flex-row items-center justify-center rounded-lg ${student.disabled ? "bg-green-500" : "bg-red-600"} p-3`}
       >
-        <Ionicons name="ban" size={24} color="#fff" className="mr-2" />
-        <Text className="text-white">Ban Student</Text>
+        <Ionicons
+          name={student.disabled ? "lock-open" : "lock-closed"}
+          size={24}
+          color="#fff"
+          className="mr-2"
+        />
+        <Text className="text-white">
+          {student.disabled ? "Unban Student" : "Ban Student"}
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={handleDelete}
+        onPress={handleReset}
         className="flex-row items-center justify-center rounded-lg bg-red-600 p-3"
       >
-        <Ionicons name="trash-bin" size={24} color="#fff" className="mr-2" />
-        <Text className="text-white">Delete Account</Text>
+        <FontAwesome6
+          name="rotate-right"
+          size={24}
+          color="#fff"
+          className="mr-2"
+        />
+        <Text className="text-white"> Reset Password</Text>
       </TouchableOpacity>
     </View>
   );
