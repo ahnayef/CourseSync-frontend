@@ -1,26 +1,49 @@
 import { View, Text, Button, Alert, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
+import { request } from "@/utils/request";
+import { toast } from "@/utils/toast";
 
 const Student = () => {
   const { id } = useLocalSearchParams();
 
+  // const [student, setStudent] = useState({
+  //   id: 1,
+  //   name: "Abdullah ",
+  //   sid: "0562310005101042",
+  //   role: "student",
+  //   session: "Spring 23",
+  // });
+
   const [student, setStudent] = useState({
-    id: 1,
-    name: "Abdullah ",
-    sid: "0562310005101042",
-    role: "student",
-    session: "Spring 23",
+    id: null,
+    name: "",
+    sid: "",
+    role: "",
+    session: "",
   });
+
+  const getStudent = async () => {
+    try {
+      const res = await request.get(`/users/getOne/${id}`);
+      setStudent(res.data);
+    } catch (error: any) {
+      toast(error.response?.data || error.message);
+    }
+  };
+
+  useEffect(() => {
+    getStudent();
+  }, []);
 
   const handleBan = () => {
     Alert.alert("Under Construction");
   };
 
   const handleRoleChange = (newRole: string) => {
-    setStudent((prevStudent) => ({ ...prevStudent, role: newRole }));
+    // setStudent((prevStudent) => ({ ...prevStudent, role: newRole }));
   };
 
   const handleDelete = () => {
@@ -63,7 +86,7 @@ const Student = () => {
         className="mb-4 flex-row items-center justify-center rounded-lg bg-red-600 p-4"
       >
         <Ionicons name="ban" size={24} color="#fff" className="mr-2" />
-        <Text className=" text-white">Ban Student</Text>
+        <Text className="text-white">Ban Student</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -71,7 +94,7 @@ const Student = () => {
         className="flex-row items-center justify-center rounded-lg bg-red-600 p-4"
       >
         <Ionicons name="trash-bin" size={24} color="#fff" className="mr-2" />
-        <Text className=" text-white">Delete Account</Text>
+        <Text className="text-white">Delete Account</Text>
       </TouchableOpacity>
     </View>
   );
