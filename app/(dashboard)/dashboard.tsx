@@ -80,7 +80,7 @@ const Dashboard = () => {
           <View className="flex w-full flex-col items-center justify-center gap-5 py-5">
             <TouchableOpacity
               className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
-              onPress={() => alert("Under Construction")}
+              onPress={() => handleNavigate("schedule")}
             >
               <Image source={scheduleIcon} className="h-5 w-5" />
               <Text className="ml-2 text-white">
