@@ -1,8 +1,8 @@
 import { View, Text, ScrollView } from "react-native";
 import React, { useContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import FormInput from "../components/FormInput/FormInput";
-import Cbutton from "../components/Cbutton/Cbutton";
+import FormInput from "../../components/FormInput/FormInput";
+import Cbutton from "../../components/Cbutton/Cbutton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Href, Link, router } from "expo-router";
 import GlobalContext from "@/context/globalContext";
