@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import React, { useContext, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -76,82 +76,84 @@ const Signup = () => {
   };
 
   return (
-    <SafeAreaView>
-      <GestureHandlerRootView className="flex h-full flex-col items-center justify-center bg-white font-notoSB">
-        <Text className="text-xl font-bold text-primary">Sign Up</Text>
-        <View className="w-3/4">
-          <FormInput
-            value={formState.name}
-            title="Name"
-            onChangeFn={(e: any) => setFormState({ ...formState, name: e })}
-          />
+    <ScrollView>
+      <SafeAreaView>
+        <GestureHandlerRootView className="h-screen flex-1 flex-col items-center justify-center bg-white font-notoSB">
+          <Text className="text-xl font-bold text-primary">Sign Up</Text>
+          <View className="w-3/4">
+            <FormInput
+              value={formState.name}
+              title="Name"
+              onChangeFn={(e: any) => setFormState({ ...formState, name: e })}
+            />
 
-          <FormInput
-            value={formState.role}
-            title="Role"
-            onChangeFn={(e: any) => setFormState({ ...formState, role: e })}
-            type="select"
-            selectItems={["Teacher", "Student"]}
-          />
+            <FormInput
+              value={formState.role}
+              title="Role"
+              onChangeFn={(e: any) => setFormState({ ...formState, role: e })}
+              type="select"
+              selectItems={["Teacher", "Student"]}
+            />
 
-          {formState.role === "Teacher" ? (
-            <>
-              <FormInput
-                value={formState.email || ""}
-                title="Email"
-                onChangeFn={(e: any) =>
-                  setFormState({ ...formState, email: e })
-                }
-              />
-            </>
-          ) : formState.role === "Student" ? (
-            <>
-              <FormInput
-                value={formState.sid || ""}
-                title="Student ID"
-                onChangeFn={(e: any) => setFormState({ ...formState, sid: e })}
-              />
-              <FormInput
-                value={formState.session || ""}
-                title="Session"
-                onChangeFn={(e: any) =>
-                  setFormState({ ...formState, session: e })
-                }
-              />
-            </>
-          ) : (
-            <></>
-          )}
+            {formState.role === "Teacher" ? (
+              <>
+                <FormInput
+                  value={formState.email || ""}
+                  title="Email"
+                  onChangeFn={(e: any) =>
+                    setFormState({ ...formState, email: e })
+                  }
+                />
+              </>
+            ) : formState.role === "Student" ? (
+              <>
+                <FormInput
+                  value={formState.sid || ""}
+                  title="Student ID"
+                  onChangeFn={(e: any) => setFormState({ ...formState, sid: e })}
+                />
+                <FormInput
+                  value={formState.session || ""}
+                  title="Session"
+                  onChangeFn={(e: any) =>
+                    setFormState({ ...formState, session: e })
+                  }
+                />
+              </>
+            ) : (
+              <></>
+            )}
 
-          {formState.role !== "" && (
-            <>
-              <FormInput
-                value={formState.department}
-                title="Department"
-                onChangeFn={(e: any) =>
-                  setFormState({ ...formState, department: e })
-                }
-                type="select"
-                selectItems={["CSE", "BBA", "English", "LLB"]}
-              />
-              <FormInput
-                value={formState.password}
-                title="Password"
-                onChangeFn={(e: any) =>
-                  setFormState({ ...formState, password: e })
-                }
-                isPassword={true}
-              />
-            </>
-          )}
+            {formState.role !== "" && (
+              <>
+                <FormInput
+                  value={formState.department}
+                  title="Department"
+                  onChangeFn={(e: any) =>
+                    setFormState({ ...formState, department: e })
+                  }
+                  type="select"
+                  selectItems={["CSE", "BBA", "English", "LLB"]}
+                />
+                <FormInput
+                  value={formState.password}
+                  title="Password"
+                  onChangeFn={(e: any) =>
+                    setFormState({ ...formState, password: e })
+                  }
+                  isPassword={true}
+                />
+              </>
+            )}
 
-          <Cbutton title="Signup" onclickFn={() => handleSubmit()} />
-          <Text className="w-full text-center p-2">
-                Already have an account? <Link className="text-primary" href="/login"> Login</Link>
-              </Text>
-        </View>
-      </GestureHandlerRootView>
-    </SafeAreaView>
+            <Cbutton title="Signup" onclickFn={() => handleSubmit()} />
+            <Text className="w-full text-center p-2">
+              Already have an account? <Link className="text-primary" href="/login"> Login</Link>
+            </Text>
+          </View>
+        </GestureHandlerRootView>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
