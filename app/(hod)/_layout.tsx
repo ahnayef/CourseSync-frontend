@@ -1,8 +1,20 @@
-import { View, Text } from "react-native";
-import React from "react";
-import { Stack } from "expo-router";
+import React, { useContext, useEffect } from "react";
+import { Redirect, Stack } from "expo-router";
+import GlobalContext from "@/context/globalContext";
 
 const HodMain = () => {
+  const { user, isLoggedIn } = useContext(GlobalContext);
+
+  const verifyAccess = () => {
+    if (!isLoggedIn || user.role !== "hod") {
+      return <Redirect href="/login" />;
+    }
+  };
+
+  useEffect(() => {
+    verifyAccess();
+  }, []);
+
   return (
     <Stack>
       <Stack.Screen name="hodMain" options={{ headerShown: false }} />
