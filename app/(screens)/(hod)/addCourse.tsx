@@ -16,7 +16,6 @@ const AddCourse = () => {
     name: "",
     code: "",
     department: "",
-    session: "",
     credit: "",
   });
 
@@ -25,7 +24,6 @@ const AddCourse = () => {
       formState.name !== "" &&
       formState.code !== "" &&
       formState.department !== "" &&
-      formState.session !== "" &&
       formState.credit !== ""
     ) {
       setLoading(true);
@@ -33,7 +31,7 @@ const AddCourse = () => {
         const res = await request.post("/courses/create", formState);
         setLoading(false);
         toast(res as any);
-        handleNavigate("./courses");
+        handleNavigate("./manageCourses");
       } catch (error: any) {
         toast(error.response?.data || error.message);
       } finally {
@@ -78,15 +76,6 @@ const AddCourse = () => {
                 setFormState({ ...formState, department: e })
               }
             />
-
-            <FormInput
-              value={formState.session}
-              title="Session"
-              onChangeFn={(e: any) =>
-                setFormState({ ...formState, session: e })
-              }
-            />
-
             <Cbutton title="Add Course" onclickFn={() => handleSubmit()} />
           </View>
         </GestureHandlerRootView>

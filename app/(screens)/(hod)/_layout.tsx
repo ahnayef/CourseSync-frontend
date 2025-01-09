@@ -17,7 +17,14 @@ const HodMain = () => {
 
   return (
     <Stack>
-      <Stack.Screen name="hodMain" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="addCourse"
+        options={{
+          animation: "slide_from_bottom",
+          contentStyle: { backgroundColor: "white" },
+          title: "Add Course",
+        }}
+      />
       <Stack.Screen name="manageStudents" options={{ headerShown: false }} />
       <Stack.Screen
         name="student/[id]"
@@ -32,7 +39,7 @@ const HodMain = () => {
           headerShown: false,
         }}
       />
-      <Stack.Screen name="manageSchedule" options={{ headerShown: false }} />
+      {/* <Stack.Screen name="manageSchedule" options={{ headerShown: false }} /> */}
     </Stack>
   );
 };

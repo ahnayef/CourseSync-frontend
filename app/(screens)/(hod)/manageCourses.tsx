@@ -20,9 +20,8 @@ const ManageCourses = () => {
     try {
       const res = await request.get("/courses/hodGet");
       setDbCourses(res.data);
-      console.log(res.data);
     } catch (error: any) {
-      // toast(error.response?.data || error.message);
+      toast(error.response?.data || error.message);
     } finally {
       setLoading(false);
     }
@@ -42,7 +41,7 @@ const ManageCourses = () => {
     {
       id: 1,
       code: "CSE-12345",
-      name: "Demo Course",
+      name: "Demo Course 2",
       department: "CSE",
       credit: 3,
       instructor: "5",
@@ -87,7 +86,7 @@ const ManageCourses = () => {
   return (
     <GestureHandlerRootView className="h-full bg-gray-100">
       <FlatList
-        data={courses}
+        data={dbCourses}
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={() => (
           <View className="px-5 py-6 w-full">

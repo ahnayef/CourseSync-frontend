@@ -25,14 +25,6 @@ const DashboardLayout = () => {
           }}
         />
         <Stack.Screen
-          name="addCourse"
-          options={{
-            animation: "slide_from_bottom",
-            contentStyle: { backgroundColor: "white" },
-            title: "Add Course",
-          }}
-        />
-        <Stack.Screen
           name="course/[id]"
           options={{
             headerShown: false,
