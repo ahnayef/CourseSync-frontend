@@ -1,5 +1,5 @@
 import { View, ScrollView } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormInput from "../../components/FormInput/FormInput";
@@ -10,14 +10,30 @@ import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
 
 const AddCourse = () => {
-  const { isLoading, setLoading } = useContext(GlobalContext);
+  const { isLoading, setLoading, user } = useContext(GlobalContext);
 
   const [formState, setFormState] = useState({
     name: "",
     code: "",
     department: "",
     credit: "",
+    instructor: NaN,
   });
+
+  const [instructors, setInstructors] = useState<any>([]);
+
+  const getInstructors = async () => {
+    try {
+      const res = await request.get(`/users/getTeachers/${user.department}`);
+      setInstructors(res.data);
+    } catch (error: any) {
+      toast(error.response?.data || error.message);
+    }
+  };
+
+  useEffect(() => {
+    getInstructors();
+  }, []);
 
   const handleSubmit = async () => {
     if (
@@ -63,19 +79,41 @@ const AddCourse = () => {
               value={formState.credit}
               title="Credit"
               type="select"
-              selectItems={["3", "1.5"]}
+              selectItems={[
+                { label: "3", value: "3" },
+                { label: "1.5", value: "1.5" },
+              ]}
               onChangeFn={(e: any) => setFormState({ ...formState, credit: e })}
             />
 
             <FormInput
               value={formState.department}
               type="select"
-              selectItems={["CSE", "BBA", "English", "LLB"]}
+              selectItems={[
+                { label: "CSE", value: "CSE" },
+                { label: "BBA", value: "BBA" },
+                { label: "English", value: "English" },
+                { label: "LLB", value: "LLB" },
+              ]}
               title="Department"
               onChangeFn={(e: any) =>
                 setFormState({ ...formState, department: e })
               }
             />
+
+            <FormInput
+              value={formState.instructor}
+              type="select"
+              selectItems={instructors.map((instructor: any) => ({
+                label: instructor.name,
+                value: instructor.id,
+              }))}
+              title="Instructor"
+              onChangeFn={(e: any) =>
+                setFormState({ ...formState, instructor: e })
+              }
+            />
+
             <Cbutton title="Add Course" onclickFn={() => handleSubmit()} />
           </View>
         </GestureHandlerRootView>

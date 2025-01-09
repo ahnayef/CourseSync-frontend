@@ -2,13 +2,13 @@ import { Picker } from "@react-native-picker/picker";
 import { View, Text, TextInput } from "react-native";
 
 type FormInputProps = {
-  value: string;
+  value: any;
   title: string;
   onChangeFn: Function;
   isPassword?: boolean;
   type?: string;
 } & (
-  | { type: "select"; selectItems: string[] }
+  | { type: "select"; selectItems: { label: string; value: any }[] }
   | { type?: Exclude<string, "select">; selectItems?: never }
 );
 
@@ -33,7 +33,7 @@ const FormInput = ({
               enabled={false}
             />
             {selectItems.map((item, index) => (
-              <Picker.Item key={index} label={item} value={item} />
+              <Picker.Item key={index} label={item.label} value={item.value} />
             ))}
           </Picker>
         ) : type === "textarea" ? (
