@@ -189,19 +189,19 @@ function RootLayout() {
         }}
       />
       <Stack.Screen
-        name="(auth)"
+        name="(screens)/(auth)"
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="(dashboard)"
+        name="(screens)/(dashboard)"
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="(hod)"
+        name="(screens)/(hod)"
         options={{
           headerShown: false,
         }}

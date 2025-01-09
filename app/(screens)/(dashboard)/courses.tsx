@@ -124,7 +124,7 @@ const Cources = () => {
             <View className="flex w-full flex-col items-center justify-center text-center">
               <Text className="text-xl text-primary">Cources</Text>
 
-              {user.role === "teacher" && (
+              {/* {user.role === "teacher" && (
                 <TouchableOpacity
                   className="my-5 flex w-2/5 flex-row items-center justify-center rounded bg-primary p-3 text-center text-xl"
                   onPress={() => handleNavigate("./addCourse")}
@@ -132,7 +132,7 @@ const Cources = () => {
                   <Image source={addIcon} className="h-5 w-5" />
                   <Text className="ml-2 text-white">Add Cource</Text>
                 </TouchableOpacity>
-              )}
+              )} */}
             </View>
           )}
         />

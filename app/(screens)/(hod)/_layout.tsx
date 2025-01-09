@@ -25,6 +25,13 @@ const HodMain = () => {
           headerShown: false,
         }}
       />
+      <Stack.Screen name="manageCourses" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="hodcourse/[id]"
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen name="manageSchedule" options={{ headerShown: false }} />
     </Stack>
   );

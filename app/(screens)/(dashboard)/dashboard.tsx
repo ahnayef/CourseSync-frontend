@@ -13,6 +13,7 @@ import {
 } from "@/constants/icons";
 import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const Dashboard = () => {
   const { user, logout } = useContext(GlobalContext);
@@ -32,7 +33,7 @@ const Dashboard = () => {
               <Text className="text-primary">{user.name}!</Text>
             </Text>
           </View>
-
+          {/* For Students and Teachers  */}
           {user.role !== "hod" && user.role !== "admin" && (
             <View className="flex w-full flex-col items-center justify-center gap-5">
               {user.role !== "teacher" && (
@@ -64,19 +65,28 @@ const Dashboard = () => {
               </TouchableOpacity>
             </View>
           )}
-
+          {/* For HOD only */}
           {user.role === "hod" && (
             <View className="flex w-full flex-col items-center justify-center gap-5">
               <TouchableOpacity
-                className="flex flex-wrap w-2/5 flex-row items-center justify-around rounded bg-primary p-4 text-center text-xl"
+                className="flex w-2/5 flex-row flex-wrap items-center justify-around rounded bg-primary p-4 text-center text-xl"
                 onPress={() => handleNavigate("/manageStudents")}
               >
                 <Image source={groupIcon} className="h-5 w-5" />
                 <Text className="ml-2 w-full text-white">Manage Students</Text>
               </TouchableOpacity>
+
+              <TouchableOpacity
+                className="flex w-2/5 flex-row flex-wrap items-center justify-around rounded bg-primary p-4 text-center text-xl"
+                onPress={() => handleNavigate("/manageCourses")}
+              >
+                <MaterialIcons name="library-books" size={20} color="white" />
+                <Text className="ml-2 w-full text-white">Manage Courses</Text>
+              </TouchableOpacity>
+
             </View>
           )}
-
+          {/* For Everyone  */}
           <View className="flex w-full flex-col items-center justify-center gap-5 py-5">
             <TouchableOpacity
               className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
