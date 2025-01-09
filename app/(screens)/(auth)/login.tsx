@@ -56,7 +56,11 @@ export default function Login() {
               title="Role"
               onChangeFn={(e: any) => setFormState({ ...formState, role: e })}
               type="select"
-              selectItems={["Teacher", "Student", "Admin/HOD"]}
+              selectItems={[
+                { label: "Teacher", value: "Teacher" },
+                { label: "Student", value: "Student" },
+                { label: "Admin/HOD", value: "Admin/HOD" },
+              ]}
             />
 
             {formState.role === "Teacher" || formState.role === "Admin/HOD" ? (

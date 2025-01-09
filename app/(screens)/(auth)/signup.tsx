@@ -92,7 +92,10 @@ const Signup = () => {
               title="Role"
               onChangeFn={(e: any) => setFormState({ ...formState, role: e })}
               type="select"
-              selectItems={["Teacher", "Student"]}
+              selectItems={[
+                { label: "Teacher", value: "Teacher" },
+                { label: "Student", value: "Student" }
+              ]}
             />
 
             {formState.role === "Teacher" ? (
@@ -133,7 +136,12 @@ const Signup = () => {
                     setFormState({ ...formState, department: e })
                   }
                   type="select"
-                  selectItems={["CSE", "BBA", "English", "LLB"]}
+                  selectItems={[
+                    { label: "CSE", value: "CSE" },
+                    { label: "BBA", value: "BBA" },
+                    { label: "English", value: "English" },
+                    { label: "LLB", value: "LLB" }
+                  ]}
                 />
                 <FormInput
                   value={formState.password}
