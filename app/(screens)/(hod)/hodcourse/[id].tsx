@@ -1,32 +1,22 @@
-import {
-  View,
-  Text,
-  Button,
-  Alert,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Text, Alert, TouchableOpacity, ScrollView } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
-import { Ionicons, FontAwesome6 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { request } from "@/utils/request";
 import { toast } from "@/utils/toast";
 import FormInput from "@/app/components/FormInput/FormInput";
 import Cbutton from "@/app/components/Cbutton/Cbutton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import GlobalContext from "@/context/globalContext";
 
 const Student = () => {
   const { id } = useLocalSearchParams();
 
-  const [course, setCourse] = useState({
-    id: "1",
-    name: "Demo Course",
-    code: "CSE-123",
-    credit: "3",
-    instructor: "Demo Teacher",
-  });
+  const { user } = useContext(GlobalContext);
+
+  const [course, setCourse] = useState<any>({});
 
   const [teachers, setTeachers] = useState([
     {
@@ -45,15 +35,26 @@ const Student = () => {
 
   const getCourse = async () => {
     try {
-      const res = await request.get(`/courses/getOne/${id}`);
+      const res = await request.get(`/courses/get/${id}`);
+      console.log(res.data);
       setCourse(res.data);
     } catch (error: any) {
-      // toast(error.response?.data || error.message);
+      toast(error.response?.data || error.message);
+    }
+  };
+
+  const getTeachers = async () => {
+    try {
+      const res = await request.get(`/users/getTeachers/${user.department}`);
+      setTeachers(res.data);
+    } catch (error: any) {
+      toast(error.response?.data || error.message);
     }
   };
 
   useEffect(() => {
     getCourse();
+    getTeachers();
   }, []);
 
   const handleDelete = () => {
@@ -88,7 +89,7 @@ const Student = () => {
         instructorId: instructorId,
       });
       toast(res as any);
-      setCourse((prevInstructor) => ({
+      setCourse((prevInstructor: any) => ({
         ...prevInstructor,
         instructor: instructorId,
       }));
@@ -124,7 +125,7 @@ const Student = () => {
                 value={course.credit}
                 title="Credit"
                 type="select"
-                selectItems={["3", "1.5"]}
+                selectItems={[3, 1.5] as any}
                 onChangeFn={(e: any) => setCourse({ ...course, credit: e })}
               />
 
@@ -140,11 +141,15 @@ const Student = () => {
                 }
               >
                 {teachers.map((teacher) => (
-                  <Picker.Item key={teacher.id} label={teacher.name} value={teacher.id} />
+                  <Picker.Item
+                    key={teacher.id}
+                    label={teacher.name}
+                    value={teacher.id}
+                  />
                 ))}
               </Picker>
             </View>
-            
+
             <Text className="mb-2 font-bold text-gray-800">Action:</Text>
             <TouchableOpacity
               onPress={handleDelete}
