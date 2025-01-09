@@ -72,7 +72,7 @@ const Student = () => {
 
   const updateCourse = () => {
     request
-      .put(`/course/update/${id}`, course)
+      .put(`/courses/update/`, course)
       .then((res) => {
         toast(res as any);
       })
@@ -107,8 +107,8 @@ const Student = () => {
                 title="Credit"
                 type="select"
                 selectItems={[
-                  { label: "3", value: 3 },
-                  { label: "1.5", value: 1.5 },
+                  { label: "3", value: "3" },
+                  { label: "1.5", value: "1.5" },
                 ]}
                 onChangeFn={(e: any) => setCourse({ ...course, credit: e })}
               />
