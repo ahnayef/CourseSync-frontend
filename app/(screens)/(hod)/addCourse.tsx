@@ -40,10 +40,12 @@ const AddCourse = () => {
       formState.name !== "" &&
       formState.code !== "" &&
       formState.department !== "" &&
-      formState.credit !== ""
+      formState.credit !== "" &&
+      !Number.isNaN(formState.instructor)
     ) {
       setLoading(true);
       try {
+        console.log(formState);
         const res = await request.post("/courses/create", formState);
         setLoading(false);
         toast(res as any);

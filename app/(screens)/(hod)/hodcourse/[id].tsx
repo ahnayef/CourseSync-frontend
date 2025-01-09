@@ -2,7 +2,7 @@ import { View, Text, Alert, TouchableOpacity, ScrollView } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { request } from "@/utils/request";
 import { toast } from "@/utils/toast";
 import FormInput from "@/app/components/FormInput/FormInput";
@@ -18,20 +18,7 @@ const Student = () => {
 
   const [course, setCourse] = useState<any>({});
 
-  const [teachers, setTeachers] = useState([
-    {
-      id: 1,
-      name: "Demo Teacher 1",
-    },
-    {
-      id: 2,
-      name: "Demo Teacher 2",
-    },
-    {
-      id: 3,
-      name: "Demo Teacher 3",
-    },
-  ]);
+  const [instructors, setInstructors] = useState([]);
 
   const getCourse = async () => {
     try {
@@ -46,7 +33,7 @@ const Student = () => {
   const getTeachers = async () => {
     try {
       const res = await request.get(`/users/getTeachers/${user.department}`);
-      setTeachers(res.data);
+      setInstructors(res.data);
     } catch (error: any) {
       toast(error.response?.data || error.message);
     }
@@ -82,23 +69,17 @@ const Student = () => {
     );
   };
 
-  const handleInstructorChange = async (instructorId: string) => {
-    try {
-      const res = await request.put(`/course/updateInstructor/`, {
-        courseId: id,
-        instructorId: instructorId,
-      });
-      toast(res as any);
-      setCourse((prevInstructor: any) => ({
-        ...prevInstructor,
-        instructor: instructorId,
-      }));
-    } catch (error: any) {
-      toast(error.response?.data || error.message);
-    }
-  };
 
-  const saveCourse = () => {};
+  const updateCourse = () => {
+    request
+      .put(`/course/update/${id}`, course)
+      .then((res) => {
+        toast(res as any);
+      })
+      .catch((error: any) => {
+        toast(error.response?.data || error.message);
+      });
+  };
 
   return (
     <ScrollView>
@@ -125,38 +106,41 @@ const Student = () => {
                 value={course.credit}
                 title="Credit"
                 type="select"
-                selectItems={[3, 1.5] as any}
+                selectItems={[
+                  { label: "3", value: 3 },
+                  { label: "1.5", value: 1.5 },
+                ]}
                 onChangeFn={(e: any) => setCourse({ ...course, credit: e })}
               />
 
-              <Cbutton title="Save" onclickFn={() => saveCourse()} />
-            </View>
+              <FormInput
+                value={course.instructor}
+                type="select"
+                selectItems={instructors.map((instructor: any) => ({
+                  label: instructor.name,
+                  value: instructor.id,
+                }))}
+                title="Instructor"
+                onChangeFn={(e: any) => setCourse({ ...course, instructor: e })}
+              />
 
-            <Text className="mb-2 font-bold text-gray-800">Instructor:</Text>
-            <View className="mb-6 rounded-lg bg-white p-2">
-              <Picker
-                selectedValue={course.instructor}
-                onValueChange={(itemValue: string) =>
-                  handleInstructorChange(itemValue)
-                }
-              >
-                {teachers.map((teacher) => (
-                  <Picker.Item
-                    key={teacher.id}
-                    label={teacher.name}
-                    value={teacher.id}
-                  />
-                ))}
-              </Picker>
+              <Cbutton title="Save" onclickFn={() => updateCourse()} />
             </View>
 
             <Text className="mb-2 font-bold text-gray-800">Action:</Text>
             <TouchableOpacity
               onPress={handleDelete}
+              className="mb-4 flex-row items-center justify-center rounded-lg bg-primary p-3"
+            >
+              <FontAwesome6 name="rotate-left" size={20} color="#fff" />
+              <Text className="text-white">Reset</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleDelete}
               className="mb-4 flex-row items-center justify-center rounded-lg bg-red-600 p-3"
             >
               <Ionicons name="trash" size={24} color="#fff" className="mr-2" />
-              <Text className="text-white">Delete Course</Text>
+              <Text className="text-white">Delete</Text>
             </TouchableOpacity>
           </View>
         </GestureHandlerRootView>
