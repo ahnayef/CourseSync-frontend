@@ -1,45 +1,70 @@
 import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
-import React, { useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import { handleNavigate } from "@/utils/navigate";
 import { addIcon } from "@/constants/icons";
 import GlobalContext from "@/context/globalContext";
 import { FontAwesome6 } from "@expo/vector-icons";
+import { useFocusEffect } from "expo-router";
+import { request } from "@/utils/request";
+import { toast } from "@/utils/toast";
 
 const Schedule = () => {
   const { user, isLoading } = useContext(GlobalContext);
 
-  const schedule = [
-    {
-      id:1,
-      name: "Operating System",
-      teacher: "Muthmainna Mou",
-      from: "8:30 AM",
-      to: "9:55 AM",
-      courseCode: "CSE-06132213",
-      room: "R-206",
-    },
-    {
-      id:2,
-      name: "Theory Of Computation",
-      teacher: "Dr Arif Ahmad",
-      from: "10:00 AM",
-      to: "11:25 AM",
-      courseCode: "CSE-06132215",
-      room: "R-301",
-    },
-    {
-      id:3,
-      name: "Operating System Lab",
-      teacher: "Muthmainna Mou",
-      from: "11:30 AM",
-      to: "2:25 PM",
-      courseCode: "CSE-06132214",
-      room: "R-309",
-    },
-  ];
+  // const schedule = [
+  //   {
+  //     id:1,
+  //     name: "Operating System",
+  //     teacher: "Muthmainna Mou",
+  //     from: "8:30 AM",
+  //     to: "9:55 AM",
+  //     courseCode: "CSE-06132213",
+  //     room: "R-206",
+  //   },
+  //   {
+  //     id:2,
+  //     name: "Theory Of Computation",
+  //     teacher: "Dr Arif Ahmad",
+  //     from: "10:00 AM",
+  //     to: "11:25 AM",
+  //     courseCode: "CSE-06132215",
+  //     room: "R-301",
+  //   },
+  //   {
+  //     id:3,
+  //     name: "Operating System Lab",
+  //     teacher: "Muthmainna Mou",
+  //     from: "11:30 AM",
+  //     to: "2:25 PM",
+  //     courseCode: "CSE-06132214",
+  //     room: "R-309",
+  //   },
+  // ];
 
+  const [schedule, setSchedule] = useState([]);
+
+  const getSchedules = async () => {
+    try {
+      const res = await request.get("/schedules/get");
+      console.log(res.data);
+      setSchedule(res.data);
+    } catch (error: any) {
+      console.log(error.response?.data || error.message);
+      toast(error.response?.data || error.message);
+    }
+  };
+
+  useEffect(() => {
+    getSchedules();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getSchedules();
+    }, []),
+  );
 
   const renderSchedule = (item: any) => {
     return (
@@ -47,7 +72,7 @@ const Schedule = () => {
         <Text className="text-2xl font-semibold text-primary">{item.name}</Text>
         <Text className="text-sm text-gray-600">{item.teacher}</Text>
         <Text className="text-sm text-gray-600">
-          {item.from} - {item.to}
+          {item.start} - {item.end}
         </Text>
         <Text className="text-sm text-gray-500">{item.courseCode}</Text>
         <Text className="text-sm text-gray-500">{item.room}</Text>
