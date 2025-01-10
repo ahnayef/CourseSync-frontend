@@ -7,20 +7,13 @@ import Cbutton from "@/app/components/Cbutton/Cbutton";
 import GlobalContext from "@/context/globalContext";
 import { request } from "@/utils/request";
 import { toast } from "@/utils/toast";
+import { scheduleResponse } from "@/models/model";
+import { handleNavigate } from "@/utils/navigate";
 
 const addSchedule = () => {
   const { user } = useContext(GlobalContext);
 
-  const [schedule, setSchedule] = useState({
-    course: "",
-    instructor: "",
-    day: "",
-    department: "",
-    session: "",
-    start: "2:00:00",
-    end: "07:00:00",
-    room: "",
-  });
+  const [schedule, setSchedule] = useState<any>();
 
   // const instructors = [
   //   {
@@ -57,8 +50,10 @@ const addSchedule = () => {
   const getInstructors = async () => {
     try {
       const res = await request.get("/users/getTeachers/");
+      console.log(res.data);
       setInstructors(res.data);
     } catch (error: any) {
+      console.log(error);
       toast(error.response?.data || error.message);
     }
   };
@@ -79,14 +74,33 @@ const addSchedule = () => {
     getInstructors();
   }, []);
 
-  const handleSubmit = () => {
-    setSchedule({ ...schedule, department: user.department });
-    request
-      .post("/schedules/create", schedule)
-      .then((res) => toast(res.data))
-      .catch((error) => {
+  const handleSubmit = async () => {
+    if (
+      schedule?.session &&
+      schedule?.day &&
+      schedule?.start &&
+      schedule?.end &&
+      schedule?.course &&
+      schedule?.instructor &&
+      schedule?.room
+    ) {
+      if (schedule?.start > schedule?.end) {
+        toast("Start time should be less than end time");
+        return;
+      }
+      setSchedule({ ...schedule, department: user.department });
+
+      try {
+        const res = await request.post("/schedules/create", schedule);
+        toast(res as any);
+        handleNavigate("/schedule");
+      } catch (error: any) {
         toast(error.response?.data || error.message);
-      });
+      }
+    } else {
+      toast("Please fill all fields");
+      return;
+    }
   };
 
   return (
@@ -94,14 +108,13 @@ const addSchedule = () => {
       <SafeAreaView>
         <GestureHandlerRootView className="flex-col items-center justify-center font-notoSB">
           <View className="w-full p-5">
-
             <FormInput
-              value={schedule.session}
+              value={schedule?.session}
               title="Session"
               onChangeFn={(e: any) => setSchedule({ ...schedule, session: e })}
             />
             <FormInput
-              value={schedule.day}
+              value={schedule?.day}
               title="Day"
               type="select"
               selectItems={[
@@ -115,20 +128,20 @@ const addSchedule = () => {
             />
 
             <FormInput
-              value={new Date(`1970-01-01T${schedule.start}`)}
+              value={new Date(`1970-01-01T${schedule?.start}`)}
               type="time"
               title="Start"
               onChangeFn={(e: any) => setSchedule({ ...schedule, start: e })}
             />
             <FormInput
-              value={new Date(`1970-01-01T${schedule.end}`)}
+              value={new Date(`1970-01-01T${schedule?.end}`)}
               type="time"
               title="End"
               onChangeFn={(e: any) => setSchedule({ ...schedule, end: e })}
             />
 
             <FormInput
-              value={schedule.course}
+              value={schedule?.course}
               title="Course"
               type="select"
               selectItems={courses.map((course: any) => ({
@@ -139,7 +152,7 @@ const addSchedule = () => {
             />
 
             <FormInput
-              value={schedule.instructor}
+              value={schedule?.instructor}
               type="select"
               selectItems={instructors.map((instructor: any) => ({
                 label: instructor.name,
@@ -152,7 +165,7 @@ const addSchedule = () => {
             />
 
             <FormInput
-              value={schedule.room}
+              value={schedule?.room}
               title="Room"
               onChangeFn={(e: any) => setSchedule({ ...schedule, room: e })}
             />

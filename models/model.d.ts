@@ -15,3 +15,25 @@ export interface AuthContext {
     logout: () => void;
     checkIsLoggedIn: () => void;
 }
+
+export interface courseResponse {
+    id: number;
+    name: string;
+    code: string;
+    department: string;
+    credit: number;
+    semester: number;
+    session: string;
+}
+
+export interface scheduleResponse {
+    id: number;
+    course: number;
+    instructor: number;
+    day: string;
+    start: string;
+    end: string;
+    room: string;
+    session: string;
+    department: string;
+}

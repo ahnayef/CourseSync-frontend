@@ -45,7 +45,6 @@ const AddCourse = () => {
     ) {
       setLoading(true);
       try {
-        console.log(formState);
         const res = await request.post("/courses/create", formState);
         setLoading(false);
         toast(res as any);

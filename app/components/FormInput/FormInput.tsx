@@ -54,6 +54,7 @@ const FormInput = ({
               value={value && value.toLocaleTimeString()}
               placeholder={`Enter time for ${title}`}
               onPress={() => setShowTimePicker(true)}
+              className="cursor-pointer text-center bg-black/10"
             />
             {showTimePicker && (
               <RNDateTimePicker
