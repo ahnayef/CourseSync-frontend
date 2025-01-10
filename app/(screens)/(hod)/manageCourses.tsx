@@ -37,30 +37,19 @@ const ManageCourses = () => {
     }, []),
   );
 
-  const courses = [
-    {
-      id: 1,
-      code: "CSE-12345",
-      name: "Demo Course 2",
-      department: "CSE",
-      credit: 3,
-      instructor: "5",
-    },
-  ];
+  // const [filteredCourses, setFilteredCourses] = useState(dbCourses);
 
-  const [filteredCourses, setFilteredCourses] = useState(courses);
-
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    if (query === "") {
-      setFilteredCourses(courses);
-    } else {
-      const filtered = courses.filter((student) =>
-        student.name.toLowerCase().includes(query.toLowerCase()),
-      );
-      setFilteredCourses(filtered);
-    }
-  };
+  // const handleSearch = (query: string) => {
+  //   setSearchQuery(query);
+  //   if (query === "") {
+  //     setFilteredCourses(dbCourses);
+  //   } else {
+  //     const filtered = dbCourses.filter((course:any) =>
+  //       course.name.toLowerCase().includes(query.toLowerCase()),
+  //     );
+  //     setFilteredCourses(filtered);
+  //   }
+  // };
 
   const renderCourses = ({ item }: any) => (
     <View className="mb-4 rounded-lg bg-white shadow-md">
@@ -69,8 +58,10 @@ const ManageCourses = () => {
           <Text className="text-xl font-semibold text-gray-900">
             {item.name}
           </Text>
-          <Text className="text-sm text-gray-500">{item.sid}</Text>
-          <Text className="text-sm text-gray-500">{item.session}</Text>
+          <Text className="text-sm text-gray-500">
+            Course code: {item.code}
+          </Text>
+          <Text className="text-sm text-gray-500">Credit: {item.credit}</Text>
         </View>
         <TouchableOpacity
           onPress={() => handleNavigate(`/hodcourse/${item.id}`)}
@@ -89,22 +80,20 @@ const ManageCourses = () => {
         data={dbCourses}
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={() => (
-          <View className="px-5 py-6 w-full">
+          <View className="w-full px-5 py-6">
             <Text className="mb-4 text-center text-3xl font-bold text-primary">
               Manage Courses
             </Text>
 
-            
-              <TouchableOpacity
-                className="my-5 flex w-full flex-row items-center justify-center rounded bg-primary p-2 text-center text-xl"
-                onPress={() => handleNavigate("./addCourse")}
-              >
-                <FontAwesome name="plus" size={20} color="white" />
-                <Text className="ml-2 text-white">Add Cource</Text>
-              </TouchableOpacity>
-            
+            <TouchableOpacity
+              className="my-5 flex w-full flex-row items-center justify-center rounded bg-primary p-2 text-center text-xl"
+              onPress={() => handleNavigate("./addCourse")}
+            >
+              <FontAwesome name="plus" size={20} color="white" />
+              <Text className="ml-2 text-white">Add Cource</Text>
+            </TouchableOpacity>
 
-            <View className="mb-4 flex flex-row items-center justify-between bg-white">
+            {/* <View className="mb-4 flex flex-row items-center justify-between bg-white">
               <TextInput
                 className="flex-1 bg-transparent"
                 placeholder="Search courses..."
@@ -112,7 +101,7 @@ const ManageCourses = () => {
                 onChangeText={handleSearch}
                 placeholderTextColor="#999"
               />
-            </View>
+            </View> */}
           </View>
         )}
         renderItem={renderCourses}
