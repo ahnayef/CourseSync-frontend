@@ -11,8 +11,8 @@ const addSchedule = () => {
 
   const [schedule, setSchedule] = useState({
     day: "",
-    from: "",
-    to: "",
+    from: new Date(1736498040000),
+    to: new Date(1736498040000),
     course: "",
     instructor: "",
     room: "",
@@ -74,7 +74,7 @@ const addSchedule = () => {
             />
 
             <FormInput
-              value={schedule.from}
+              value={schedule.from as any}
               type="time"
               title="From"
               onChangeFn={(e: any) => setSchedule({ ...schedule, from: e })}
@@ -83,7 +83,7 @@ const addSchedule = () => {
               value={schedule.to}
               type="time"
               title="To"
-              onChangeFn={(e: any) => setSchedule({ ...schedule, from: e })}
+              onChangeFn={(e: any) => setSchedule({ ...schedule, to: e })}
             />
 
             <FormInput

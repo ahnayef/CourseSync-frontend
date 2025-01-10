@@ -1,5 +1,7 @@
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import { View, Text, TextInput } from "react-native";
+import React, { useState } from "react";
 
 type FormInputProps = {
   value: any;
@@ -20,6 +22,8 @@ const FormInput = ({
   type,
   selectItems = [],
 }: FormInputProps) => {
+  const [showTimePicker, setShowTimePicker] = useState(false);
+
   return (
     <View className="flex w-full gap-2 py-3">
       <Text className="font-medium text-primary">{title}:</Text>
@@ -40,19 +44,35 @@ const FormInput = ({
           <TextInput
             value={value}
             onChangeText={(e) => onChangeFn(e)}
-            placeholder={`Enter your ${title}`}
             multiline
             numberOfLines={4}
             style={{ textAlignVertical: "top" }}
           />
         ) : type === "time" ? (
-          // TODO: Add time picker
-          <TextInput
-            value={value}
-            onChangeText={(e) => onChangeFn(e)}
-            placeholder={`Enter time for ${title}`}
-            keyboardType="numeric"
-          />
+          <>
+            <TextInput
+              value={value && new Date(value).toLocaleTimeString()}
+              placeholder={`Enter time for ${title}`}
+              onPress={() => {
+                setShowTimePicker(true);
+                console.log(
+                  "Time: ",
+                  value && new Date(value).toLocaleTimeString(),
+                );
+              }}
+            />
+            {showTimePicker && (
+              <RNDateTimePicker
+                value={value && new Date(value)}
+                mode="time"
+                onChange={(e) => {
+                  // console.log(e.nativeEvent.timestamp);
+                  onChangeFn(e.nativeEvent.timestamp);
+                  setShowTimePicker(false);
+                }}
+              ></RNDateTimePicker>
+            )}
+          </>
         ) : (
           <TextInput
             value={value}
