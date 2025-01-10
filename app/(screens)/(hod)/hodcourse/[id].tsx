@@ -10,6 +10,7 @@ import Cbutton from "@/app/components/Cbutton/Cbutton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import GlobalContext from "@/context/globalContext";
+import { handleNavigate } from "@/utils/navigate";
 
 const Student = () => {
   const { id } = useLocalSearchParams();
@@ -44,10 +45,21 @@ const Student = () => {
     getTeachers();
   }, []);
 
-  const handleDelete = () => {
+  const updateCourse = () => {
+    request
+      .put(`/courses/update/`, course)
+      .then((res) => {
+        toast(res as any);
+      })
+      .catch((error: any) => {
+        toast(error.response?.data || error.message);
+      });
+  };
+
+  const deleteCourse = () => {
     Alert.alert(
       "Delete Course",
-      `Are you sure you want to delete this student?`,
+      "Are you sure you want to delete this course?",
       [
         {
           text: "Cancel",
@@ -58,7 +70,8 @@ const Student = () => {
           text: "OK",
           onPress: async () => {
             try {
-              const res = await request.delete(`/course/delete/${course.id}`);
+              const res = await request.delete(`/courses/delete/${course.id}`);
+              handleNavigate("/manageCourses");
               toast(res as any);
             } catch (error: any) {
               toast(error.response?.data || error.message);
@@ -67,18 +80,6 @@ const Student = () => {
         },
       ],
     );
-  };
-
-
-  const updateCourse = () => {
-    request
-      .put(`/courses/update/`, course)
-      .then((res) => {
-        toast(res as any);
-      })
-      .catch((error: any) => {
-        toast(error.response?.data || error.message);
-      });
   };
 
   return (
@@ -129,14 +130,14 @@ const Student = () => {
 
             <Text className="mb-2 font-bold text-gray-800">Action:</Text>
             <TouchableOpacity
-              onPress={handleDelete}
+              onPress={() => console.log("Reset")}
               className="mb-4 flex-row items-center justify-center rounded-lg bg-primary p-3"
             >
               <FontAwesome6 name="rotate-left" size={20} color="#fff" />
               <Text className="text-white">Reset</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={handleDelete}
+              onPress={deleteCourse}
               className="mb-4 flex-row items-center justify-center rounded-lg bg-red-600 p-3"
             >
               <Ionicons name="trash" size={24} color="#fff" className="mr-2" />

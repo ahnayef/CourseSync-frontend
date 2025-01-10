@@ -33,32 +33,6 @@ const Cources = () => {
     }
   };
 
-  const handleCourseDelete = (id: number) => {
-    Alert.alert(
-      "Delete Course",
-      "Are you sure you want to delete this course?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: async () => {
-            try {
-              const res = await request.delete(`/courses/delete/${id}`);
-              getCourse();
-              toast(res as any);
-            } catch (error: any) {
-              toast(error.response?.data || error.message);
-            }
-          },
-        },
-      ],
-    );
-  };
-
   useEffect(() => {
     getCourse();
   }, []);
@@ -83,15 +57,6 @@ const Cources = () => {
           <Text className="text-sm font-medium">Course Code: {item.code}</Text>
           <Text className="text-xs">Department: {item.department}</Text>
         </View>
-
-        {user.role === "teacher" && (
-          <TouchableOpacity
-            onPress={() => handleCourseDelete(item.id)}
-            className="absolute right-2 top-2"
-          >
-            <Image source={trashIcon} className="h-5 w-5" />
-          </TouchableOpacity>
-        )}
       </TouchableOpacity>
     );
   };
