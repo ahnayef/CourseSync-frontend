@@ -25,6 +25,7 @@ const Cources = () => {
     setLoading(true);
     try {
       const res = await request.get("/courses/get");
+      console.log(res.data);
       setCourses(res.data);
     } catch (error: any) {
       toast(error.response?.data || error.message);
@@ -56,6 +57,12 @@ const Cources = () => {
         <View className="mt-3 space-y-2">
           <Text className="text-sm font-medium">Course Code: {item.code}</Text>
           <Text className="text-xs">Department: {item.department}</Text>
+          {user.role == "teacher" && (
+            <Text className="text-xs">
+              {item.studentCount}{" "}
+              {item.studentCount === 1 ? "Student" : "Students"}
+            </Text>
+          )}
         </View>
       </TouchableOpacity>
     );
