@@ -82,7 +82,6 @@ const Cources = () => {
         <View className="mt-3 space-y-2">
           <Text className="text-sm font-medium">Course Code: {item.code}</Text>
           <Text className="text-xs">Department: {item.department}</Text>
-          <Text className="text-xs">Session: {item.session}</Text>
         </View>
 
         {user.role === "teacher" && (
