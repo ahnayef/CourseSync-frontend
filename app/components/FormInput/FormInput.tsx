@@ -53,20 +53,13 @@ const FormInput = ({
             <TextInput
               value={value && new Date(value).toLocaleTimeString()}
               placeholder={`Enter time for ${title}`}
-              onPress={() => {
-                setShowTimePicker(true);
-                console.log(
-                  "Time: ",
-                  value && new Date(value).toLocaleTimeString(),
-                );
-              }}
+              onPress={() => setShowTimePicker(true)}
             />
             {showTimePicker && (
               <RNDateTimePicker
                 value={value && new Date(value)}
                 mode="time"
                 onChange={(e) => {
-                  // console.log(e.nativeEvent.timestamp);
                   onChangeFn(e.nativeEvent.timestamp);
                   setShowTimePicker(false);
                 }}
