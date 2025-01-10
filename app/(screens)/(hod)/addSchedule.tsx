@@ -75,11 +75,13 @@ const addSchedule = () => {
 
             <FormInput
               value={schedule.from}
+              type="time"
               title="From"
               onChangeFn={(e: any) => setSchedule({ ...schedule, from: e })}
             />
             <FormInput
               value={schedule.to}
+              type="time"
               title="To"
               onChangeFn={(e: any) => setSchedule({ ...schedule, from: e })}
             />

@@ -45,6 +45,14 @@ const FormInput = ({
             numberOfLines={4}
             style={{ textAlignVertical: "top" }}
           />
+        ) : type === "time" ? (
+          // TODO: Add time picker
+          <TextInput
+            value={value}
+            onChangeText={(e) => onChangeFn(e)}
+            placeholder={`Enter time for ${title}`}
+            keyboardType="numeric"
+          />
         ) : (
           <TextInput
             value={value}
