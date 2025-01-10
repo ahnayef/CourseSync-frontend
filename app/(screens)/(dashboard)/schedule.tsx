@@ -94,7 +94,7 @@ const Schedule = () => {
               {user.role === "hod" && (
                 <TouchableOpacity
                   className="my-5 flex w-2/5 flex-row items-center justify-center rounded bg-primary p-3 text-center text-xl"
-                  onPress={() => handleNavigate("./addSchedule")}
+                  onPress={() => handleNavigate("/addSchedule")}
                 >
                   <Image source={addIcon} className="h-5 w-5" />
                   <Text className="ml-2 text-white">Add Schedule</Text>

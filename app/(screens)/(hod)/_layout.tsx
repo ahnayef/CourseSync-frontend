@@ -25,6 +25,14 @@ const HodMain = () => {
           title: "Add Course",
         }}
       />
+      <Stack.Screen
+        name="addSchedule"
+        options={{
+          animation: "slide_from_bottom",
+          contentStyle: { backgroundColor: "white" },
+          title: "Add Schedule",
+        }}
+      />
       <Stack.Screen name="manageStudents" options={{ headerShown: false }} />
       <Stack.Screen
         name="student/[id]"
