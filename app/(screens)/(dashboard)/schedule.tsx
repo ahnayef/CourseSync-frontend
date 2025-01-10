@@ -12,6 +12,7 @@ const Schedule = () => {
 
   const schedule = [
     {
+      id:1,
       name: "Operating System",
       teacher: "Muthmainna Mou",
       from: "8:30 AM",
@@ -20,6 +21,7 @@ const Schedule = () => {
       room: "R-206",
     },
     {
+      id:2,
       name: "Theory Of Computation",
       teacher: "Dr Arif Ahmad",
       from: "10:00 AM",
@@ -28,6 +30,7 @@ const Schedule = () => {
       room: "R-301",
     },
     {
+      id:3,
       name: "Operating System Lab",
       teacher: "Muthmainna Mou",
       from: "11:30 AM",

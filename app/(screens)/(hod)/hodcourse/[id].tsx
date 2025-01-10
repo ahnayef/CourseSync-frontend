@@ -12,7 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
 
-const Student = () => {
+const hodCourse = () => {
   const { id } = useLocalSearchParams();
 
   const { user } = useContext(GlobalContext);
@@ -150,4 +150,4 @@ const Student = () => {
   );
 };
 
-export default Student;
+export default hodCourse;

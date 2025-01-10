@@ -47,6 +47,14 @@ const HodMain = () => {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="editSchedule/[id]"
+        options={{
+          animation: "slide_from_bottom",
+          contentStyle: { backgroundColor: "white" },
+          title: "Edit Schedule",
+        }}
+      />
       {/* <Stack.Screen name="manageSchedule" options={{ headerShown: false }} /> */}
     </Stack>
   );
