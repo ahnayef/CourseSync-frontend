@@ -84,7 +84,6 @@ const editSchedule = () => {
         toast(res as any);
         handleNavigate("/schedule");
       } catch (error: any) {
-        console.log(error.response?.data || error.message);
         toast(error.response?.data || error.message);
       }
     } else {
