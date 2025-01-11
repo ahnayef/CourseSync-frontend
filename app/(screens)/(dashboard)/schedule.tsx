@@ -13,7 +13,6 @@ import { toast } from "@/utils/toast";
 const Schedule = () => {
   const { user, isLoading } = useContext(GlobalContext);
 
-
   const [schedule, setSchedule] = useState([]);
   const [filteredSchedule, setFilteredSchedule] = useState<any>([]);
   // let filteredSchedule: any = [];
@@ -98,17 +97,19 @@ const Schedule = () => {
         </Text>
         <Text className="text-sm text-gray-500">{item.courseCode}</Text>
         <Text className="text-sm text-gray-500">{item.room}</Text>
+        {(user.role === "hod" || user.role === "teacher") && (
+          <Text className="absolute bottom-1 right-2 text-sm text-primary opacity-60">
+            {item.session}
+          </Text>
+        )}
 
         {user.role === "hod" && (
-          <>
-          <Text className=" text-primary absolute right-2 bottom-1 text-sm  opacity-60">{item.session}</Text>
           <TouchableOpacity
             onPress={() => handleNavigate(`/editSchedule/${item.id}`)}
             className="absolute right-2 top-2"
-            >
+          >
             <FontAwesome6 name="edit" size={17} color="black" />
           </TouchableOpacity>
-            </>
         )}
       </View>
     );
