@@ -62,6 +62,13 @@ const DashboardLayout = () => {
             headerShown: false,
           }}
         />
+
+        <Stack.Screen
+          name="(discussion)"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </>
   );

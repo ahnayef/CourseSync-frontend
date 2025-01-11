@@ -49,7 +49,7 @@ const Dashboard = () => {
               {user.role !== "teacher" && (
                 <TouchableOpacity
                   className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
-                  onPress={() => alert("Under Construction")}
+                  onPress={() => handleNavigate("discussion")}
                 >
                   <Image source={discussionIcon} className="h-5 w-5" />
                   <Text className="ml-2 text-white">Discussion</Text>
