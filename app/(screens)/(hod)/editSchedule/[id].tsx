@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -7,21 +7,38 @@ import Cbutton from "@/app/components/Cbutton/Cbutton";
 import GlobalContext from "@/context/globalContext";
 import { request } from "@/utils/request";
 import { toast } from "@/utils/toast";
-import { scheduleResponse } from "@/models/model";
 import { handleNavigate } from "@/utils/navigate";
+import { useLocalSearchParams } from "expo-router";
 
 const editSchedule = () => {
   const { user } = useContext(GlobalContext);
+  const { id } = useLocalSearchParams();
 
-  const [schedule, setSchedule] = useState<any>();
+  const [schedule, setSchedule] = useState<any>({
+    session: "",
+    day: "",
+    start: "",
+    end: "",
+    course: "",
+    instructor: "",
+    room: "",
+  });
 
+  const getSchedule = async () => {
+    try {
+      const res = await request.get(`/schedules/hodGet/${id}`);
+      console.log(res.data);
+      setSchedule(res.data);
+    } catch (error: any) {
+      toast(error.response?.data || error.message);
+    }
+  };
 
   const [instructors, setInstructors] = useState<any>([]);
 
   const getInstructors = async () => {
     try {
       const res = await request.get("/users/getTeachers/");
-      console.log(res.data);
       setInstructors(res.data);
     } catch (error: any) {
       console.log(error);
@@ -41,6 +58,7 @@ const editSchedule = () => {
   };
 
   useEffect(() => {
+    getSchedule();
     getCourses();
     getInstructors();
   }, []);
@@ -59,10 +77,10 @@ const editSchedule = () => {
         toast("Start time should be less than end time");
         return;
       }
-      
+
       try {
         setSchedule({ ...schedule, department: user.department });
-        const res = await request.post("/schedules/create", schedule);
+        const res = await request.post("/schedules/update", schedule);
         toast(res as any);
         handleNavigate("/schedule");
       } catch (error: any) {
@@ -141,7 +159,7 @@ const editSchedule = () => {
               onChangeFn={(e: any) => setSchedule({ ...schedule, room: e })}
             />
 
-            <Cbutton title="Add Schedule" onclickFn={() => handleSubmit()} />
+            <Cbutton title="Save" onclickFn={() => handleSubmit()} />
           </View>
         </GestureHandlerRootView>
       </SafeAreaView>
