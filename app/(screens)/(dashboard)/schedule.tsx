@@ -42,6 +42,33 @@ const Schedule = () => {
     setFilteredSchedule(schedule.filter((item: any) => item.day === today));
   };
 
+  const handleDelete = (id: any) => {
+    Alert.alert(
+      "Delete Schedule",
+      "Are you sure you want to delete this schedule?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: async () => {
+            try {
+              const res = await request.delete(`/schedules/delete/${id}`);
+              toast(res as any);
+              setFilteredSchedule(filteredSchedule.filter((item: any) => item.id !== id));
+            } catch (error: any) {
+              console.log(error.response?.data || error.message);
+              toast(error.response?.data || error.message);
+            }
+          },
+        },
+      ],
+    );
+  };
+
   const getSchedules = async () => {
     try {
       const res = await request.get("/schedules/get");
@@ -87,18 +114,27 @@ const Schedule = () => {
         <Text className="text-sm text-gray-500">{item.courseCode}</Text>
         <Text className="text-sm text-gray-500">{item.room}</Text>
         {(user.role === "hod" || user.role === "teacher") && (
-          <Text className="absolute bottom-1 right-2 text-sm text-primary opacity-60">
+          <Text className="absolute bottom-2 right-2 rounded-lg bg-primary px-2 py-1 text-xs text-white opacity-80">
             {item.session}
           </Text>
         )}
 
         {user.role === "hod" && (
-          <TouchableOpacity
-            onPress={() => handleNavigate(`/editSchedule/${item.id}`)}
-            className="absolute right-2 top-2"
-          >
-            <FontAwesome6 name="edit" size={17} color="black" />
-          </TouchableOpacity>
+          <View className="absolute right-0 top-0 flex-row items-center justify-center">
+            <TouchableOpacity
+              className="mx-2"
+              onPress={() => handleNavigate(`/editSchedule/${item.id}`)}
+            >
+              <FontAwesome6 name="edit" size={17} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              className="mx-2"
+              onPress={() => handleDelete(item.id)}
+            >
+              <FontAwesome6 name="trash-can" size={17} color="red" />
+            </TouchableOpacity>
+          </View>
         )}
       </View>
     );
