@@ -1,60 +1,77 @@
 import { View, Text, ScrollView } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import FormInput from "@/app/components/FormInput/FormInput";
 import Cbutton from "@/app/components/Cbutton/Cbutton";
 import GlobalContext from "@/context/globalContext";
-import { useLocalSearchParams } from "expo-router";
+import { request } from "@/utils/request";
+import { toast } from "@/utils/toast";
+import { scheduleResponse } from "@/models/model";
+import { handleNavigate } from "@/utils/navigate";
 
 const editSchedule = () => {
   const { user } = useContext(GlobalContext);
 
-  const { id } = useLocalSearchParams();
+  const [schedule, setSchedule] = useState<any>();
 
-  const [schedule, setSchedule] = useState({
-    day: "",
-    from: new Date(1736498040000),
-    to: new Date(1736498040000),
-    course: "",
-    instructor: "",
-    room: "",
-    department: "",
-  });
 
-  const instructors = [
-    {
-      id: 1,
-      name: "Muthmainna Mou",
-    },
-    {
-      id: 2,
-      name: "Dr Arif Ahmad",
-    },
-    {
-      id: 3,
-      name: "K. M. Asifuzzaman",
-    },
-  ];
+  const [instructors, setInstructors] = useState<any>([]);
 
-  const courses = [
-    {
-      id: 1,
-      name: "Operating System",
-    },
-    {
-      id: 2,
-      name: "Theory Of Computation",
-    },
-    {
-      id: 3,
-      name: "Operating System Lab",
-    },
-  ];
+  const getInstructors = async () => {
+    try {
+      const res = await request.get("/users/getTeachers/");
+      console.log(res.data);
+      setInstructors(res.data);
+    } catch (error: any) {
+      console.log(error);
+      toast(error.response?.data || error.message);
+    }
+  };
 
-  const handleSubmit = () => {
-    setSchedule({ ...schedule, department: user.department });
-    console.log(schedule);
+  const [courses, setCourses] = useState<any>([]);
+
+  const getCourses = async () => {
+    try {
+      const res = await request.get("/courses/getAll");
+      setCourses(res.data);
+    } catch (error: any) {
+      toast(error.response?.data || error.message);
+    }
+  };
+
+  useEffect(() => {
+    getCourses();
+    getInstructors();
+  }, []);
+
+  const handleSubmit = async () => {
+    if (
+      schedule?.session &&
+      schedule?.day &&
+      schedule?.start &&
+      schedule?.end &&
+      schedule?.course &&
+      schedule?.instructor &&
+      schedule?.room
+    ) {
+      if (schedule?.start > schedule?.end) {
+        toast("Start time should be less than end time");
+        return;
+      }
+      
+      try {
+        setSchedule({ ...schedule, department: user.department });
+        const res = await request.post("/schedules/create", schedule);
+        toast(res as any);
+        handleNavigate("/schedule");
+      } catch (error: any) {
+        toast(error.response?.data || error.message);
+      }
+    } else {
+      toast("Please fill all fields");
+      return;
+    }
   };
 
   return (
@@ -63,7 +80,12 @@ const editSchedule = () => {
         <GestureHandlerRootView className="flex-col items-center justify-center font-notoSB">
           <View className="w-full p-5">
             <FormInput
-              value={schedule.day}
+              value={schedule?.session}
+              title="Session"
+              onChangeFn={(e: any) => setSchedule({ ...schedule, session: e })}
+            />
+            <FormInput
+              value={schedule?.day}
               title="Day"
               type="select"
               selectItems={[
@@ -77,20 +99,20 @@ const editSchedule = () => {
             />
 
             <FormInput
-              value={schedule.from as any}
+              value={new Date(`1970-01-01T${schedule?.start}`)}
               type="time"
-              title="From"
-              onChangeFn={(e: any) => setSchedule({ ...schedule, from: e })}
+              title="Start"
+              onChangeFn={(e: any) => setSchedule({ ...schedule, start: e })}
             />
             <FormInput
-              value={schedule.to}
+              value={new Date(`1970-01-01T${schedule?.end}`)}
               type="time"
-              title="To"
-              onChangeFn={(e: any) => setSchedule({ ...schedule, to: e })}
+              title="End"
+              onChangeFn={(e: any) => setSchedule({ ...schedule, end: e })}
             />
 
             <FormInput
-              value={schedule.course}
+              value={schedule?.course}
               title="Course"
               type="select"
               selectItems={courses.map((course: any) => ({
@@ -101,7 +123,7 @@ const editSchedule = () => {
             />
 
             <FormInput
-              value={schedule.instructor}
+              value={schedule?.instructor}
               type="select"
               selectItems={instructors.map((instructor: any) => ({
                 label: instructor.name,
@@ -114,12 +136,12 @@ const editSchedule = () => {
             />
 
             <FormInput
-              value={schedule.room}
+              value={schedule?.room}
               title="Room"
               onChangeFn={(e: any) => setSchedule({ ...schedule, room: e })}
             />
 
-            <Cbutton title="Save" onclickFn={() => handleSubmit()} />
+            <Cbutton title="Add Schedule" onclickFn={() => handleSubmit()} />
           </View>
         </GestureHandlerRootView>
       </SafeAreaView>

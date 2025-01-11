@@ -13,35 +13,6 @@ import { toast } from "@/utils/toast";
 const Schedule = () => {
   const { user, isLoading } = useContext(GlobalContext);
 
-  // const schedule = [
-  //   {
-  //     id:1,
-  //     name: "Operating System",
-  //     teacher: "Muthmainna Mou",
-  //     from: "8:30 AM",
-  //     to: "9:55 AM",
-  //     courseCode: "CSE-06132213",
-  //     room: "R-206",
-  //   },
-  //   {
-  //     id:2,
-  //     name: "Theory Of Computation",
-  //     teacher: "Dr Arif Ahmad",
-  //     from: "10:00 AM",
-  //     to: "11:25 AM",
-  //     courseCode: "CSE-06132215",
-  //     room: "R-301",
-  //   },
-  //   {
-  //     id:3,
-  //     name: "Operating System Lab",
-  //     teacher: "Muthmainna Mou",
-  //     from: "11:30 AM",
-  //     to: "2:25 PM",
-  //     courseCode: "CSE-06132214",
-  //     room: "R-309",
-  //   },
-  // ];
 
   const [schedule, setSchedule] = useState([]);
   const [filteredSchedule, setFilteredSchedule] = useState<any>([]);
