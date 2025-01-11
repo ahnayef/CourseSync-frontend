@@ -129,21 +129,24 @@ const Schedule = () => {
           )}
           ListHeaderComponent={() => (
             <View className="flex w-full flex-col items-center justify-center text-center">
+              <Text className="text-2xl font-semibold text-primary pb-2">
+                Schedule
+              </Text>
               <View className="flex w-full flex-row items-center justify-center">
                 {today != "Sunday" ? (
                   <TouchableOpacity
-                    className="mx-2 bg-primary p-1 rounded"
+                    className="mx-2 rounded bg-primary p-1"
                     onPress={handlePrev}
                   >
                     <AntDesign name="caretleft" size={19} color="white" />
                   </TouchableOpacity>
                 ) : null}
 
-                <Text className="text-xl text-primary">Schedule | {today}</Text>
+                <Text className="text-xl text-primary">{today}</Text>
 
                 {today != "Thursday" ? (
                   <TouchableOpacity
-                    className="mx-2 bg-primary p-1 rounded"
+                    className="mx-2 rounded bg-primary p-1"
                     onPress={handleNext}
                   >
                     <AntDesign name="caretright" size={19} color="white" />
