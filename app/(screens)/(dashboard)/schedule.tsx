@@ -56,16 +56,7 @@ const Schedule = () => {
     getSchedules();
     console.log(today);
     if (today === "Friday" || today === "Saturday") {
-      setFilteredSchedule([
-        {
-          name: "No Class",
-          teacher: "No Teacher",
-          start: "No Time",
-          end: "No Time",
-          courseCode: "No Course Code",
-          room: "No Room",
-        },
-      ]);
+      setFilteredSchedule([]);
     } else {
       setFilteredSchedule(schedule.filter((item: any) => item.day === today));
     }
@@ -83,7 +74,15 @@ const Schedule = () => {
         <Text className="text-2xl font-semibold text-primary">{item.name}</Text>
         <Text className="text-sm text-gray-600">{item.teacher}</Text>
         <Text className="text-sm text-gray-600">
-          {item.start} - {item.end}
+          {new Date(`1970-01-01T${item?.start}`).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}{" "}
+          -{" "}
+          {new Date(`1970-01-01T${item?.end}`).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
         </Text>
         <Text className="text-sm text-gray-500">{item.courseCode}</Text>
         <Text className="text-sm text-gray-500">{item.room}</Text>
@@ -133,10 +132,10 @@ const Schedule = () => {
               <View className="flex w-full flex-row items-center justify-center">
                 {today != "Sunday" ? (
                   <TouchableOpacity
-                    className="mx-2 bg-primary p-1"
+                    className="mx-2 bg-primary p-1 rounded"
                     onPress={handlePrev}
                   >
-                    <AntDesign name="caretleft" size={20} color="white" />
+                    <AntDesign name="caretleft" size={19} color="white" />
                   </TouchableOpacity>
                 ) : null}
 
@@ -144,10 +143,10 @@ const Schedule = () => {
 
                 {today != "Thursday" ? (
                   <TouchableOpacity
-                    className="mx-2 bg-primary p-1"
+                    className="mx-2 bg-primary p-1 rounded"
                     onPress={handleNext}
                   >
-                    <AntDesign name="caretright" size={20} color="white" />
+                    <AntDesign name="caretright" size={19} color="white" />
                   </TouchableOpacity>
                 ) : null}
               </View>
