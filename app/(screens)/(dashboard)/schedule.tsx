@@ -129,7 +129,7 @@ const Schedule = () => {
           )}
           ListHeaderComponent={() => (
             <View className="flex w-full flex-col items-center justify-center text-center">
-              <Text className="text-2xl font-semibold text-primary pb-2">
+              <Text className="pb-2 text-2xl font-semibold text-primary">
                 Schedule
               </Text>
               <View className="flex w-full flex-row items-center justify-center">
