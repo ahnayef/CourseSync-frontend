@@ -80,10 +80,11 @@ const editSchedule = () => {
 
       try {
         setSchedule({ ...schedule, department: user.department });
-        const res = await request.post("/schedules/update", schedule);
+        const res = await request.put("/schedules/update", schedule);
         toast(res as any);
         handleNavigate("/schedule");
       } catch (error: any) {
+        console.log(error.response?.data || error.message);
         toast(error.response?.data || error.message);
       }
     } else {
