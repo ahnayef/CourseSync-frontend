@@ -15,12 +15,8 @@ const Schedule = () => {
 
   const [schedule, setSchedule] = useState([]);
   const [filteredSchedule, setFilteredSchedule] = useState<any>([]);
-  // let filteredSchedule: any = [];
 
   const [date, setDate] = useState(new Date());
-  // const [today, setToday] = useState(
-  //   date.toLocaleDateString("en-US", { weekday: "long" }),
-  // );
   let today = date.toLocaleDateString("en-US", { weekday: "long" });
   const handlePrev = () => {
     if (today === "Sunday") {
@@ -29,11 +25,9 @@ const Schedule = () => {
 
     date.setDate(date.getDate() - 1);
     //set new day
-    // setToday(date.toLocaleDateString("en-US", { weekday: "long" }));
     today = date.toLocaleDateString("en-US", { weekday: "long" });
     //set new schedule
     setFilteredSchedule(schedule.filter((item: any) => item.day === today));
-    // filteredSchedule = schedule.filter((item: any) => item.day === today);
   };
 
   const handleNext = () => {
@@ -43,11 +37,9 @@ const Schedule = () => {
 
     date.setDate(date.getDate() + 1);
     //set new day
-    // setToday(date.toLocaleDateString("en-US", { weekday: "long" }));
     today = date.toLocaleDateString("en-US", { weekday: "long" });
     //set new schedule
     setFilteredSchedule(schedule.filter((item: any) => item.day === today));
-    // filteredSchedule = schedule.filter((item: any) => item.day === today);
   };
 
   const getSchedules = async () => {
@@ -74,10 +66,8 @@ const Schedule = () => {
           room: "No Room",
         },
       ]);
-      // filteredSchedule = []
     } else {
       setFilteredSchedule(schedule.filter((item: any) => item.day === today));
-      // filteredSchedule = schedule.filter((item: any) => item.day === today);
     }
   }, []);
 
