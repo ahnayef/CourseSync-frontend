@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -7,30 +7,50 @@ import {
   FlatList,
 } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import GlobalContext from "@/context/globalContext";
 
-interface Message {
-  text: string;
-  isMine: boolean;
+interface Question {
+  id: string;
+  content: string;
+  asked_by: string;
+  created_at: string;
+}
+
+interface Answer {
+  id: string;
+  content: string;
+  answered_by: string;
+  created_at: string;
   userName: string;
 }
 
 const DiscussionThread = () => {
   const { title } = useLocalSearchParams();
-  const [messages, setMessages] = useState<Message[]>([
+
+  const { user } = useContext(GlobalContext);
+
+  const [messages, setMessages] = useState<Answer[]>([
     {
-      text: "You can use Firebase Authentication for implementing auth in React Native.",
-      isMine: false,
+      id: "1",
+      content:
+        "You can use Firebase Authentication for implementing auth in React Native.",
+      answered_by: "1",
       userName: "Demo User 1",
+      created_at: "2021-09-01T12:00:00Z",
     },
     {
-      text: "Consider using Redux or Context API for state management.",
-      isMine: false,
+      id: "2",
+      content: "Consider using Redux or Context API for state management.",
+      answered_by: "2",
       userName: "Demo User 2",
+      created_at: "2021-09-02T12:00:00Z",
     },
     {
-      text: "Great suggestions! Thanks!",
-      isMine: true,
-      userName: "You",
+      id: "3",
+      content: "Thank you for your question! I'll look into it.",
+      answered_by: "1",
+      userName: "Demo User 1",
+      created_at: "2021-09-03T12:00:00Z",
     },
   ]);
   const [newMessage, setNewMessage] = useState("");
@@ -42,7 +62,13 @@ const DiscussionThread = () => {
       // Add user's message
       setMessages((prev) => [
         ...prev,
-        { text: newMessage.trim(), isMine: true, userName: "You" },
+        {
+          id: newMessage.length.toString(),
+          content: newMessage.trim(),
+          answered_by: user.id,
+          userName: "You",
+          created_at: new Date().toISOString(),
+        },
       ]);
       setNewMessage("");
 
@@ -51,9 +77,11 @@ const DiscussionThread = () => {
         setMessages((prev) => [
           ...prev,
           {
-            text: "Thank you for your question! I'll look into it.",
-            isMine: false,
+            id: setMessages.length.toString(),
+            content: "Thank you for your question! I'll look into it.",
+            answered_by: "1",
             userName: "Demo User 1",
+            created_at: new Date().toISOString(),
           },
         ]);
       }, 1000);
@@ -70,7 +98,7 @@ const DiscussionThread = () => {
   return (
     <View className="flex-1 bg-gray-100 p-3">
       {/* Question Heading */}
-      <View className="mb-3 flex items-start justify-start rounded-xl bg-white px-4 py-3 align-baseline shadow-lg border border-primary">
+      <View className="mb-3 flex items-start justify-start rounded-xl border border-primary bg-white px-4 py-3 align-baseline shadow-lg">
         <Text className="mb-1 text-left text-base font-semibold text-primary">
           {dummyUserName}
         </Text>
@@ -88,21 +116,21 @@ const DiscussionThread = () => {
         renderItem={({ item }) => (
           <View
             className={`my-1 max-w-[80%] rounded-xl px-3 py-2 shadow-sm ${
-              item.isMine ? "self-end bg-primary" : "self-start bg-white"
+              item.answered_by == user.id ? "self-end bg-primary" : "self-start bg-white"
             }`}
           >
             {/* Display User Name for Non-Mine Messages */}
-            {!item.isMine && (
+            {item.answered_by !== user.id && (
               <Text className="mb-1 text-xs text-gray-600">
                 {item.userName}
               </Text>
             )}
             <Text
               className={`text-base ${
-                item.isMine ? "text-white" : "text-black"
+                item.answered_by == user.id ? "text-white" : "text-black"
               }`}
             >
-              {item.text}
+              {item.content}
             </Text>
           </View>
         )}

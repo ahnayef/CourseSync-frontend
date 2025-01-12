@@ -1,24 +1,39 @@
-import React, { useState, useRef, useEffect } from "react";
-import { View, Text, FlatList, TextInput, TouchableOpacity } from "react-native";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { handleNavigate } from "@/utils/navigate";
+import GlobalContext from "@/context/globalContext";
 
 interface Question {
   id: string;
-  title: string;
+  content: string;
+  asked_by: string;
   userName: string;
+  created_at: string;
 }
 
 const Discussion = () => {
+  const { user } = useContext(GlobalContext);
+
   const [questions, setQuestions] = useState<Question[]>([
     {
       id: "1",
-      title: "How to implement authentication in React Native?",
+      content: "How to implement authentication in React Native?",
+      asked_by: "1",
       userName: "Demo User 1",
+      created_at: "2021-09-01T12:00:00Z",
     },
     {
       id: "2",
-      title: "Best practices for state management?",
+      content: "Best practices for state management?",
+      asked_by: "2",
       userName: "Demo User 2",
+      created_at: "2021-09-02T12:00:00Z",
     },
   ]);
   const [newQuestion, setNewQuestion] = useState("");
@@ -29,9 +44,11 @@ const Discussion = () => {
       setQuestions((prev) => [
         ...prev,
         {
-          id: Date.now().toString(),
-          title: newQuestion.trim(),
+          id: newQuestion.length.toString() +1,
+          content: newQuestion.trim(),
+          asked_by: user.id,
           userName: "You",
+          created_at: new Date().toISOString(),
         },
       ]);
       setNewQuestion("");
@@ -57,31 +74,42 @@ const Discussion = () => {
         data={questions}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
+        ListHeaderComponent={() => (
+          <View className="w-full text-center">
+            <Text className="text-center text-lg font-semibold text-primary">
+              Chatroom | {user.session} - {user.department}
+            </Text>
+          </View>
+        )}
         renderItem={({ item }) => (
-          <View className="bg-white rounded-lg px-5 py-4 my-3 shadow-lg">
+          <View className="my-3 rounded-lg bg-white px-5 py-4 shadow-lg">
             {/* User Name */}
-            <Text className="text-xs text-primary mb-1">{item.userName}</Text>
+            <Text className="mb-1 text-xs text-primary">{item.userName}</Text>
             {/* Question Title */}
-            <Text className="text-base font-semibold text-gray-800 mb-3">
-              {item.title}
+            <Text className="mb-3 text-base font-semibold text-gray-800">
+              {item.content}
+            </Text>
+            {/* Question Date */}
+            <Text className="mb-3 text-xs text-gray-500">
+              {new Date(item.created_at).toDateString()}
             </Text>
             {/* Reply Button */}
-            <View className="flex-row w-full p-1">
+            <View className="w-full flex-row p-1">
               <TouchableOpacity
-                className="bg-primary px-4 py-2 rounded-full text-center flex items-center justify-center"
+                className="flex items-center justify-center rounded-full bg-primary px-4 py-2 text-center"
                 onPress={() => handleNavigate(`question/${item.id}`)}
               >
-                <Text className="text-white text-sm font-medium">Reply</Text>
+                <Text className="text-sm font-medium text-white">Reply</Text>
               </TouchableOpacity>
             </View>
           </View>
         )}
       />
       {/* Input Section */}
-      <View className="flex-row items-center mt-4">
+      <View className="mt-4 flex-row items-center">
         {/* Input for New Question */}
         <TextInput
-          className="flex-1 bg-white border border-gray-300 rounded-full px-4 py-2 mr-2 text-sm"
+          className="mr-2 flex-1 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm"
           placeholder="Ask a question..."
           value={newQuestion}
           onChangeText={setNewQuestion}
@@ -89,9 +117,9 @@ const Discussion = () => {
         {/* Send Button */}
         <TouchableOpacity
           onPress={addQuestion}
-          className="bg-primary rounded-full px-4 py-2"
+          className="rounded-full bg-primary px-4 py-2"
         >
-          <Text className="text-white text-sm font-medium">Send</Text>
+          <Text className="text-sm font-medium text-white">Send</Text>
         </TouchableOpacity>
       </View>
     </View>
