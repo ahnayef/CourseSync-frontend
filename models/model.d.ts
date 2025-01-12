@@ -37,3 +37,19 @@ export interface scheduleResponse {
     session: string;
     department: string;
 }
+
+interface Answer {
+  id: number;
+  content: string;
+  answered_by: number;
+  userName: string;
+  created_at: string;
+}
+
+interface Question {
+  id: number;
+  content: string;
+  asked_by: number;
+  userName: string;
+  created_at: string;
+}
