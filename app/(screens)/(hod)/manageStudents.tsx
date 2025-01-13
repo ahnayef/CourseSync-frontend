@@ -62,7 +62,7 @@ const ManageStudents = () => {
             {item.name}
           </Text>
           <Text className="text-sm text-gray-500">{item.sid}</Text>
-          <Text className="text-sm text-gray-500">{item.department}</Text>
+          <Text className="text-sm text-gray-500">{item.role.toUpperCase()}</Text>
         </View>
         <TouchableOpacity
           onPress={() => handleNavigate(`/student/${item.id}`)}
