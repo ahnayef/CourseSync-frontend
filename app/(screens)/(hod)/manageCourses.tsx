@@ -90,7 +90,7 @@ const ManageCourses = () => {
               onPress={() => handleNavigate("./addCourse")}
             >
               <FontAwesome name="plus" size={20} color="white" />
-              <Text className="ml-2 text-white">Add Cource</Text>
+              <Text className="ml-2 text-white">Add Course</Text>
             </TouchableOpacity>
 
             {/* <View className="mb-4 flex flex-row items-center justify-between bg-white">

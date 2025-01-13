@@ -2,21 +2,21 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
+
   FlatList,
-  Alert,
+  
 } from "react-native";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { addIcon, trashIcon } from "@/constants/icons";
+
 import GlobalContext from "@/context/globalContext";
 import { handleNavigate } from "@/utils/navigate";
 import { request } from "@/utils/request";
 import { toast } from "@/utils/toast";
 import { useFocusEffect } from "expo-router";
 
-const Cources = () => {
+const Courses = () => {
   const { user, isLoading, setLoading } = useContext(GlobalContext);
 
   const [courses, setCourses] = useState([]);
@@ -87,23 +87,13 @@ const Cources = () => {
               {isLoading ? (
                 <Text>Loading...</Text>
               ) : (
-                <Text className="text-red-500">No cources yet</Text>
+                <Text className="text-red-500">No courses yet</Text>
               )}
             </View>
           )}
           ListHeaderComponent={() => (
             <View className="flex w-full flex-col items-center justify-center text-center">
-              <Text className="text-xl text-primary">Cources</Text>
-
-              {/* {user.role === "teacher" && (
-                <TouchableOpacity
-                  className="my-5 flex w-2/5 flex-row items-center justify-center rounded bg-primary p-3 text-center text-xl"
-                  onPress={() => handleNavigate("./addCourse")}
-                >
-                  <Image source={addIcon} className="h-5 w-5" />
-                  <Text className="ml-2 text-white">Add Cource</Text>
-                </TouchableOpacity>
-              )} */}
+              <Text className="text-xl text-primary">Courses</Text>
             </View>
           )}
         />
@@ -112,4 +102,4 @@ const Cources = () => {
   );
 };
 
-export default Cources;
+export default Courses;

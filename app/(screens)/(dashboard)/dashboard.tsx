@@ -61,7 +61,7 @@ const Dashboard = () => {
                 onPress={() => handleNavigate("courses")}
               >
                 <Image source={courseIcon} className="h-5 w-5" />
-                <Text className="ml-2 text-white">Cources</Text>
+                <Text className="ml-2 text-white">Courses</Text>
               </TouchableOpacity>
             </View>
           )}
