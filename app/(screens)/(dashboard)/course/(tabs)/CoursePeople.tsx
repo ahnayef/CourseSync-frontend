@@ -115,11 +115,11 @@ const CoursePeople = ({ course }: any) => {
         data={students}
         ListHeaderComponent={() => (
           <View className="py-2c flex w-full flex-row items-center justify-center border-b-2 border-primary px-3 text-center align-middle">
-            {user.role === "teacher" ? (
-              <>
-                <Text className="w-full text-2xl font-bold text-primary">
-                  Students
-                </Text>
+            <>
+              <Text className="w-full text-2xl font-bold text-primary">
+                {user.role === "teacher" ? "Students" : "Classmates"}
+              </Text>
+              {(user.role === "teacher" || user.role === "cr") && (
                 <TouchableOpacity
                   onPress={() =>
                     handleNavigate(`./addPeople?courseId=${course.id}`)
@@ -127,12 +127,8 @@ const CoursePeople = ({ course }: any) => {
                 >
                   <Image source={addPeopleIcon} className="h-6 w-6" />
                 </TouchableOpacity>
-              </>
-            ) : (
-              <Text className="w-full text-2xl font-bold text-primary">
-                Classmates
-              </Text>
-            )}
+              )}
+            </>
           </View>
         )}
         renderItem={({ item }: any) => (
