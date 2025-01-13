@@ -88,9 +88,9 @@ const addSchedule = () => {
         toast("Start time should be less than end time");
         return;
       }
-      
+
       try {
-        setSchedule({ ...schedule, department: user.department });
+        schedule.department = user.department;
         const res = await request.post("/schedules/create", schedule);
         toast(res as any);
         handleNavigate("/schedule");
