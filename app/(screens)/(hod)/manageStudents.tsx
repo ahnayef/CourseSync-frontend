@@ -13,7 +13,7 @@ const ManageStudents = () => {
 
   const { isLoading, setLoading } = useContext(GlobalContext);
 
-  const [dbStundets, setDbStudents] = useState<any>([]);
+  const [dbStudents, setDbStudents] = useState<any>([]);
 
   const getStudent = async () => {
     setLoading(true);
@@ -38,50 +38,21 @@ const ManageStudents = () => {
     }, []),
   );
 
-  const students = [
-    {
-      id: 1,
-      name: "Demo Student 1",
-      sid: "123456",
-      role: "student",
-      session: "Spring 23",
-    },
-    {
-      id: 3,
-      name: "Demo Student 2",
-      sid: "123458",
-      role: "student",
-      session: "Spring 23",
-    },
-    {
-      id: 4,
-      name: "Demo Student 3",
-      sid: "123459",
-      role: "student",
-      session: "Spring 23",
-    },
-    {
-      id: 5,
-      name: "Demo Student 4",
-      sid: "123460",
-      role: "student",
-      session: "Spring 23",
-    },
-  ];
+ 
 
-  const [filteredStudents, setFilteredStudents] = useState(students);
+  // const [filteredStudents, setFilteredStudents] = useState(students);
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    if (query === "") {
-      setFilteredStudents(students);
-    } else {
-      const filtered = students.filter((student) =>
-        student.name.toLowerCase().includes(query.toLowerCase()),
-      );
-      setFilteredStudents(filtered);
-    }
-  };
+  // const handleSearch = (query: string) => {
+  //   setSearchQuery(query);
+  //   if (query === "") {
+  //     setFilteredStudents(students);
+  //   } else {
+  //     const filtered = students.filter((student) =>
+  //       student.name.toLowerCase().includes(query.toLowerCase()),
+  //     );
+  //     setFilteredStudents(filtered);
+  //   }
+  // };
 
   const renderStudents = ({ item }: any) => (
     <View className="mb-4 rounded-lg bg-white shadow-md">
@@ -107,7 +78,7 @@ const ManageStudents = () => {
   return (
     <GestureHandlerRootView className="h-full bg-gray-100">
       <FlatList
-        data={dbStundets}
+        data={dbStudents}
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={() => (
           <View className="px-5 py-6">
@@ -120,7 +91,7 @@ const ManageStudents = () => {
                 className="flex-1 bg-transparent"
                 placeholder="Search students..."
                 value={searchQuery}
-                onChangeText={handleSearch}
+                // onChangeText={handleSearch}
                 placeholderTextColor="#999"
               />
             </View>
