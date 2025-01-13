@@ -26,9 +26,6 @@ const CourseDetails = ({ course }: any) => {
                 Department:{" "}
                 <Text className="text-primary">{course?.department}</Text>
               </Text>
-              <Text className="text-sm font-medium text-gray-700">
-                Session: <Text className="text-primary">{course?.session}</Text>
-              </Text>
             </View>
           </View>
         </View>
