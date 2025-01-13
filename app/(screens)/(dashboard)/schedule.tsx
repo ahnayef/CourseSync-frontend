@@ -18,6 +18,7 @@ const Schedule = () => {
 
   const [date, setDate] = useState(new Date());
   let today = date.toLocaleDateString("en-US", { weekday: "long" });
+
   const handlePrev = () => {
     if (today === "Sunday") {
       return;
@@ -73,6 +74,7 @@ const Schedule = () => {
     try {
       const res = await request.get("/schedules/get");
       setSchedule(res.data);
+      setFilteredSchedule(res.data);
     } catch (error: any) {
       console.log(error.response?.data || error.message);
       toast(error.response?.data || error.message);
