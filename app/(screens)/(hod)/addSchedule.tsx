@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -7,43 +7,12 @@ import Cbutton from "@/app/components/Cbutton/Cbutton";
 import GlobalContext from "@/context/globalContext";
 import { request } from "@/utils/request";
 import { toast } from "@/utils/toast";
-import { scheduleResponse } from "@/models/model";
 import { handleNavigate } from "@/utils/navigate";
 
 const addSchedule = () => {
   const { user } = useContext(GlobalContext);
 
   const [schedule, setSchedule] = useState<any>();
-
-  // const instructors = [
-  //   {
-  //     id: 1,
-  //     name: "Muthmainna Mou",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Dr Arif Ahmad",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Dr. M. A. Mottalib",
-  //   },
-  // ];
-
-  // const courses = [
-  //   {
-  //     id: 1,
-  //     name: "Operating System",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Theory Of Computation",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Operating System Lab",
-  //   },
-  // ];
 
   const [instructors, setInstructors] = useState<any>([]);
 
@@ -81,7 +50,6 @@ const addSchedule = () => {
       schedule?.start &&
       schedule?.end &&
       schedule?.course &&
-      schedule?.instructor &&
       schedule?.room
     ) {
       if (schedule?.start > schedule?.end) {
@@ -149,19 +117,6 @@ const addSchedule = () => {
                 value: course.id,
               }))}
               onChangeFn={(e: any) => setSchedule({ ...schedule, course: e })}
-            />
-
-            <FormInput
-              value={schedule?.instructor}
-              type="select"
-              selectItems={instructors.map((instructor: any) => ({
-                label: instructor.name,
-                value: instructor.id,
-              }))}
-              title="Instructor"
-              onChangeFn={(e: any) =>
-                setSchedule({ ...schedule, instructor: e })
-              }
             />
 
             <FormInput
