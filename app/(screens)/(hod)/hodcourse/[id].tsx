@@ -33,7 +33,7 @@ const hodCourse = () => {
 
   const getTeachers = async () => {
     try {
-      const res = await request.get(`/users/getTeachers/${user.department}`);
+      const res = await request.get("/users/getTeachers");
       setInstructors(res.data);
     } catch (error: any) {
       toast(error.response?.data || error.message);
