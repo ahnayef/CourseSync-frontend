@@ -14,18 +14,6 @@ const addSchedule = () => {
 
   const [schedule, setSchedule] = useState<any>();
 
-  const [instructors, setInstructors] = useState<any>([]);
-
-  const getInstructors = async () => {
-    try {
-      const res = await request.get("/users/getTeachers/");
-      console.log(res.data);
-      setInstructors(res.data);
-    } catch (error: any) {
-      console.log(error);
-      toast(error.response?.data || error.message);
-    }
-  };
 
   const [courses, setCourses] = useState<any>([]);
 
@@ -40,7 +28,6 @@ const addSchedule = () => {
 
   useEffect(() => {
     getCourses();
-    getInstructors();
   }, []);
 
   const handleSubmit = async () => {

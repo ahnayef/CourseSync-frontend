@@ -20,7 +20,6 @@ const editSchedule = () => {
     start: "",
     end: "",
     course: "",
-    instructor: "",
     room: "",
   });
 
@@ -34,18 +33,7 @@ const editSchedule = () => {
     }
   };
 
-  const [instructors, setInstructors] = useState<any>([]);
-
-  const getInstructors = async () => {
-    try {
-      const res = await request.get("/users/getTeachers/");
-      setInstructors(res.data);
-    } catch (error: any) {
-      console.log(error);
-      toast(error.response?.data || error.message);
-    }
-  };
-
+ 
   const [courses, setCourses] = useState<any>([]);
 
   const getCourses = async () => {
@@ -60,7 +48,6 @@ const editSchedule = () => {
   useEffect(() => {
     getSchedule();
     getCourses();
-    getInstructors();
   }, []);
 
   const handleSubmit = async () => {
@@ -70,7 +57,6 @@ const editSchedule = () => {
       schedule?.start &&
       schedule?.end &&
       schedule?.course &&
-      schedule?.instructor &&
       schedule?.room
     ) {
       if (schedule?.start > schedule?.end) {
@@ -139,20 +125,6 @@ const editSchedule = () => {
               }))}
               onChangeFn={(e: any) => setSchedule({ ...schedule, course: e })}
             />
-
-            <FormInput
-              value={schedule?.instructor}
-              type="select"
-              selectItems={instructors.map((instructor: any) => ({
-                label: instructor.name,
-                value: instructor.id,
-              }))}
-              title="Instructor"
-              onChangeFn={(e: any) =>
-                setSchedule({ ...schedule, instructor: e })
-              }
-            />
-
             <FormInput
               value={schedule?.room}
               title="Room"
