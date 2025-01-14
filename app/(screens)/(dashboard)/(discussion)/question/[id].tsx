@@ -12,19 +12,29 @@ import createSocket from "@/utils/socket";
 import { request } from "@/utils/request";
 import { Socket } from "socket.io-client";
 import { toast } from "@/utils/toast";
-import { Answer } from "@/models/model";
-
+import { Answer, Question } from "@/models/model";
 
 const DiscussionThread = () => {
-  const { id, title } = useLocalSearchParams();
+  const { id } = useLocalSearchParams();
   const { user } = useContext(GlobalContext);
 
   const [messages, setMessages] = useState<Answer[]>([]);
+  const [question, setQuestion] = useState<Question>();
   const [newMessage, setNewMessage] = useState("");
   const flatListRef = useRef<FlatList>(null);
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
+    const getOne = async () => {
+      try {
+        const res = await request.get(`/discussion/question/${id}`);
+        setQuestion(res.data);
+      } catch (error: any) {
+        toast(error.response?.data || error.message);
+      }
+    };
+    getOne();
+
     const fetchAnswers = async () => {
       try {
         const res = await request.get(`/discussion/answers/${id}`);
@@ -70,12 +80,16 @@ const DiscussionThread = () => {
       {/* Question Heading */}
       <View className="mb-3 flex items-start justify-start rounded-xl border border-primary bg-white px-4 py-3 shadow-lg">
         <Text className="mb-1 text-left text-base font-semibold text-primary">
-          AHN
+          {question?.userName}
         </Text>
         <Text className="text-left text-gray-800">
-          {title ||
-            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur soluta repellendus similique exercitationem, ratione at fuga officia maxime debitis saepe."}
+          {question?.content}
         </Text>
+
+        <Text className="mt-2 text-xs text-gray-600">
+          {question?.created_at ? new Date(question.created_at).toDateString() : ""}
+        </Text>
+
       </View>
 
       {/* Messages */}
