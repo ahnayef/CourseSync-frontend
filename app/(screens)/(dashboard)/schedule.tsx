@@ -74,7 +74,7 @@ const Schedule = () => {
     try {
       const res = await request.get("/schedules/get");
       setSchedule(res.data);
-      setFilteredSchedule(res.data);
+      setFilteredSchedule(schedule.filter((item: any) => item.day === today));
     } catch (error: any) {
       console.log(error.response?.data || error.message);
       toast(error.response?.data || error.message);
