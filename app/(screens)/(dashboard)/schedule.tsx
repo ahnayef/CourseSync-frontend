@@ -83,7 +83,6 @@ const Schedule = () => {
 
   useEffect(() => {
     getSchedules();
-    console.log(today);
     if (today === "Friday" || today === "Saturday") {
       setFilteredSchedule([]);
     } else {

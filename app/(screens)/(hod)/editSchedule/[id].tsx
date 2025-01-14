@@ -26,7 +26,6 @@ const editSchedule = () => {
   const getSchedule = async () => {
     try {
       const res = await request.get(`/schedules/hodGet/${id}`);
-      console.log(res.data);
       setSchedule(res.data);
     } catch (error: any) {
       toast(error.response?.data || error.message);

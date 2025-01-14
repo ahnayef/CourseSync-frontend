@@ -19,7 +19,6 @@ export default function Login() {
   const { login } = useContext(GlobalContext);
 
   const handleSubmit = () => {
-    console.log(formState.role);
     if (
       (formState.role === "Teacher" || formState.role === "Admin/HOD") &&
       formState.email !== "" &&

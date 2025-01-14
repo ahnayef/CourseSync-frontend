@@ -46,7 +46,6 @@ const courseDiscussion = ({ course }: any) => {
       newSocket.emit("joinRoom", { course_id: course.id });
 
       newSocket.on("newQuestion", (question: Question) => {
-        console.log("New:", question);
         setQuestions((prev) => [...prev, question]);
         setTimeout(() => {
           flatListRef.current?.scrollToEnd({ animated: true });

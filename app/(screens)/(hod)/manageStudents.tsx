@@ -20,7 +20,6 @@ const ManageStudents = () => {
     try {
       const res = await request.get("/users/hodGet");
       setDbStudents(res.data);
-      console.log(res.data)
     } catch (error: any) {
       toast(error.response?.data || error.message);
     } finally {

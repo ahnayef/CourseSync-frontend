@@ -67,7 +67,6 @@ const Signup = () => {
           password: formState.password,
           role: formState.role,
         });
-        // console.log(formState);
         // router.navigate("/dashboard" as Href);
       } else {
         alert("Please fill all the fields");

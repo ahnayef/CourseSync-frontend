@@ -52,7 +52,6 @@ const DiscussionThread = () => {
     newSocket.emit("joinRoom", { question_id: parseInt(id as string, 10) });
 
     newSocket.on("newAnswer", (answer: Answer) => {
-      console.log("New:", answer);
       setMessages((prev) => [...prev, answer]);
       setTimeout(() => {
         flatListRef.current?.scrollToEnd({ animated: true });

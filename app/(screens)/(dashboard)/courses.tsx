@@ -25,7 +25,6 @@ const Courses = () => {
     setLoading(true);
     try {
       const res = await request.get("/courses/get");
-      console.log(res.data);
       setCourses(res.data);
     } catch (error: any) {
       toast(error.response?.data || error.message);

@@ -24,7 +24,6 @@ const hodCourse = () => {
   const getCourse = async () => {
     try {
       const res = await request.get(`/courses/get/${id}`);
-      console.log(res.data);
       setCourse(res.data);
     } catch (error: any) {
       toast(error.response?.data || error.message);

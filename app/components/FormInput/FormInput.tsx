@@ -64,8 +64,6 @@ const FormInput = ({
                   const formatedTime = new Date(e.nativeEvent.timestamp)
                     .toLocaleTimeString("en-GB", { hour12: false })
                     .padStart(8, "0");
-
-                  console.log(formatedTime);
                   onChangeFn(formatedTime);
                   setShowTimePicker(false);
                 }}
