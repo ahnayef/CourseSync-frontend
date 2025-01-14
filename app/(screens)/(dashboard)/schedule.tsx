@@ -100,9 +100,9 @@ const Schedule = () => {
   const renderSchedule = (item: any) => {
     return (
       <View className="my-2 flex w-full flex-col items-center justify-center space-y-2 rounded-lg border border-gray-200 bg-white p-4 shadow-md">
-        <Text className="text-2xl font-semibold text-primary">{item.name}</Text>
-        <Text className="text-sm text-gray-600">{item.teacher}</Text>
-        <Text className="text-sm text-gray-600">
+        <Text className="text-xl font-semibold text-primary text-center">{item.name}</Text>
+        <Text className="text-sm text-gray-600 text-center">{item.teacher}</Text>
+        <Text className="text-sm text-gray-600 text-center">
           {new Date(`1970-01-01T${item?.start}`).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
