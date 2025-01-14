@@ -6,6 +6,7 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { handleNavigate } from "@/utils/navigate";
 import GlobalContext from "@/context/globalContext";
@@ -75,6 +76,32 @@ const Discussion = () => {
     }
   };
 
+  const deleteQuestion = async (id: number) => {
+    Alert.alert(
+      "Delete Question",
+      "Are you sure you want to delete this question?",
+      [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: async () => {
+        try {
+          await request.delete(`/discussion/question/${id}`);
+          setQuestions((prev) => prev.filter((item) => item.id !== id));
+        } catch (error: any) {
+          toast(error.response?.data || error.message);
+        }
+        },
+      },
+      ],
+      { cancelable: true }
+    );
+  };
+
   return (
     <View className="flex-1 bg-gray-50 p-4">
       <View className="w-full text-center">
@@ -111,7 +138,7 @@ const Discussion = () => {
               {user.id == item.asked_by && (
                 <TouchableOpacity
                   className="flex items-center justify-center rounded-full bg-red-500 px-4 py-2 text-center"
-                  onPress={() => handleNavigate(`question/${item.id}`)}
+                  onPress={() => deleteQuestion(item.id)}
                 >
                   <Text className="text-sm font-medium text-white">Delete</Text>
                 </TouchableOpacity>
