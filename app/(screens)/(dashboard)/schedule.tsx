@@ -59,7 +59,9 @@ const Schedule = () => {
             try {
               const res = await request.delete(`/schedules/delete/${id}`);
               toast(res as any);
-              setFilteredSchedule(filteredSchedule.filter((item: any) => item.id !== id));
+              setFilteredSchedule(
+                filteredSchedule.filter((item: any) => item.id !== id),
+              );
             } catch (error: any) {
               console.log(error.response?.data || error.message);
               toast(error.response?.data || error.message);
@@ -74,7 +76,7 @@ const Schedule = () => {
     try {
       const res = await request.get("/schedules/get");
       setSchedule(res.data);
-      setFilteredSchedule(schedule.filter((item: any) => item.day === today));
+      setFilteredSchedule(res.data.filter((item: any) => item.day === today));
     } catch (error: any) {
       console.log(error.response?.data || error.message);
       toast(error.response?.data || error.message);
@@ -82,11 +84,10 @@ const Schedule = () => {
   };
 
   useEffect(() => {
-    getSchedules();
     if (today === "Friday" || today === "Saturday") {
       setFilteredSchedule([]);
     } else {
-      setFilteredSchedule(schedule.filter((item: any) => item.day === today));
+      getSchedules();
     }
   }, []);
 
@@ -99,9 +100,13 @@ const Schedule = () => {
   const renderSchedule = (item: any) => {
     return (
       <View className="my-2 flex w-full flex-col items-center justify-center space-y-2 rounded-lg border border-gray-200 bg-white p-4 shadow-md">
-        <Text className="text-xl font-semibold text-primary text-center">{item.name}</Text>
-        <Text className="text-sm text-gray-600 text-center">{item.teacher}</Text>
-        <Text className="text-sm text-gray-600 text-center">
+        <Text className="text-center text-xl font-semibold text-primary">
+          {item.name}
+        </Text>
+        <Text className="text-center text-sm text-gray-600">
+          {item.teacher}
+        </Text>
+        <Text className="text-center text-sm text-gray-600">
           {new Date(`1970-01-01T${item?.start}`).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
