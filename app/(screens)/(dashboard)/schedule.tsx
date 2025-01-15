@@ -89,12 +89,12 @@ const Schedule = () => {
     } else {
       getSchedules();
     }
-  }, [today]);
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
       getSchedules();
-    }, [today]),
+    }, []),
   );
 
   const renderSchedule = (item: any) => {
