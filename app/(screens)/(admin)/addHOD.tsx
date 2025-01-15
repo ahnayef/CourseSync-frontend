@@ -33,7 +33,7 @@ const AddHOD = () => {
         const res = await request.post("/users/addHOD", HOD);
 
         toast(res as any);
-        handleNavigate("./");
+        handleNavigate("/manageHODs");
       } catch (error: any) {
         toast(error.response?.data || error.message);
       }
