@@ -91,11 +91,11 @@ const Schedule = () => {
     }
   }, []);
 
-  useFocusEffect(
-    useCallback(() => {
-      getSchedules();
-    }, []),
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // getSchedules();
+  //   }, []),
+  // );
 
   const renderSchedule = (item: any) => {
     return (

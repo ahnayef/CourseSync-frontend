@@ -83,20 +83,34 @@ const Dashboard = () => {
                 <MaterialIcons name="library-books" size={20} color="white" />
                 <Text className="ml-2 w-full text-white">Manage Courses</Text>
               </TouchableOpacity>
-
             </View>
           )}
-          {/* For Everyone  */}
+
+          {/* For Admin only */}
+          {user.role === "admin" && (
+            <View className="flex w-full flex-col items-center justify-center gap-5">
+              <TouchableOpacity
+                className="flex w-2/5 flex-row flex-wrap items-center justify-around rounded bg-primary p-4 text-center text-xl"
+                onPress={() => handleNavigate("/manageHODs")}
+              >
+                <Image source={groupIcon} className="h-5 w-5" />
+                <Text className="ml-2 w-full text-white">Manage HOD</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          {/* General  */}
           <View className="flex w-full flex-col items-center justify-center gap-5 py-5">
-            <TouchableOpacity
-              className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
-              onPress={() => handleNavigate("schedule")}
-            >
-              <Image source={scheduleIcon} className="h-5 w-5" />
-              <Text className="ml-2 text-white">
-                {user.role === "hod" ? "Manage Schedule" : "Schedule"}
-              </Text>
-            </TouchableOpacity>
+            {user.role !== "admin" && (
+              <TouchableOpacity
+                className="flex w-2/5 flex-row items-center justify-center rounded bg-primary p-4 text-center text-xl"
+                onPress={() => handleNavigate("schedule")}
+              >
+                <Image source={scheduleIcon} className="h-5 w-5" />
+                <Text className="ml-2 text-white">
+                  {user.role === "hod" ? "Manage Schedule" : "Schedule"}
+                </Text>
+              </TouchableOpacity>
+            )}
 
             <TouchableOpacity
               className="flex w-2/5 flex-row items-center justify-center rounded bg-red-500 p-4 text-center text-xl"

@@ -206,6 +206,12 @@ function RootLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="(screens)/(admin)"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
