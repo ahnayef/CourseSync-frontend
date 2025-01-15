@@ -17,18 +17,18 @@ const Schedule = () => {
   const [filteredSchedule, setFilteredSchedule] = useState<any>([]);
 
   const [date, setDate] = useState(new Date());
-  let today = date.toLocaleDateString("en-US", { weekday: "long" });
+  const [today, setToday] = useState(date.toLocaleDateString("en-US", { weekday: "long" }));
 
   const handlePrev = () => {
     if (today === "Sunday") {
       return;
     }
 
-    date.setDate(date.getDate() - 1);
-    //set new day
-    today = date.toLocaleDateString("en-US", { weekday: "long" });
-    //set new schedule
-    setFilteredSchedule(schedule.filter((item: any) => item.day === today));
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() - 1);
+    setDate(newDate);
+    setToday(newDate.toLocaleDateString("en-US", { weekday: "long" }));
+    setFilteredSchedule(schedule.filter((item: any) => item.day === newDate.toLocaleDateString("en-US", { weekday: "long" })));
   };
 
   const handleNext = () => {
@@ -36,11 +36,11 @@ const Schedule = () => {
       return;
     }
 
-    date.setDate(date.getDate() + 1);
-    //set new day
-    today = date.toLocaleDateString("en-US", { weekday: "long" });
-    //set new schedule
-    setFilteredSchedule(schedule.filter((item: any) => item.day === today));
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + 1);
+    setDate(newDate);
+    setToday(newDate.toLocaleDateString("en-US", { weekday: "long" }));
+    setFilteredSchedule(schedule.filter((item: any) => item.day === newDate.toLocaleDateString("en-US", { weekday: "long" })));
   };
 
   const handleDelete = (id: any) => {
@@ -89,12 +89,12 @@ const Schedule = () => {
     } else {
       getSchedules();
     }
-  }, []);
+  }, [today]);
 
   useFocusEffect(
     useCallback(() => {
       getSchedules();
-    }, []),
+    }, [today]),
   );
 
   const renderSchedule = (item: any) => {
@@ -175,25 +175,25 @@ const Schedule = () => {
                 Schedule
               </Text>
               <View className="flex w-full flex-row items-center justify-center">
-                {today != "Sunday" ? (
+                {today !== "Sunday" && (
                   <TouchableOpacity
                     className="mx-2 rounded bg-primary p-1"
                     onPress={handlePrev}
                   >
                     <AntDesign name="caretleft" size={19} color="white" />
                   </TouchableOpacity>
-                ) : null}
+                )}
 
                 <Text className="text-xl text-primary">{today}</Text>
 
-                {today != "Thursday" ? (
+                {today !== "Thursday" && (
                   <TouchableOpacity
                     className="mx-2 rounded bg-primary p-1"
                     onPress={handleNext}
                   >
                     <AntDesign name="caretright" size={19} color="white" />
                   </TouchableOpacity>
-                ) : null}
+                )}
               </View>
 
               {user.role === "hod" && (
