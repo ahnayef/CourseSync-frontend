@@ -33,7 +33,7 @@ const Student = () => {
 
   const toggleBan = () => {
     Alert.alert(
-      "Delete Course",
+      "Delete Student",
       `Are you sure you want to ${student.disabled ? "unban" : "ban"} this student?`,
       [
         {
