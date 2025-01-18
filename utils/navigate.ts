@@ -1,5 +1,11 @@
 import { Href, router } from "expo-router";
 
 export const handleNavigate = (page: string) => {
-    router.navigate(`${page}` as Href);
-  };
+
+  if (page === "@back") {
+    router.back();
+    return;
+  }
+
+  router.navigate(`${page}` as Href);
+};
