@@ -48,7 +48,7 @@ const addSchedule = () => {
         schedule.department = user.department;
         const res = await request.post("/schedules/create", schedule);
         toast(res as any);
-        handleNavigate("/schedule");
+        handleNavigate("@back");
       } catch (error: any) {
         toast(error.response?.data || error.message);
       }

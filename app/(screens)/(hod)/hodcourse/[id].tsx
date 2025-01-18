@@ -70,7 +70,7 @@ const hodCourse = () => {
           onPress: async () => {
             try {
               const res = await request.delete(`/courses/delete/${course.id}`);
-              handleNavigate("/manageCourses");
+              handleNavigate("@back");
               toast(res as any);
             } catch (error: any) {
               toast(error.response?.data || error.message);

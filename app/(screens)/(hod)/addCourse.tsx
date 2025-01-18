@@ -48,7 +48,7 @@ const AddCourse = () => {
         const res = await request.post("/courses/create", formState);
         setLoading(false);
         toast(res as any);
-        handleNavigate("./manageCourses");
+        handleNavigate("@back");
       } catch (error: any) {
         toast(error.response?.data || error.message);
       } finally {

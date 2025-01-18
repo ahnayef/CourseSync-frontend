@@ -65,7 +65,7 @@ export default function Login() {
             {formState.role === "Teacher" || formState.role === "Admin/HOD" ? (
               <>
                 <FormInput
-                  value={formState.email}
+                  value={formState.email || ""}
                   title="Email"
                   onChangeFn={(e: any) =>
                     setFormState({ ...formState, email: e })
@@ -100,9 +100,13 @@ export default function Login() {
             )}
 
             <Cbutton title="Login" onclickFn={() => handleSubmit()} />
-              <Text className="w-full text-center p-2">
-                Don't have an account? <Link className="text-primary" href="/signup"> Signup</Link>
-              </Text>
+            <Text className="w-full p-2 text-center">
+              Don't have an account?{" "}
+              <Link className="text-primary" href="/signup">
+                {" "}
+                Signup
+              </Link>
+            </Text>
           </View>
         </GestureHandlerRootView>
       </SafeAreaView>

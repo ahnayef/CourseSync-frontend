@@ -17,7 +17,9 @@ const Schedule = () => {
   const [filteredSchedule, setFilteredSchedule] = useState<any>([]);
 
   const [date, setDate] = useState(new Date());
-  const [today, setToday] = useState(date.toLocaleDateString("en-US", { weekday: "long" }));
+  const [today, setToday] = useState(
+    date.toLocaleDateString("en-US", { weekday: "long" }),
+  );
 
   const handlePrev = () => {
     if (today === "Sunday") {
@@ -28,7 +30,12 @@ const Schedule = () => {
     newDate.setDate(newDate.getDate() - 1);
     setDate(newDate);
     setToday(newDate.toLocaleDateString("en-US", { weekday: "long" }));
-    setFilteredSchedule(schedule.filter((item: any) => item.day === newDate.toLocaleDateString("en-US", { weekday: "long" })));
+    setFilteredSchedule(
+      schedule.filter(
+        (item: any) =>
+          item.day === newDate.toLocaleDateString("en-US", { weekday: "long" }),
+      ),
+    );
   };
 
   const handleNext = () => {
@@ -40,7 +47,12 @@ const Schedule = () => {
     newDate.setDate(newDate.getDate() + 1);
     setDate(newDate);
     setToday(newDate.toLocaleDateString("en-US", { weekday: "long" }));
-    setFilteredSchedule(schedule.filter((item: any) => item.day === newDate.toLocaleDateString("en-US", { weekday: "long" })));
+    setFilteredSchedule(
+      schedule.filter(
+        (item: any) =>
+          item.day === newDate.toLocaleDateString("en-US", { weekday: "long" }),
+      ),
+    );
   };
 
   const handleDelete = (id: any) => {
@@ -84,10 +96,9 @@ const Schedule = () => {
   };
 
   useEffect(() => {
+    getSchedules();
     if (today === "Friday" || today === "Saturday") {
       setFilteredSchedule([]);
-    } else {
-      getSchedules();
     }
   }, []);
 
